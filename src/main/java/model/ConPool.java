@@ -34,8 +34,6 @@ package model;
 
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.apache.tomcat.jdbc.pool.DataSource;
-
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.TimeZone;
@@ -48,7 +46,7 @@ public class ConPool {
         if (datasource == null) {
 
             PoolProperties p = new PoolProperties();
-            p.setUrl("jdbc:mysql://localhost:3306/esercitazione2?serverTimezone=" + TimeZone.getDefault().getID());
+            p.setUrl("jdbc:mysql://localhost:3306/progettotsw?serverTimezone=" + TimeZone.getDefault().getID());
             p.setDriverClassName("com.mysql.cj.jdbc.Driver");
             p.setUsername("root");
             p.setPassword("qazwsx");

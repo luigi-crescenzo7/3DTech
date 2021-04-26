@@ -6,10 +6,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 @WebServlet(name = "HomeServlet", urlPatterns = "/home")
@@ -20,6 +16,18 @@ public class HomeServlet extends HttpServlet {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) {
+
+        String fieldUsername = request.getParameter("fieldUsername");
+        String fieldPassword = request.getParameter("fieldPassword");
+
+        if(fieldPassword == null || fieldUsername == null)
+            return;
+
+        if(fieldPassword.isEmpty() || fieldUsername.isEmpty())
+            return;
+
+
+
 
 
     }
