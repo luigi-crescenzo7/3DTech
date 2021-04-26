@@ -1,6 +1,6 @@
 package controller;
 
-import model.Prodotto;
+import model.Utente;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,19 +20,17 @@ public class HomeServlet extends HttpServlet {
         String fieldUsername = request.getParameter("fieldUsername");
         String fieldPassword = request.getParameter("fieldPassword");
 
-        if(fieldPassword == null || fieldUsername == null)
+        if (fieldPassword == null || fieldUsername == null)
             return;
 
-        if(fieldPassword.isEmpty() || fieldUsername.isEmpty())
+        if (fieldPassword.isEmpty() || fieldUsername.isEmpty())
             return;
 
-
-
-
+        Utente user = new Utente();
 
     }
 
-    public void destroy(){
+    public void destroy() {
 
     }
 }

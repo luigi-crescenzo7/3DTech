@@ -7,9 +7,9 @@ public class Utente {
     private String name;
     private String surname;
     private String phoneNumber;
-    private int ZIPCode;
-    private String citta;
-    private String via;
+    private String ZIPCode;
+    private String city;
+    private String street;
     private boolean admin;
 
     public int getId() {
@@ -60,28 +60,28 @@ public class Utente {
         this.phoneNumber = phoneNumber;
     }
 
-    public int getZIPCode() {
+    public String getZIPCode() {
         return ZIPCode;
     }
 
-    public void setZIPCode(int ZIPCode) {
+    public void setZIPCode(String ZIPCode) {
         this.ZIPCode = ZIPCode;
     }
 
-    public String getCitta() {
-        return citta;
+    public String getCity() {
+        return city;
     }
 
-    public void setCitta(String citta) {
-        this.citta = citta;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getVia() {
-        return via;
+    public String getStreet() {
+        return street;
     }
 
-    public void setVia(String via) {
-        this.via = via;
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public boolean isAdmin() {
