@@ -31,8 +31,15 @@ public class HomeServlet extends HttpServlet {
 
         Utente user = new Utente();
         UtenteDAO dao = new UtenteDAO();
+
         user.setEmail(fieldEmail);
         user.setPasswordhash(fieldPassword);
+        user.setName("aa");
+        user.setSurname("bb");
+        user.setPhoneNumber("999");
+        user.setZIPCode("111");
+        user.setCity("aaaaooo");
+        user.setStreet("oooooo 22");
 
         dao.doSave(user);
 
