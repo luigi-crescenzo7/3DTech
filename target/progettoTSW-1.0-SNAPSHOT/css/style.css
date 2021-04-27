@@ -6,12 +6,12 @@
 }
 
 /* #001f3f   #0e0e60*/
-header{
+/*header{
     background-color: #001f3f;
-    padding-bottom: 40px;
+    padding-bottom: 0px;
     font-size: 60px;
-    font-family: "Roboto Slab", serif;
-}
+   font-family: "Roboto Slab", serif;
+}*/
 
 .cookie-banner{
     position: sticky;
