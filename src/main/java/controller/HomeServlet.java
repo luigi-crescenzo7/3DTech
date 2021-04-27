@@ -36,6 +36,8 @@ public class HomeServlet extends HttpServlet {
 
         dao.doSave(user);
 
+        request.setAttribute("user", user);
+
         request.getRequestDispatcher("/WEB-INF/ss.jsp").forward(request, response);
     }
 
