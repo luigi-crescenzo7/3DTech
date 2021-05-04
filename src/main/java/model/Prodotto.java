@@ -8,6 +8,15 @@ public class Prodotto {
     private double prezzo;
     private double peso;
     private double sconto;
+    private Categoria categoria;
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 
     public int getId() {
         return id;

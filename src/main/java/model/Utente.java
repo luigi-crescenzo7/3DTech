@@ -1,5 +1,11 @@
 package model;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+
 public class Utente {
     private int id;
     private String email;
@@ -11,6 +17,15 @@ public class Utente {
     private String city;
     private String street;
     private boolean admin;
+    private List<Ordine> ordini;
+
+    public List<Ordine> getOrdini() {
+        return ordini;
+    }
+
+    public void setOrdini(List<Ordine> ordini) {
+        this.ordini = ordini;
+    }
 
     public int getId() {
         return id;
@@ -33,7 +48,16 @@ public class Utente {
     }
 
     public void setPasswordhash(String passwordhash) {
-        this.passwordhash = passwordhash;
+        try {
+            MessageDigest digest =
+                    MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(passwordhash.getBytes(StandardCharsets.UTF_8));
+            this.passwordhash = String.format("%040x", new
+                    BigInteger(1, digest.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getName() {
