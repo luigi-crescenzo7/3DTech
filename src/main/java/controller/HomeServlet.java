@@ -44,7 +44,6 @@ public class HomeServlet extends HttpServlet {
 
         if (user == null) return;
 
-
         HttpSession session = request.getSession();
 
         session.setAttribute("user", user);

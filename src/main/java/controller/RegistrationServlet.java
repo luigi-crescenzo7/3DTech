@@ -1,6 +1,7 @@
 package controller;
 
 
+import model.ConPool;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -43,7 +44,6 @@ public class RegistrationServlet extends HttpServlet {
 
         dao.doSave(user);
 
-
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
@@ -55,5 +55,10 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
+    }
+
+    @Override
+    public void destroy() {
+        ConPool.destroyConnection();
     }
 }

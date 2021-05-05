@@ -20,7 +20,7 @@ public class ProdottoDAO {
     }
 
     public void doSaveJson(String s) {
-        try(PreparedStatement ps = con.prepareStatement("INSERT INTO test VALUE(?)")){
+        try (PreparedStatement ps = con.prepareStatement("INSERT INTO test VALUE(?)")) {
             ps.setString(1, s);
             if (ps.executeUpdate() != 1) throw new RuntimeException();
         } catch (SQLException e) {
@@ -30,7 +30,7 @@ public class ProdottoDAO {
 
     public String doRetrieveJson() {
         String s = "";
-        try (PreparedStatement ps = con.prepareStatement("SELECT * from test WHERE json_column->'$.name' = ?")){
+        try (PreparedStatement ps = con.prepareStatement("SELECT * from test WHERE json_column->'$.name' = ?")) {
             ps.setString(1, "gigi");
             ResultSet set = ps.executeQuery();
             while (set.next()) {
@@ -44,7 +44,7 @@ public class ProdottoDAO {
 
     public List<Prodotto> doRetrieveAll() {
         String sql = "SELECT * FROM Prodotto";
-        try(PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> array = new ArrayList<>();
@@ -67,8 +67,8 @@ public class ProdottoDAO {
 
     public Prodotto doRetrieveById(int id) {
 
-        String sql = "SELECT * FROM Prodotto WHERE id=?";
-        try(PreparedStatement ps = con.prepareStatement(sql)){
+        String sql = "SELECT * FROM Prodotto WHERE id_prodotto=?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -92,9 +92,9 @@ public class ProdottoDAO {
     }
 
     public void doSave(Prodotto p) {
-        try(PreparedStatement ps = con.prepareStatement("INSERT INTO " +
-                                                            "Prodotto(id, nome, marchio, descrizione, prezzo, peso, sconto)" +
-                                                            "VALUES(?,?,?,?,?,?,?)")){
+        try (PreparedStatement ps = con.prepareStatement("INSERT INTO " +
+                "Prodotto(id_prodotto, nome, marchio, descrizione, prezzo, peso, sconto)" +
+                "VALUES(?,?,?,?,?,?,?)")) {
             ps.setInt(1, p.getId());
             ps.setString(2, p.getNome());
             ps.setString(3, p.getMarchio());
@@ -112,9 +112,9 @@ public class ProdottoDAO {
 
     public void doUpdateProdottobyId(int id, Prodotto p) {
 
-        try(PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET " +
-                                                            "nome=?, marchio=?, descrizione=?, prezzo=?, peso=?, sconto=?" +
-                                                            " WHERE id=?")){
+        try (PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET " +
+                "nome=?, marchio=?, descrizione=?, prezzo=?, peso=?, sconto=?" +
+                " WHERE id_prodotto = ?")) {
 
             ps.setString(1, p.getNome());
             ps.setString(2, p.getMarchio());
@@ -131,5 +131,23 @@ public class ProdottoDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    //TODO implementare metodo
+    public String doRetrieveCaratteristiche(int id) {
+        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto" +
+                " WHERE id_prodotto = ?")) {
+            ps.setInt(1, id);
+
+            ResultSet set = ps.executeQuery();
+            if (set.next()) {
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "";
     }
 }

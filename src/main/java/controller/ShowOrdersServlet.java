@@ -1,5 +1,6 @@
 package controller;
 
+import model.ConPool;
 import model.Ordine;
 import model.Utente;
 import model.UtenteDAO;
@@ -53,5 +54,10 @@ public class ShowOrdersServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
+    }
+
+    @Override
+    public void destroy() {
+        ConPool.destroyConnection();
     }
 }
