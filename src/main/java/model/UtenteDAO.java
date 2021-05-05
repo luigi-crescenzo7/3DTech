@@ -16,7 +16,22 @@ public class UtenteDAO {
     }
 
     public void doUpdate(Utente user) {
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE utente SET telefono = ?")) {
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE utente SET email = ?, passwordHash = ?, nome = ?, cognome = ?, " +
+                                                                "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?, admin = ?")) {
+
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getPasswordhash());
+            ps.setString(3, user.getName());
+            ps.setString(4, user.getSurname());
+            ps.setDate(5, user.getDataNascita());
+            ps.setString(6,user.getPhoneNumber());
+            ps.setString(7, user.getZIPCode());
+            ps.setString(8, user.getCity());
+            ps.setString(9, user.getStreet());
+            ps.setBoolean(10, user.isAdmin());
+
+
+            if (ps.executeUpdate() != 1) throw new RuntimeException();
 
         } catch (SQLException e) {
             e.printStackTrace();
