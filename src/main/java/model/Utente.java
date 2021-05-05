@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
 import java.util.List;
 
 public class Utente {
@@ -12,6 +13,7 @@ public class Utente {
     private String passwordhash;
     private String name;
     private String surname;
+    private Date dataNascita;
     private String phoneNumber;
     private String ZIPCode;
     private String city;
@@ -21,6 +23,14 @@ public class Utente {
 
     public List<Ordine> getOrdini() {
         return ordini;
+    }
+
+    public Date getDataNascita() {
+        return dataNascita;
+    }
+
+    public void setDataNascita(Date dataNascita) {
+        this.dataNascita = dataNascita;
     }
 
     public void setOrdini(List<Ordine> ordini) {

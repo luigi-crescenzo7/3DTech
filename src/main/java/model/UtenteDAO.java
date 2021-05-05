@@ -35,6 +35,7 @@ public class UtenteDAO {
                 user.setEmail(rs.getString("Email"));
                 user.setPasswordhash(rs.getString("Passwordhash"));
                 user.setName(rs.getString("Nome"));
+                user.setDataNascita(rs.getDate("data_di_nascita"));
                 user.setSurname(rs.getString("Cognome"));
                 user.setPhoneNumber(rs.getString("telefono"));
                 user.setZIPCode(rs.getString("CAP"));
@@ -84,6 +85,7 @@ public class UtenteDAO {
                 utente.setEmail(set.getString("email"));
                 utente.setName(set.getString("nome"));
                 utente.setSurname(set.getString("cognome"));
+                utente.setDataNascita(set.getDate("data_di_nascita"));
                 utente.setPhoneNumber(set.getString("telefono"));
                 utente.setId(set.getInt("id"));
                 utente.setCity(set.getString("citta"));
@@ -103,19 +105,20 @@ public class UtenteDAO {
 
         try {
             PreparedStatement ps = connection.prepareStatement("insert into utente " +
-                    "(email, passwordhash, nome, cognome," +
+                    "(email, passwordhash, nome, cognome, data_di_nascita," +
                     " telefono, cap, citta, via, admin)" +
-                    "values (?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    "values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());
             ps.setString(3, user.getName());
             ps.setString(4, user.getSurname());
-            ps.setString(5, user.getPhoneNumber());
-            ps.setString(6, user.getZIPCode());
-            ps.setString(7, user.getCity());
-            ps.setString(8, user.getStreet());
-            ps.setBoolean(9, user.isAdmin());
+            ps.setDate(5, user.getDataNascita());
+            ps.setString(6, user.getPhoneNumber());
+            ps.setString(7, user.getZIPCode());
+            ps.setString(8, user.getCity());
+            ps.setString(9, user.getStreet());
+            ps.setBoolean(10, user.isAdmin());
 
             if (ps.executeUpdate() != 1) throw new RuntimeException();
 
