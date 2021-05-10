@@ -46,7 +46,7 @@ public class ShowOrdersServlet extends HttpServlet {
 
         request.setAttribute("orders", user.getOrdini());
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/showOrders.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/showOrders.jsp");
         dispatcher.forward(request, response);
     }
 

@@ -47,7 +47,7 @@ public class RegistrationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ss.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/ss.jsp");
         dispatcher.forward(request, response);
     }
 

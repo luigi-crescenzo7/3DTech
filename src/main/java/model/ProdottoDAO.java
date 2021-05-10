@@ -9,18 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProdottoDAO {
-    private static Connection con;
+    private static Connection connection;
 
     public ProdottoDAO() {
-        try {
-            con = ConPool.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (connection == null) {
+            try (Connection conn = ConPool.getConnection()) {
+                connection = conn;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public void doSaveJson(String s) {
-        try (PreparedStatement ps = con.prepareStatement("INSERT INTO test VALUE(?)")) {
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO test VALUE(?)")) {
             ps.setString(1, s);
             if (ps.executeUpdate() != 1) throw new RuntimeException();
         } catch (SQLException e) {
@@ -30,7 +32,7 @@ public class ProdottoDAO {
 
     public String doRetrieveJson() {
         String s = "";
-        try (PreparedStatement ps = con.prepareStatement("SELECT * from test WHERE json_column->'$.name' = ?")) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * from test WHERE json_column->'$.name' = ?")) {
             ps.setString(1, "gigi");
             ResultSet set = ps.executeQuery();
             while (set.next()) {
@@ -44,7 +46,7 @@ public class ProdottoDAO {
 
     public List<Prodotto> doRetrieveAll() {
         String sql = "SELECT * FROM Prodotto";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ResultSet rs = ps.executeQuery();
             ArrayList<Prodotto> array = new ArrayList<>();
@@ -68,7 +70,7 @@ public class ProdottoDAO {
     public Prodotto doRetrieveById(int id) {
 
         String sql = "SELECT * FROM Prodotto WHERE id_prodotto=?";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
 
@@ -92,7 +94,7 @@ public class ProdottoDAO {
     }
 
     public void doSave(Prodotto p) {
-        try (PreparedStatement ps = con.prepareStatement("INSERT INTO " +
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
                 "Prodotto(id_prodotto, nome, marchio, descrizione, prezzo, peso, sconto)" +
                 "VALUES(?,?,?,?,?,?,?)")) {
             ps.setInt(1, p.getId());
@@ -112,7 +114,7 @@ public class ProdottoDAO {
 
     public void doUpdateProdottobyId(int id, Prodotto p) {
 
-        try (PreparedStatement ps = con.prepareStatement("UPDATE Prodotto SET " +
+        try (PreparedStatement ps = connection.prepareStatement("UPDATE Prodotto SET " +
                 "nome=?, marchio=?, descrizione=?, prezzo=?, peso=?, sconto=?" +
                 " WHERE id_prodotto = ?")) {
 
@@ -136,7 +138,7 @@ public class ProdottoDAO {
 
     //TODO implementare metodo
     public String doRetrieveCaratteristiche(int id) {
-        try (PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto" +
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM prodotto" +
                 " WHERE id_prodotto = ?")) {
             ps.setInt(1, id);
 

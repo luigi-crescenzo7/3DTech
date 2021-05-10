@@ -8,23 +8,25 @@ public class UtenteDAO {
     private static Connection connection;
 
     public UtenteDAO() {
-        try {
-            connection = ConPool.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (connection == null) {
+            try (Connection conn = ConPool.getConnection()) {
+                connection = conn;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public void doUpdate(Utente user) {
         try (PreparedStatement ps = connection.prepareStatement("UPDATE utente SET email = ?, passwordHash = ?, nome = ?, cognome = ?, " +
-                                                                "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?, admin = ?")) {
+                "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?, admin = ?")) {
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());
             ps.setString(3, user.getName());
             ps.setString(4, user.getSurname());
             ps.setDate(5, user.getDataNascita());
-            ps.setString(6,user.getPhoneNumber());
+            ps.setString(6, user.getPhoneNumber());
             ps.setString(7, user.getZIPCode());
             ps.setString(8, user.getCity());
             ps.setString(9, user.getStreet());
@@ -78,7 +80,7 @@ public class UtenteDAO {
                 order.setQuantita(set.getInt("quantita"));
                 order.setDataOrdine(set.getDate("data_ordine"));
                 //TODO aggiungere setUser()
-               // order.setUser(user);
+                // order.setUser(user);
                 ordini.add(order);
             }
         } catch (SQLException e) {
@@ -118,11 +120,11 @@ public class UtenteDAO {
     public void doSave(Utente user) {
         if (user == null) return;
 
-        try {
-            PreparedStatement ps = connection.prepareStatement("insert into utente " +
-                    "(email, passwordhash, nome, cognome, data_di_nascita," +
-                    " telefono, cap, citta, via, admin)" +
-                    "values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement ps = connection.prepareStatement("insert into utente " +
+                "(email, passwordhash, nome, cognome, data_di_nascita," +
+                " telefono, cap, citta, via, admin)" +
+                "values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @WebServlet(name = "HomeServlet", urlPatterns = "/home")
@@ -75,7 +77,7 @@ public class HomeServlet extends HttpServlet {
         user.setStreet("oooooo 22");*/
 
 
-        request.getRequestDispatcher("/WEB-INF/ss.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/results/ss.jsp").forward(request, response);
     }
 
     @Override

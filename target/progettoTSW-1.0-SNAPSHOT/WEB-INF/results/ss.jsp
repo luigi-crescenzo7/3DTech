@@ -14,5 +14,11 @@
     <input type="hidden" name="userId" value="${sessionScope.user.id}">
     <input type="submit" value="Visualizza ordini">
 </form>
+<br>
+<form action="Logout" method="post">
+    <c:if test="${sessionScope.user != null}">
+        <input type="submit" value="Logout">
+    </c:if>
+</form>
 </body>
 </html>
