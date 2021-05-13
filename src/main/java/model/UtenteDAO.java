@@ -5,21 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UtenteDAO {
-    private static Connection connection;
-
-    public UtenteDAO() {
-        if (connection == null) {
-            try (Connection conn = ConPool.getConnection()) {
-                connection = conn;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
 
     public void doUpdate(Utente user) {
-        try (PreparedStatement ps = connection.prepareStatement("UPDATE utente SET email = ?, passwordHash = ?, nome = ?, cognome = ?, " +
-                "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?, admin = ?")) {
+        try (Connection connection = ConPool.getConnection();
+                PreparedStatement ps =
+                     connection.prepareStatement("UPDATE utente SET email = ?, passwordHash = ?," +
+                                                     " nome = ?, cognome = ?, " +
+                                                     "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?, admin = ?")) {
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());
@@ -32,7 +24,6 @@ public class UtenteDAO {
             ps.setString(9, user.getStreet());
             ps.setBoolean(10, user.isAdmin());
 
-
             if (ps.executeUpdate() != 1) throw new RuntimeException();
 
         } catch (SQLException e) {
@@ -41,7 +32,8 @@ public class UtenteDAO {
     }
 
     public List<Utente> doRetrieveAll() {
-        try (PreparedStatement ps = connection.prepareStatement("select * from utente")) {
+        try (Connection connection = ConPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement("select * from utente")) {
             List<Utente> list = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
@@ -69,7 +61,8 @@ public class UtenteDAO {
 
     public List<Ordine> doRetrieveOrders(int id) {
         List<Ordine> ordini = new ArrayList<>();
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM ordine WHERE id_utente = ?")) {
+        try (Connection connection = ConPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM ordine WHERE id_utente = ?")) {
             ps.setInt(1, id);
 
             ResultSet set = ps.executeQuery();
@@ -90,7 +83,8 @@ public class UtenteDAO {
     }
 
     public Utente doRetrieveEmailPassword(Utente user) {
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM utente" +
+        try (Connection connection = ConPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM utente" +
                 " WHERE email = ? AND passwordHash = ?")) {
 
             ps.setString(1, user.getEmail());
@@ -108,6 +102,7 @@ public class UtenteDAO {
                 utente.setCity(set.getString("citta"));
                 utente.setZIPCode(set.getString("CAP"));
                 utente.setStreet(set.getString("via"));
+                utente.setAdmin(set.getBoolean("admin"));
                 return utente;
             }
         } catch (SQLException e) {
@@ -119,8 +114,8 @@ public class UtenteDAO {
 
     public void doSave(Utente user) {
         if (user == null) return;
-
-        try (PreparedStatement ps = connection.prepareStatement("insert into utente " +
+        try (Connection connection = ConPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement("insert into utente " +
                 "(email, passwordhash, nome, cognome, data_di_nascita," +
                 " telefono, cap, citta, via, admin)" +
                 "values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {

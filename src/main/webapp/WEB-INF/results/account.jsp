@@ -10,15 +10,17 @@
     Email: ${sessionScope.user.email}<br>
     Nome: ${sessionScope.user.name}<br>
 </h1>
-<form action="ShowOrders" method="post">
-    <input type="hidden" name="userId" value="${sessionScope.user.id}">
-    <input type="submit" value="Visualizza ordini">
-</form>
+<fieldset>
+    <legend>
+        <form action="ShowOrders" method="post">
+            <input type="hidden" name="userId" value="${sessionScope.user.id}">
+            <input type="submit" value="Visualizza ordini">
+        </form>
+    </legend>
+</fieldset>
 <br>
-<form action="Logout" method="post">
-    <c:if test="${sessionScope.user != null}">
-        <input type="submit" value="Logout">
-    </c:if>
+<form action="logout" method="post">
+    <input type="submit" value="Logout">
 </form>
 </body>
 </html>

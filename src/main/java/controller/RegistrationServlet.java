@@ -21,18 +21,18 @@ public class RegistrationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String fieldEmail = request.getParameter("fieldEmail");
+        /*String fieldEmail = request.getParameter("fieldEmail");
         String fieldPassword = request.getParameter("fieldPassword");
         String fieldName = request.getParameter("fieldName");
         String fieldSurname = request.getParameter("fieldSurname");
         String fieldPhoneNumber = request.getParameter("fieldPhoneNumber");
         String fieldZIPCode = request.getParameter("fieldZIPCode");
         String fieldCity = request.getParameter("fieldCity");
-        String fieldStreet = request.getParameter("fieldStreet");
+        String fieldStreet = request.getParameter("fieldStreet");*/
 
         UtenteDAO dao = new UtenteDAO();
 
-        Utente user = new Utente();
+        /*Utente user = new Utente();
         user.setEmail(fieldEmail);
         user.setPasswordhash(fieldPassword);
         user.setName(fieldName);
@@ -47,8 +47,8 @@ public class RegistrationServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/ss.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/account.jsp");
+        dispatcher.forward(request, response);*/
     }
 
     @Override
@@ -59,6 +59,6 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     public void destroy() {
-        ConPool.destroyConnection();
+        //ConPool.destroyConnection();
     }
 }

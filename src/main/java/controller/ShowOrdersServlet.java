@@ -1,7 +1,6 @@
 package controller;
 
-import model.ConPool;
-import model.Ordine;
+
 import model.Utente;
 import model.UtenteDAO;
 
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
+
 
 
 @WebServlet(urlPatterns = "/ShowOrders")
@@ -24,7 +23,7 @@ public class ShowOrdersServlet extends HttpServlet {
 
         String userId = request.getParameter("userId");
 
-        if (userId.isEmpty() || userId == null) return;
+        if (userId.isEmpty()) return;
 
         UtenteDAO dao = new UtenteDAO();
         Utente user;
@@ -58,6 +57,6 @@ public class ShowOrdersServlet extends HttpServlet {
 
     @Override
     public void destroy() {
-        ConPool.destroyConnection();
+        //ConPool.destroyConnection();
     }
 }

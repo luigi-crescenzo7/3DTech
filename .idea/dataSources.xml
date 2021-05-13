@@ -8,9 +8,9 @@
       <jdbc-url>jdbc:mysql://localhost:3306/progettotsw</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
       <driver-properties>
-        <property name="serverTimezone" value="GMT" />
+        <property name="serverTimezone" value="Europe/Berlin" />
       </driver-properties>
-      <time-zone>GMT</time-zone>
+      <time-zone>Europe/Berlin</time-zone>
     </data-source>
   </component>
 </project>

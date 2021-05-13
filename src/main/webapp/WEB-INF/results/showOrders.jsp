@@ -5,8 +5,6 @@
     <title>Title</title>
 </head>
 <body>
-
-
 <ul>
     <c:forEach items="${orders}" var="order">
         <li>

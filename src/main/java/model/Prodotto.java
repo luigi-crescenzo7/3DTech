@@ -1,10 +1,13 @@
 package model;
 
+import org.json.JSONObject;
+
 public class Prodotto {
     private int id;
     private String nome;
     private String descrizione;
     private String marchio;
+    private JSONObject caratteristiche;
     private double prezzo;
     private double peso;
     private double sconto;
@@ -16,6 +19,14 @@ public class Prodotto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public JSONObject getCaratteristiche() {
+        return caratteristiche;
+    }
+
+    public void setCaratteristiche(JSONObject caratteristiche) {
+        this.caratteristiche = caratteristiche;
     }
 
     public int getId() {

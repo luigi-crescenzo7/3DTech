@@ -10,6 +10,17 @@ body {
     padding: 0;
 }
 
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    font-family: "Roboto Slab", serif;
+    font-size: 80%
+}
+
 
 /* #001f3f #001f3f  #0e0e60*/
 header {
@@ -17,7 +28,6 @@ header {
     margin: 0;
     padding: 0;
     background-color: whitesmoke;
-    font-size: 60px;
     font-family: "Roboto Slab", serif;
 }
 
@@ -43,7 +53,7 @@ div.xxt {
     background-color: #00acb8;
 }
 
-ul#categories > li{
+ul#categories > li {
     box-sizing: border-box;
     color: white;
 }
@@ -59,7 +69,7 @@ li {
 }
 
 li:hover {
-    background-color: #1d1d74;
+    opacity: 60%;
 }
 
 .elem {
@@ -97,4 +107,3 @@ img {
     z-index: 1000;
     line-height: 24px;
 }*/
-

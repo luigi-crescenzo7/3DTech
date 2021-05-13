@@ -62,6 +62,6 @@ public class ConPool {
     }
 
     public static void destroyConnection() {
-		datasource.close(true);
+		datasource.close(false);
 	}
 }
