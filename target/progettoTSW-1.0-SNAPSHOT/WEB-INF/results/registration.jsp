@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form action="RegistrationServlet" method="post">
+<form action="registration" method="post">
     <fieldset>
         <legend>aaa</legend>
         <label for="email">Email:</label>

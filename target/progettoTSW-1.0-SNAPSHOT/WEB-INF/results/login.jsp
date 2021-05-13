@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="xx/login" method="post">
+<form action="login" method="post">
     <label for="email">Email:</label>
     <input type="email" id="email" name="fieldEmail">
     <label for="password">Password:</label>

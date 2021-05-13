@@ -2,29 +2,44 @@ package controller;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 public class RequestValidator {
     private final HttpServletRequest request;
     private final List<String> list;
 
-    public RequestValidator(HttpServletRequest request){
+    public RequestValidator(HttpServletRequest request) {
         this.request = request;
         this.list = new ArrayList<>();
     }
 
-    public void isRequired(String name, String errorMessage){
+    private void isRequired(String name, String errorMessage) {
         String parameter = request.getParameter(name);
-        if(parameter == null){
+        if (parameter == null || parameter.isEmpty()) {
             list.add(errorMessage);
         }
     }
 
-    public boolean isRequestValid(){
+    public static void validateRequest(HttpServletRequest request) throws RequestNotValidException {
+        RequestValidator validator = new RequestValidator(request);
+        Enumeration<String> enumeration = request.getParameterNames();
+        while (enumeration.hasMoreElements()) {
+            String parameter = enumeration.nextElement();
+            validator.isRequired(parameter, "Error message");
+        }
+
+        if(!validator.isRequestValid()){
+            request.setAttribute("errors", validator.getList());
+            throw new RequestNotValidException();
+        }
+    }
+
+    private boolean isRequestValid() {
         return list.isEmpty();
     }
 
-    public List<String> getList(){
+    private List<String> getList() {
         return list;
     }
 }

@@ -35,11 +35,11 @@
                 <li><a href="xx/registration">Registrazione</a></li>
             </c:when>
             <c:when test="${sessionScope.user.admin == true}">
-                <li><a href="">Il mio profilo</a></li>
+                <li><a href="xx/account">Il mio profilo</a></li>
                 <li><a href="">Pannello di controllo</a></li>
             </c:when>
             <c:otherwise>
-                <li><a href="">Il mio profilo</a></li>
+                <li><a href="xx/account">Il mio profilo</a></li>
             </c:otherwise>
         </c:choose>
     </ul>
