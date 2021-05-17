@@ -115,8 +115,6 @@ public class UtenteDAO {
             if (keys.next()) {
                 user.setId(keys.getInt(1));
             }
-
-            //user.setId(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -30,7 +30,7 @@ public class AccountServlet extends HttpServlet {
         List<String> list;
         Utente user = null;
 
-        System.out.println("Ho chiamato doPost di AccountServlet");
+
         switch (path) {
             case "/registration":
                 list = FormExtractor.retrieveParameterValues(request);
@@ -75,7 +75,6 @@ public class AccountServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
 
-        System.out.println("Ho chiamato doGet di AccountServlet");
         switch (path) {
             case "/login":
                 resource = "/WEB-INF/results/login.jsp";

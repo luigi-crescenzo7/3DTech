@@ -1,17 +1,28 @@
 package model;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Ordine {
     private int id;
     private int quantita;
     private Date dataOrdine;
     private Utente user;
+    private List<Prodotto> prodotti;
+
 
     public Utente getUser() {
         return user;
     }
 
+    public List<Prodotto> getProdotti() {
+        return prodotti;
+    }
+
+    public void setProdotti(List<Prodotto> prodotti) {
+        this.prodotti = prodotti;
+    }
+    
     public void setUser(Utente user) {
         this.user = user;
     }

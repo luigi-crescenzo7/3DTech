@@ -18,7 +18,7 @@
     </legend>
 </fieldset>
 <br>
-<form action="xx/logout" method="post">
+<form action="logout" method="post">
     <input type="submit" value="Logout">
 </form>
 </body>
