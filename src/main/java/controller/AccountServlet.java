@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/xx/*")
-public class RedirectLogin extends HttpServlet {
+public class AccountServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -27,28 +28,38 @@ public class RedirectLogin extends HttpServlet {
         UtenteDAO dao = new UtenteDAO();
         HttpSession session = request.getSession();
         List<String> list;
-        Utente user;
+        Utente user = null;
 
+        System.out.println("Ho chiamato doPost di AccountServlet");
         switch (path) {
             case "/registration":
                 list = FormExtractor.retrieveParameterValues(request);
-                user = UserConstructor.extractRegistration(list);
+                try{
+                    user = UserConstructor.extractRegistration(list);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                dao.doSave(user);
                 session.setAttribute("user", user);
-                resource = "/WEB-INF/results/account.jsp";
-                dispatcher = request.getRequestDispatcher(resource);
-                dispatcher.forward(request, response);
+                resource = "/index.jsp";
+                response.sendRedirect(request.getContextPath() + resource);
                 break;
             case "/login":
                 list = FormExtractor.retrieveParameterValues(request);
                 user = UserConstructor.extractLogin(list);
                 user = dao.doRetrieveEmailPassword(user);
-                if (user == null) return;
+                if (user == null){
+                    System.out.println("Utente non esistente");
+                    return;
+                }
                 session.setAttribute("user", user);
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                resource = "/index.jsp";
+                response.sendRedirect(request.getContextPath() + resource);
                 break;
             case "logout":
                 session.removeAttribute("user");
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                resource = "/index.jsp";
+                response.sendRedirect(request.getContextPath() + resource);
                 break;
             default:
                 response.sendError(404, "Not found");
@@ -64,6 +75,7 @@ public class RedirectLogin extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
 
+        System.out.println("Ho chiamato doGet di AccountServlet");
         switch (path) {
             case "/login":
                 resource = "/WEB-INF/results/login.jsp";
@@ -73,12 +85,15 @@ public class RedirectLogin extends HttpServlet {
                 break;
             case "/account":
                 resource = "/WEB-INF/results/account.jsp";
+                break;
             default:
                 response.sendError(404, "error");
                 break;
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(resource);
-        dispatcher.forward(request, response);
+        if (path.equals("/login") || path.equals("/registration") || path.equals("/account")) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher(resource);
+            dispatcher.forward(request, response);
+        }
     }
 }

@@ -1,6 +1,8 @@
 package controller;
 
 
+import model.Ordine;
+import model.OrdineDAO;
 import model.Utente;
 import model.UtenteDAO;
 
@@ -15,18 +17,20 @@ import java.io.IOException;
 
 
 
-@WebServlet(urlPatterns = "/ShowOrders")
+@WebServlet(urlPatterns = "/tt/*")
 public class ShowOrdersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String userId = request.getParameter("userId");
+        String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
+        String resource = "/";
+
+        /*String userId = request.getParameter("userId");
 
         if (userId.isEmpty()) return;
 
-        UtenteDAO dao = new UtenteDAO();
-        Utente user;
+        OrdineDAO dao = new OrdineDAO();
 
         int id = 0;
 
@@ -34,19 +38,21 @@ public class ShowOrdersServlet extends HttpServlet {
             id = Integer.parseInt(userId);
         } catch (NumberFormatException e) {
             e.printStackTrace();
-        }
+        }*/
 
+
+        /*System.out.println(request.getPathInfo());
+        OrdineDAO dao = new OrdineDAO();
         HttpSession session = request.getSession();
-        user = (Utente) session.getAttribute("user");
+        Utente user = (Utente) session.getAttribute("user");
 
-        System.out.println(id);
 
-        user.setOrdini(dao.doRetrieveOrders(id));
+        user.setOrdini(dao.doRetrieveOrders(user));
 
         request.setAttribute("orders", user.getOrdini());
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/showOrders.jsp");
-        dispatcher.forward(request, response);
+        dispatcher.forward(request, response);*/
     }
 
     @Override

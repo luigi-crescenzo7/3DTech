@@ -59,29 +59,6 @@ public class UtenteDAO {
         }
     }
 
-    public List<Ordine> doRetrieveOrders(int id) {
-        List<Ordine> ordini = new ArrayList<>();
-        try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM ordine WHERE id_utente = ?")) {
-            ps.setInt(1, id);
-
-            ResultSet set = ps.executeQuery();
-
-            while (set.next()) {
-                Ordine order = new Ordine();
-                order.setId(set.getInt("id_ordine"));
-                order.setQuantita(set.getInt("quantita"));
-                order.setDataOrdine(set.getDate("data_ordine"));
-                //TODO aggiungere setUser()
-                // order.setUser(user);
-                ordini.add(order);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return ordini;
-    }
-
     public Utente doRetrieveEmailPassword(Utente user) {
         try (Connection connection = ConPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement("SELECT * FROM utente" +
@@ -120,7 +97,6 @@ public class UtenteDAO {
                 " telefono, cap, citta, via, admin)" +
                 "values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
-
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());
             ps.setString(3, user.getName());
@@ -134,13 +110,13 @@ public class UtenteDAO {
 
             if (ps.executeUpdate() != 1) throw new RuntimeException();
 
-            /*ResultSet keys = ps.getGeneratedKeys();
+            //TODO ??? da verificare
+            ResultSet keys = ps.getGeneratedKeys();
             if (keys.next()) {
                 user.setId(keys.getInt(1));
-            }*/
+            }
 
-            //TODO modificare questo metodo
-            user.setId(1);
+            //user.setId(1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -17,6 +17,8 @@
         <input type="text" id="name" name="fieldName"><br><br>
         <label for="surname">Surname:</label>
         <input type="text" id="surname" name="fieldSurname"><br><br>
+        <label for="dateOfBirth">Data di nascita:</label>
+        <input type="date" id="dateOfBirth" name="fieldDateOfBirth"><br><br>
         <label for="phoneNumber">Numero di telefono:</label>
         <input type="number" id="phoneNumber" name="fieldPhoneNumber"><br><br>
         <label for="zipCode">CAP:</label>

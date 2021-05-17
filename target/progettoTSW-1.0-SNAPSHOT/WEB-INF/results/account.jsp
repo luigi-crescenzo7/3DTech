@@ -12,8 +12,7 @@
 </h1>
 <fieldset>
     <legend>
-        <form action="ShowOrders" method="post">
-            <input type="hidden" name="userId" value="${sessionScope.user.id}">
+        <form action="${pageContext.request.contextPath}/tt/orders" method="post">
             <input type="submit" value="Visualizza ordini">
         </form>
     </legend>
