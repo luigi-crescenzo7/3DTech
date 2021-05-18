@@ -12,7 +12,7 @@
 <body>
 <header>
     <!--<h1>3DTech</h1>-->
-    <img src="./imgs/logoNew.png" alt="logo">
+    <img class="logo" src="${pageContext.request.contextPath}/imgs/logoNew.png" alt="aa">
     <div class="test">
         <ul>
             <li>Home</li>
