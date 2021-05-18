@@ -1,4 +1,6 @@
-package model;
+package model.Utente;
+
+import model.ConPool;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ public class UtenteDAO {
 
     public void doUpdate(Utente user) {
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps =
+             PreparedStatement ps =
                      connection.prepareStatement("UPDATE utente SET email = ?, passwordHash = ?," +
                                                      " nome = ?, cognome = ?, " +
                                                      "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?, admin = ?")) {

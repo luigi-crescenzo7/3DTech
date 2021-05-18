@@ -1,10 +1,9 @@
 package controller;
 
-import model.Prodotto;
-import model.ProdottoDAO;
+import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoDAO;
 import org.json.JSONObject;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

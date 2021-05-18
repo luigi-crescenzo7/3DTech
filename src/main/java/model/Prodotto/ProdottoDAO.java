@@ -1,12 +1,10 @@
-package model;
+package model.Prodotto;
 
 
+import model.ConPool;
 import org.json.JSONObject;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +35,9 @@ public class ProdottoDAO {
 
     public void doUpdateById(Prodotto p) {
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("UPDATE prodotto" +
-                " SET nome = ?, marchio = ?, descrizione = ?, caratteristiche = ?," +
-                "prezzo = ?, peso = ?, sconto = ? WHERE id_prodotto = ?")) {
+             PreparedStatement ps = connection.prepareStatement("UPDATE prodotto" +
+                     " SET nome = ?, marchio = ?, descrizione = ?, caratteristiche = ?," +
+                     "prezzo = ?, peso = ?, sconto = ? WHERE id_prodotto = ?")) {
             ps.setString(1, p.getNome());
             ps.setString(2, p.getMarchio());
             ps.setString(3, p.getDescrizione());
@@ -57,65 +55,67 @@ public class ProdottoDAO {
         }
     }
 
-    public List<Prodotto> doRetrieveAll() {
-        String sql = "SELECT * FROM Prodotto";
-        try (
-                Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ResultSet rs = ps.executeQuery();
-            ArrayList<Prodotto> array = new ArrayList<>();
-            while (rs.next()) {
-                Prodotto p = new Prodotto();
-                p.setId(rs.getInt("id_prodotto"));
-                p.setNome(rs.getString("nome"));
-                p.setMarchio(rs.getString("marchio"));
-                p.setDescrizione(rs.getString("descrizione"));
-                p.setCaratteristiche(new JSONObject(rs.getString("caratteristiche")));
-                p.setPrezzo(rs.getDouble("prezzo"));
-                p.setPeso(rs.getDouble("peso"));
-                p.setSconto(rs.getDouble("sconto"));
-                array.add(p);
-            }
-            return array;
+    public boolean doDeleteById(int idProdotto) {
+        int result = 0;
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("DELETE FROM prodotto WHERE id_prodotto = ?");) {
+            stmt.setInt(1, idProdotto);
+            result = stmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return result == 1;
+    }
+
+    public boolean doDeleteAll() {
+        int result = 0;
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement stmt = connection.prepareStatement("DELETE FROM prodotto;")) {
+            result = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return result > 0;
+    }
+
+    public List<Prodotto> doRetrieveAll() {
+        String sql = "SELECT * FROM Prodotto";
+        List<Prodotto> list;
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            list = new ArrayList<>();
+            while (rs.next()) {
+                Prodotto p = ProdottoConstructor.constructProduct(rs);
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 
     public Prodotto doRetrieveById(int id) {
-
         String sql = "SELECT * FROM Prodotto WHERE id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql)) {
-
+             PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
-
-            rs.next();
-
-            Prodotto p = new Prodotto();
-
-            p.setId(rs.getInt("id_prodotto"));
-            p.setNome(rs.getString("nome"));
-            p.setMarchio(rs.getString("marchio"));
-            p.setDescrizione(rs.getString("descrizione"));
-            p.setCaratteristiche(new JSONObject(rs.getString("caratteristiche")));
-            p.setPrezzo(rs.getDouble("prezzo"));
-            p.setPeso(rs.getDouble("peso"));
-            p.setSconto(rs.getDouble("sconto"));
-            return p;
+            if (rs.next()) {
+                Prodotto product = ProdottoConstructor.constructProduct(rs);
+                return product;
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     public void doSave(Prodotto p) {
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
-                "Prodotto(nome, marchio, descrizione, caratteristiche, prezzo, peso, sconto, id_categoria)" +
-                "VALUES(?,?,?,?,?,?,?,?)")) {
+             PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
+                     "Prodotto(nome, marchio, descrizione, caratteristiche, prezzo, peso, sconto, id_categoria)" +
+                     "VALUES(?,?,?,?,?,?,?,?)")) {
             ps.setInt(1, p.getId());
             ps.setString(2, p.getNome());
             ps.setString(3, p.getMarchio());
@@ -131,35 +131,36 @@ public class ProdottoDAO {
         }
     }
 
-    public void doUpdateProdottobyId(int id, Prodotto p) {
+    public boolean doUpdateProdottobyId(Prodotto p) {
+        int result = 0;
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("UPDATE Prodotto SET " +
-                "nome=?, marchio=?, descrizione=?, prezzo=?, peso=?, sconto=?" +
-                " WHERE id_prodotto = ?")) {
+             PreparedStatement ps = connection.prepareStatement("UPDATE Prodotto SET " +
+                     "nome = ?, marchio = ?, descrizione = ?, caratteristiche = ?, prezzo = ?, peso = ?, sconto = ?" +
+                     " WHERE id_prodotto = ?")) {
 
             ps.setString(1, p.getNome());
             ps.setString(2, p.getMarchio());
             ps.setString(3, p.getDescrizione());
-            ps.setDouble(4, p.getPrezzo());
-            ps.setDouble(5, p.getPeso());
-            ps.setDouble(6, p.getSconto());
-            ps.setInt(7, id);
+            ps.setObject(4, p.getCaratteristiche().toString());
+            ps.setDouble(5, p.getPrezzo());
+            ps.setDouble(6, p.getPeso());
+            ps.setDouble(7, p.getSconto());
+            ps.setInt(8, p.getId());
 
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("UPDATE error.");
-            }
+            result = ps.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return result == 1;
     }
 
 
-    //TODO implementare metodo
-    public String doRetrieveCaratteristiche(int id) {
+    //TODO forse da eliminare
+    /*public String doRetrieveCaratteristiche(int id) {
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM prodotto" +
-                " WHERE id_prodotto = ?")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM prodotto" +
+                     " WHERE id_prodotto = ?")) {
             ps.setInt(1, id);
 
             ResultSet set = ps.executeQuery();
@@ -171,5 +172,5 @@ public class ProdottoDAO {
         }
 
         return "";
-    }
+    }*/
 }

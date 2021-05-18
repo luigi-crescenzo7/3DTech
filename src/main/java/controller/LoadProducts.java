@@ -1,7 +1,7 @@
 package controller;
 
-import model.Prodotto;
-import model.ProdottoDAO;
+import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoDAO;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

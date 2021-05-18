@@ -1,5 +1,6 @@
-package model;
+package model.Prodotto;
 
+import model.Categoria.Categoria;
 import org.json.JSONObject;
 
 public class Prodotto {

@@ -1,6 +1,6 @@
 package controller;
 
-import model.Utente;
+import model.Utente.Utente;
 
 import java.sql.Date;
 import java.text.ParseException;

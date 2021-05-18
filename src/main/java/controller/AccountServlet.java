@@ -1,7 +1,8 @@
 package controller;
 
-import model.Utente;
-import model.UtenteDAO;
+
+import model.Utente.Utente;
+import model.Utente.UtenteDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

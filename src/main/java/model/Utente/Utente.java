@@ -1,4 +1,6 @@
-package model;
+package model.Utente;
+
+import model.Ordine.Ordine;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

@@ -1,10 +1,8 @@
 package controller;
 
 
-import model.Ordine;
-import model.OrdineDAO;
-import model.Utente;
-import model.UtenteDAO;
+import model.Ordine.OrdineDAO;
+import model.Utente.Utente;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -1,4 +1,6 @@
-package model;
+package model.Categoria;
+
+import model.Prodotto.Prodotto;
 
 import java.util.List;
 

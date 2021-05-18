@@ -11,8 +11,8 @@
 </head>
 <body>
 <header>
-    <h1>3DTech</h1>
-    <!--<img src="logo1.png" alt="logo">-->
+    <!--<h1>3DTech</h1>-->
+    <img src="./imgs/logoNew.png" alt="logo">
     <div class="test">
         <ul>
             <li>Home</li>

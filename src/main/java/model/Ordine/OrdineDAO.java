@@ -1,4 +1,8 @@
-package model;
+package model.Ordine;
+
+import model.ConPool;
+import model.Prodotto.Prodotto;
+import model.Utente.Utente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
