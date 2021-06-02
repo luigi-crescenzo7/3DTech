@@ -6,6 +6,6 @@
 
     <error-page>
         <exception-type>controller.RequestNotValidException</exception-type>
-        <location>/WEB-INF/results/exceptions/requestnotvalidexception.jsp</location>
+        <location>/WEB-INF/results/exceptions/notfound.jsp</location>
     </error-page>
 </web-app>

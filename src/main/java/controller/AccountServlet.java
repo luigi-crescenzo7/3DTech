@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/xx/*")
@@ -24,22 +23,35 @@ public class AccountServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
+
         RequestValidator.validateRequest(request);
-        RequestDispatcher dispatcher;
+        String contextPath = request.getContextPath();
         UtenteDAO dao = new UtenteDAO();
         HttpSession session = request.getSession();
         List<String> list;
         Utente user = null;
-
+        RequestDispatcher dispatcher;
 
         switch (path) {
+            case "/loginadmin":
+                list = FormExtractor.retrieveParameterValues(request);
+                user = FormExtractor.extractLogin(list);
+                user = dao.doRetrieveEmailPassword(user);
+                if (user.isAdmin()) {
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/results/controlpanel.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/results/usernotallowed.jsp");
+                    dispatcher.forward(request, response);
+                }
+                break;
+            case "/controlpanel":
+                System.out.println("Hello");
+                break;
             case "/registration":
                 list = FormExtractor.retrieveParameterValues(request);
-                try{
-                    user = UserConstructor.extractRegistration(list);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                user = FormExtractor.extractRegistration(list);
                 dao.doSave(user);
                 session.setAttribute("user", user);
                 resource = "/index.jsp";
@@ -47,9 +59,9 @@ public class AccountServlet extends HttpServlet {
                 break;
             case "/login":
                 list = FormExtractor.retrieveParameterValues(request);
-                user = UserConstructor.extractLogin(list);
+                user = FormExtractor.extractLogin(list);
                 user = dao.doRetrieveEmailPassword(user);
-                if (user == null){
+                if (user == null) {
                     System.out.println("Utente non esistente");
                     return;
                 }
@@ -75,8 +87,14 @@ public class AccountServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
+        RequestDispatcher dispatcher;
 
         switch (path) {
+            case "/admin":
+                resource = "/WEB-INF/results/admin.jsp";
+            case "/controlpanel":
+                resource = "/WEB-INF/results/controlpanel.jsp";
+                break;
             case "/login":
                 resource = "/WEB-INF/results/login.jsp";
                 break;
@@ -87,13 +105,14 @@ public class AccountServlet extends HttpServlet {
                 resource = "/WEB-INF/results/account.jsp";
                 break;
             default:
-                response.sendError(404, "error");
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+             /* dispatcher = request.getRequestDispatcher("/WEB-INF/results/exceptions/notfound.jsp");
+                dispatcher.forward(request, response);*/
+                resource = "/WEB-INF/results/exceptions/notfound.jsp";
                 break;
         }
 
-        if (path.equals("/login") || path.equals("/registration") || path.equals("/account")) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher(resource);
-            dispatcher.forward(request, response);
-        }
+        dispatcher = request.getRequestDispatcher(resource);
+        dispatcher.forward(request, response);
     }
 }

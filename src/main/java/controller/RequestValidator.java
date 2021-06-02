@@ -1,6 +1,9 @@
 package controller;
 
+import model.Utente.Utente;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -14,6 +17,10 @@ public class RequestValidator {
         this.list = new ArrayList<>();
     }
 
+    /**
+     * @param name
+     * @param errorMessage
+     */
     private void isRequired(String name, String errorMessage) {
         String parameter = request.getParameter(name);
         if (parameter == null || parameter.isEmpty()) {
@@ -21,6 +28,30 @@ public class RequestValidator {
         }
     }
 
+    /**
+     * @param session   The session object obtained by the request
+     * @param attribute The attribute name of the value stored in the session
+     */
+    public static void authenticate(HttpSession session, String attribute) {
+        if (session == null || session.getAttribute(attribute) == null)
+            throw new RequestNotValidException("Utente non autenticato");
+    }
+
+    /**
+     * @param session
+     * @param attribute
+     */
+    public static void authorization(HttpSession session, String attribute) {
+        authenticate(session, attribute);
+        Utente user = (Utente) session.getAttribute(attribute);
+        if (!user.isAdmin())
+            throw new RequestNotValidException("Utente non autorizzato");
+    }
+
+    /**
+     * @param request
+     * @throws RequestNotValidException
+     */
     public static void validateRequest(HttpServletRequest request) throws RequestNotValidException {
         RequestValidator validator = new RequestValidator(request);
         Enumeration<String> enumeration = request.getParameterNames();
@@ -29,7 +60,7 @@ public class RequestValidator {
             validator.isRequired(parameter, "Error message");
         }
 
-        if(!validator.isRequestValid()){
+        if (!validator.isRequestValid()) {
             request.setAttribute("errors", validator.getList());
             throw new RequestNotValidException();
         }

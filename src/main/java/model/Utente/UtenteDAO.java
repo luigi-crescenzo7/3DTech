@@ -71,7 +71,9 @@ public class UtenteDAO {
             ps.setString(2, user.getPasswordhash());
             ResultSet set = ps.executeQuery();
 
-            if (set.next()) {
+            boolean flag = set.next();
+            System.out.println(user.getPasswordhash().equals("1d3a4ce256395f16e14bfa084c397ab76770ec9e"));
+            if (flag) {
                 Utente utente = new Utente();
                 utente.setEmail(set.getString("email"));
                 utente.setName(set.getString("nome"));

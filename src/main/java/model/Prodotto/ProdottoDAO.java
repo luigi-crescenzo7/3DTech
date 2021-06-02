@@ -142,13 +142,14 @@ public class ProdottoDAO {
              PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
                      "Prodotto(nome, marchio, descrizione, caratteristiche, prezzo, peso, sconto, id_categoria)" +
                      "VALUES(?,?,?,?,?,?,?,?)")) {
-            ps.setInt(1, p.getId());
-            ps.setString(2, p.getNome());
-            ps.setString(3, p.getMarchio());
-            ps.setString(4, p.getDescrizione());
+            ps.setString(1, p.getNome());
+            ps.setString(2, p.getMarchio());
+            ps.setString(3, p.getDescrizione());
+            ps.setString(4, p.getCaratteristiche().toString());
             ps.setDouble(5, p.getPrezzo());
             ps.setDouble(6, p.getPeso());
             ps.setDouble(7, p.getSconto());
+            ps.setInt(8, p.getCategoria().getId());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }

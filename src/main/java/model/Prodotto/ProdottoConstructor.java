@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ProdottoConstructor {
-
-    public static Prodotto constructProduct(ResultSet rs)
-            throws SQLException {
+    /**
+     * @param rs
+     * @return
+     * @throws SQLException
+     */
+    public static Prodotto constructProduct(ResultSet rs) throws SQLException {
         Prodotto p = new Prodotto();
         p.setId(rs.getInt("id_prodotto"));
         p.setNome(rs.getString("nome"));
