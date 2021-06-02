@@ -92,6 +92,7 @@ public class AccountServlet extends HttpServlet {
         switch (path) {
             case "/admin":
                 resource = "/WEB-INF/results/admin.jsp";
+                break;
             case "/controlpanel":
                 resource = "/WEB-INF/results/controlpanel.jsp";
                 break;
