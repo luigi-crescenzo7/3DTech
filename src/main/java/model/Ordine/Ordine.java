@@ -1,5 +1,6 @@
 package model.Ordine;
 
+import model.Cart;
 import model.Prodotto.Prodotto;
 import model.Utente.Utente;
 
@@ -11,8 +12,10 @@ public class Ordine {
     private int quantita;
     private Date dataOrdine;
     private Utente user;
-    private List<Prodotto> prodotti;
+    private Cart carrello;
+    private double total;
 
+    private List<Prodotto> prodotti;
 
     public Utente getUser() {
         return user;
@@ -22,10 +25,26 @@ public class Ordine {
         return prodotti;
     }
 
+    public Cart getCarrello() {
+        return carrello;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public void setCarrello(Cart carrello) {
+        this.carrello = carrello;
+    }
+
     public void setProdotti(List<Prodotto> prodotti) {
         this.prodotti = prodotti;
     }
-    
+
     public void setUser(Utente user) {
         this.user = user;
     }

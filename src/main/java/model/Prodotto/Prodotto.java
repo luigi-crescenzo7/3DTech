@@ -14,6 +14,7 @@ public class Prodotto {
     private double sconto;
     private Categoria categoria;
 
+
     public Categoria getCategoria() {
         return categoria;
     }
@@ -84,5 +85,17 @@ public class Prodotto {
 
     public void setSconto(double sconto) {
         this.sconto = sconto;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prodotto prodotto = (Prodotto) o;
+        return id == prodotto.id;
+    }
+
+    public String toString(){
+        return "{id: "+id+"}";
     }
 }

@@ -81,8 +81,7 @@ li:hover {
 }
 
 .logo {
-    width: 30%;
-    height: 30%;
+    height: 60px;
 }
 
 /*img {
@@ -97,7 +96,6 @@ li:hover {
 #sp-cc{
     display: block;
 }*/
-
 
 /*.sp-cc {
     background-color: #f6f6f6;

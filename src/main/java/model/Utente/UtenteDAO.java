@@ -44,6 +44,7 @@ public class UtenteDAO {
                 Utente user = new Utente();
                 user.setId(rs.getInt("Id"));
                 user.setEmail(rs.getString("Email"));
+                //TODO: levare questo metodo
                 user.setPasswordhash(rs.getString("Passwordhash"));
                 user.setName(rs.getString("Nome"));
                 user.setDataNascita(rs.getDate("data_di_nascita"));

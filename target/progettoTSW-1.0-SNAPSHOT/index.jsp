@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="./css/style.css?trroo" rel="stylesheet">
+    <link href="./css/normalize.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@900&display=swap" rel="stylesheet">
 </head>
@@ -43,6 +44,7 @@
             </c:otherwise>
         </c:choose>
     </ul>
+    <input type="text" name="searchar">
 </div>
 
 <div class="elem">

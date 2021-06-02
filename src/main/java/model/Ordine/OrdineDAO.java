@@ -33,14 +33,21 @@ public class OrdineDAO {
         return ordini;
     }
 
+    public void doSave(Ordine order) {
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("");) {
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Ordine doRetrieveProductsByOrder(Ordine ordine) {
         String query = "SELECT * FROM ordine AS ord INNER JOIN ordine_prodotto AS op ON ord.id_ordine = op.id_ordine " +
                 "INNER JOIN prodotto AS pro ON pro.id_prodotto = op.id_prodotto WHERE ord.id_ordine = ?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query);) {
-
             stmt.setInt(1, ordine.getId());
-
             ResultSet set = stmt.executeQuery();
 
             while (set.next()) {

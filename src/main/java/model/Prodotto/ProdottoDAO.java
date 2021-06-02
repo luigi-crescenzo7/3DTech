@@ -2,6 +2,9 @@ package model.Prodotto;
 
 
 import model.ConPool;
+import model.Condition;
+import model.Operator;
+import model.SqlJoiner;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -32,6 +35,7 @@ public class ProdottoDAO {
         }
         return s;
     }*/
+
 
     public void doUpdateById(Prodotto p) {
         try (Connection connection = ConPool.getConnection();
@@ -65,6 +69,28 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
         return result == 1;
+    }
+
+    public List<Prodotto> doSearch(List<Condition> conditions) {
+        List<Prodotto> products = new ArrayList<>();
+        String query = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat" +
+                " ON pro.id_categoria = cat.id_categoria WHERE " + SqlJoiner.queryJoiner(conditions, "pro");
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);) {
+            for (int i = 0; i < conditions.size(); i++) {
+                Condition condition = conditions.get(i);
+                if (condition.getOperator() == Operator.LIKE) {
+                    statement.setObject(i + 1, "%" + condition.getValue() + "%");
+                } else {
+                    statement.setObject(i + 1, condition.getValue());
+                }
+            }
+
+            ResultSet set = statement.executeQuery();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
     }
 
     public boolean doDeleteAll() {
