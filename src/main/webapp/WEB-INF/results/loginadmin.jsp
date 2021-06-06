@@ -4,7 +4,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="xx/adminpanel" method="post">
+<form action="loginadmin" method="post">
     <fieldset>
         <legend>Login amministratore</legend>
         Email:

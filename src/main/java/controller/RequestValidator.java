@@ -18,12 +18,12 @@ public class RequestValidator {
     }
 
     /**
-     * @param name
-     * @param errorMessage
+     * @param name Il nome del parametro che può essere presente nella request
+     * @param errorMessage Il messaggio di errore da mostrare allo user
      */
     private void isRequired(String name, String errorMessage) {
         String parameter = request.getParameter(name);
-        if (parameter == null || parameter.isEmpty()) {
+        if (parameter == null || parameter.isBlank()) {
             list.add(errorMessage);
         }
     }

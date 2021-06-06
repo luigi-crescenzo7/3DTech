@@ -5,7 +5,19 @@
          version="4.0">
 
     <error-page>
-        <exception-type>controller.RequestNotValidException</exception-type>
+        <error-code>404</error-code>
         <location>/WEB-INF/results/exceptions/notfound.jsp</location>
     </error-page>
+
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/results/exceptions/internalerror.jsp</location>
+    </error-page>
+
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/results/exceptions/usernotallowed.jsp</location>
+    </error-page>
+
+
 </web-app>

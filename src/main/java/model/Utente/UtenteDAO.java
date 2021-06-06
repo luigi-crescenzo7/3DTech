@@ -12,8 +12,9 @@ public class UtenteDAO {
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps =
                      connection.prepareStatement("UPDATE utente SET email = ?, passwordHash = ?," +
-                                                     " nome = ?, cognome = ?, " +
-                                                     "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?, admin = ?")) {
+                             " nome = ?, cognome = ?, " +
+                             "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?" +
+                             "WHERE id_utente = ?")) {
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());
@@ -24,7 +25,7 @@ public class UtenteDAO {
             ps.setString(7, user.getZIPCode());
             ps.setString(8, user.getCity());
             ps.setString(9, user.getStreet());
-            ps.setBoolean(10, user.isAdmin());
+            ps.setInt(10, user.getId());
 
             if (ps.executeUpdate() != 1) throw new RuntimeException();
 
@@ -35,16 +36,16 @@ public class UtenteDAO {
 
     public List<Utente> doRetrieveAll() {
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("select * from utente")) {
+             PreparedStatement ps = connection.prepareStatement("select * from utente")) {
             List<Utente> list = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 Utente user = new Utente();
-                user.setId(rs.getInt("Id"));
+                user.setId(rs.getInt("id_utente"));
                 user.setEmail(rs.getString("Email"));
-                //TODO: levare questo metodo
+                //TODO: problema con setPassword
                 user.setPasswordhash(rs.getString("Passwordhash"));
                 user.setName(rs.getString("Nome"));
                 user.setDataNascita(rs.getDate("data_di_nascita"));
@@ -64,29 +65,15 @@ public class UtenteDAO {
 
     public Utente doRetrieveEmailPassword(Utente user) {
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("SELECT * FROM utente" +
-                " WHERE email = ? AND passwordHash = ?")) {
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM utente" +
+                     " WHERE email = ? AND passwordHash = ?")) {
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());
             ResultSet set = ps.executeQuery();
 
-            boolean flag = set.next();
-            System.out.println(user.getPasswordhash().equals("1d3a4ce256395f16e14bfa084c397ab76770ec9e"));
-            if (flag) {
-                Utente utente = new Utente();
-                utente.setEmail(set.getString("email"));
-                utente.setName(set.getString("nome"));
-                utente.setSurname(set.getString("cognome"));
-                utente.setDataNascita(set.getDate("data_di_nascita"));
-                utente.setPhoneNumber(set.getString("telefono"));
-                utente.setId(set.getInt("id"));
-                utente.setCity(set.getString("citta"));
-                utente.setZIPCode(set.getString("CAP"));
-                utente.setStreet(set.getString("via"));
-                utente.setAdmin(set.getBoolean("admin"));
-                return utente;
-            }
+            if (set.next())
+                return UtenteConstructor.constructUser(set);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -97,10 +84,10 @@ public class UtenteDAO {
     public void doSave(Utente user) {
         if (user == null) return;
         try (Connection connection = ConPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement("insert into utente " +
-                "(email, passwordhash, nome, cognome, data_di_nascita," +
-                " telefono, cap, citta, via, admin)" +
-                "values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement ps = connection.prepareStatement("insert into utente " +
+                     "(email, passwordhash, nome, cognome, data_di_nascita," +
+                     " telefono, cap, citta, via, admin)" +
+                     "values (?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPasswordhash());

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
+
 @WebServlet(urlPatterns = "/xx/*")
 public class AccountServlet extends HttpServlet {
 
@@ -30,24 +31,24 @@ public class AccountServlet extends HttpServlet {
         HttpSession session = request.getSession();
         List<String> list;
         Utente user = null;
-        RequestDispatcher dispatcher;
+        boolean flag = true;
 
         switch (path) {
             case "/loginadmin":
                 list = FormExtractor.retrieveParameterValues(request);
                 user = FormExtractor.extractLogin(list);
                 user = dao.doRetrieveEmailPassword(user);
+
+                if (user == null)
+                    resource = "";
+
                 if (user.isAdmin()) {
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/results/controlpanel.jsp");
-                    dispatcher.forward(request, response);
+                    resource = "/controlpanel/panel";
+                    session.setAttribute("administrator", user);
                 } else {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    dispatcher = request.getRequestDispatcher("/WEB-INF/results/usernotallowed.jsp");
-                    dispatcher.forward(request, response);
+                    flag = false;
                 }
-                break;
-            case "/controlpanel":
-                System.out.println("Hello");
                 break;
             case "/registration":
                 list = FormExtractor.retrieveParameterValues(request);
@@ -55,7 +56,6 @@ public class AccountServlet extends HttpServlet {
                 dao.doSave(user);
                 session.setAttribute("user", user);
                 resource = "/index.jsp";
-                response.sendRedirect(request.getContextPath() + resource);
                 break;
             case "/login":
                 list = FormExtractor.retrieveParameterValues(request);
@@ -67,16 +67,19 @@ public class AccountServlet extends HttpServlet {
                 }
                 session.setAttribute("user", user);
                 resource = "/index.jsp";
-                response.sendRedirect(request.getContextPath() + resource);
                 break;
-            case "logout":
+            case "/logout":
                 session.removeAttribute("user");
                 resource = "/index.jsp";
-                response.sendRedirect(request.getContextPath() + resource);
                 break;
             default:
-                response.sendError(404, "Not found");
+                flag = false;
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
+        }
+
+        if (flag) {
+            response.sendRedirect(contextPath + resource);
         }
     }
 
@@ -88,6 +91,7 @@ public class AccountServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
         RequestDispatcher dispatcher;
+        boolean flag = true;
 
         switch (path) {
             case "/admin":
@@ -106,14 +110,14 @@ public class AccountServlet extends HttpServlet {
                 resource = "/WEB-INF/results/account.jsp";
                 break;
             default:
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-             /* dispatcher = request.getRequestDispatcher("/WEB-INF/results/exceptions/notfound.jsp");
-                dispatcher.forward(request, response);*/
-                resource = "/WEB-INF/results/exceptions/notfound.jsp";
+                flag = false;
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
         }
 
-        dispatcher = request.getRequestDispatcher(resource);
-        dispatcher.forward(request, response);
+        if (flag) {
+            dispatcher = request.getRequestDispatcher(resource);
+            dispatcher.forward(request, response);
+        }
     }
 }

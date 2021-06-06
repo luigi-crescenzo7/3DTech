@@ -66,18 +66,20 @@ public class ProductServlet extends HttpServlet {
         switch (path) {
             case "/select":
                 Prodotto p = dao.doRetrieveById(id);
-                System.out.println(products);
-                System.out.println(p);
+                System.out.println("Lista prodotti" + products);
                 if (!products.contains(p)) {
                     products.add(p);
                     session.setAttribute("products", products);
                 }
+                request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
+                break;
+            case "/create":
                 break;
             default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Risorsa non trovata");
-                return;
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                break;
         }
 
-        request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
+        //request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
     }
 }

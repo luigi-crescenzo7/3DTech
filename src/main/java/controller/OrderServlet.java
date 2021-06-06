@@ -42,9 +42,4 @@ public class OrderServlet extends HttpServlet {
                 break;
         }
     }
-
-    @Override
-    public void destroy() {
-        //ConPool.destroyConnection();
-    }
 }

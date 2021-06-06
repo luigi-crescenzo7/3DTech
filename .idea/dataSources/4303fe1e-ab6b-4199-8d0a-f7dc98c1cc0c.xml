@@ -1046,7 +1046,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <foreign-key id="304" parent="288" name="ordine_ibfk_1">
       <ColNames>id_utente</ColNames>
       <RefTableName>utente</RefTableName>
-      <RefColNames>id</RefColNames>
+      <RefColNames>id_utente</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
@@ -1177,7 +1177,7 @@ id_ordine</ColNames>
       <Position>1</Position>
       <DataType>json|0s</DataType>
     </column>
-    <column id="329" parent="292" name="id">
+    <column id="329" parent="292" name="id_utente">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
@@ -1246,7 +1246,7 @@ id_ordine</ColNames>
     </index>
     <key id="342" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
+      <ColNames>id_utente</ColNames>
       <Primary>1</Primary>
     </key>
     <key id="343" parent="292" name="utente_email_uindex">
