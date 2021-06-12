@@ -1,10 +1,7 @@
 package model.Prodotto;
 
 
-import model.ConPool;
-import model.Condition;
-import model.Operator;
-import model.SqlJoiner;
+import model.*;
 import org.json.JSONObject;
 
 import java.sql.*;
@@ -121,7 +118,7 @@ public class ProdottoDAO {
         return list;
     }
 
-    public Prodotto doRetrieveById(int id) {
+    public CartItem doRetrieveById(int id) {
         String sql = "SELECT * FROM Prodotto WHERE id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -129,7 +126,8 @@ public class ProdottoDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Prodotto product = ProdottoConstructor.constructProduct(rs);
-                return product;
+                CartItem item = new CartItem(product, 1);
+                return item;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

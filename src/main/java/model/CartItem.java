@@ -2,6 +2,8 @@ package model;
 
 import model.Prodotto.Prodotto;
 
+import java.util.Objects;
+
 public class CartItem {
     private Prodotto prodotto;
     private int quantita;
@@ -27,7 +29,16 @@ public class CartItem {
         this.quantita = quantita;
     }
 
-    public double total(){
+    public double total() {
         return (quantita * prodotto.getPrezzo());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartItem cartItem = (CartItem) o;
+        return prodotto.equals(cartItem.prodotto);
+    }
+
 }

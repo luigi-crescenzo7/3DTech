@@ -35,8 +35,8 @@ public class UpdateProductServlet extends HttpServlet {
         }
 
         ProdottoDAO dao = new ProdottoDAO();
-        Prodotto p = dao.doRetrieveById(id);
-        request.setAttribute("product", p);
+        //Prodotto p = dao.doRetrieveById(id);
+        //request.setAttribute("product", p);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/updateProduct.jsp");
         dispatcher.forward(request, response);
     }

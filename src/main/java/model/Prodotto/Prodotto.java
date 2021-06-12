@@ -96,6 +96,6 @@ public class Prodotto {
     }
 
     public String toString(){
-        return "{id: "+id+"}";
+        return "Prodotto{id: "+id+"}";
     }
 }

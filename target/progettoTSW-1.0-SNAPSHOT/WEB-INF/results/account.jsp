@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>JSP - Hello World</title>
+    <c:set var="contextPath" scope="page" value="${pageContext.request.contextPath}"/>
 </head>
 <body>
 <h1>
@@ -12,25 +13,31 @@
 </h1>
 <ul>
     <c:forEach items="${applicationScope.listProducts}" var="product">
-        <form action="${pageContext.request.contextPath}/ll/select" method="post">
+        <form action="${contextPath}/ll/select" method="post">
             <li>${product.nome}</li>
+            <label for="quantity">Quantità:</label>
+            <input id="quantity" type="number" name="fieldQuantity">
             <input type="hidden" name="productId" value="${product.id}">
             <input type="submit" value="Seleziona">
         </form>
     </c:forEach>
 </ul>
-
+<form action="${contextPath}/ll/checkout" method="post">
+    <input type="submit" value="Procedi con l'ordine">
+</form>
 <c:if test="${sessionScope.products != null}">
     <b>Prodotti nel carrello:</b><br>
     <ul>
-        <c:forEach items="${products}" var="prodotto">
+        <c:forEach items="${sessionScope.products}" var="cartitem">
+            <c:set var="prodotto" scope="page" value="${cartitem.prodotto}"/>
             <li> ${prodotto.nome} - ${prodotto.id}</li>
+            <label for="quantity">Quantità: ${cartitem.quantita}</label>
         </c:forEach>
     </ul>
 </c:if>
 <fieldset>
     <legend>
-        <form action="${pageContext.request.contextPath}/tt/orders" method="post">
+        <form action="${contextPath}/tt/orders" method="post">
             <input type="submit" value="Visualizza ordini">
         </form>
     </legend>
