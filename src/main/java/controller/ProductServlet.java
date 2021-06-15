@@ -12,17 +12,16 @@ import model.Utente.Utente;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@MultipartConfig
 @WebServlet(urlPatterns = "/ll/*")
 public class ProductServlet extends HttpServlet {
 
@@ -84,6 +83,7 @@ public class ProductServlet extends HttpServlet {
                 } else { // Se invece è presente ed è definita la quantità, allora vecchiaQuantità + nuovaQuantità
                     int pos = products.indexOf(item);
                     item = products.get(pos);
+
                     if (quantity != null && !quantity.isBlank())
                         item.setQuantita(item.getQuantita() + Integer.parseInt(quantity));
                     else
@@ -92,11 +92,14 @@ public class ProductServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                 break;
             case "/create":
-                String category = "";
-                System.out.println(request.getParameterMap());
+                Part part = request.getPart("");
+                String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                List<String> list = FormExtractor.retrieveParameterValues(request);
+                String category = request.getParameter("productCategory");
                 List<String> parameters = FormExtractor.retrieveParameterValues(request);
+                System.out.println(category);
                 switch (category) {
-                    case "/materiale_plastico":
+                    case "Materiale plastico":
                         Prodotto p = new Prodotto();
                         p.setNome("");
                         p.setMarchio("");
@@ -106,11 +109,12 @@ public class ProductServlet extends HttpServlet {
                         p.setPeso(0.0);
                         p.setSconto(0.0);
                         p.setCategoria(new Categoria());
-                        dao.doSave(p);
+                        //dao.doSave(p);
                         break;
-                    case "/utensili":
+                    case "":
                         break;
-                    case "/stampanti_3d":
+                    case "Stampanti 3D":
+                        System.out.println("Case: Stampanti 3D");
                         break;
                     default:
                         System.out.println("Default case");

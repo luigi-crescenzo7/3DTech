@@ -43,7 +43,7 @@ public class AccountServlet extends HttpServlet {
                     resource = "";
 
                 if (user.isAdmin()) {
-                    resource = "/controlpanel/panel";
+                    resource = "/controlpanel/";
                     session.setAttribute("administrator", user);
                 } else {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -77,8 +77,8 @@ public class AccountServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;
         }
-
         if (flag) {
+            System.out.println(resource);
             response.sendRedirect(contextPath + resource);
         }
     }

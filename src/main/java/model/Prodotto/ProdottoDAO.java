@@ -2,7 +2,6 @@ package model.Prodotto;
 
 
 import model.*;
-import org.json.JSONObject;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -57,9 +56,9 @@ public class ProdottoDAO {
     }
 
     public boolean doDeleteById(int idProdotto) {
-        int result = 0;
+        int result;
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("DELETE FROM prodotto WHERE id_prodotto = ?");) {
+             PreparedStatement stmt = connection.prepareStatement("DELETE FROM prodotto WHERE id_prodotto = ?")) {
             stmt.setInt(1, idProdotto);
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -68,12 +67,13 @@ public class ProdottoDAO {
         return result == 1;
     }
 
+    /*
     public List<Prodotto> doSearch(List<Condition> conditions) {
         List<Prodotto> products = new ArrayList<>();
         String query = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat" +
                 " ON pro.id_categoria = cat.id_categoria WHERE " + SqlJoiner.queryJoiner(conditions, "pro");
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query);) {
+             PreparedStatement statement = connection.prepareStatement(query)) {
             for (int i = 0; i < conditions.size(); i++) {
                 Condition condition = conditions.get(i);
                 if (condition.getOperator() == Operator.LIKE) {
@@ -88,10 +88,10 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
         return products;
-    }
+    }*/
 
     public boolean doDeleteAll() {
-        int result = 0;
+        int result;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement("DELETE FROM prodotto;")) {
             result = stmt.executeUpdate();
@@ -102,7 +102,7 @@ public class ProdottoDAO {
     }
 
     public List<Prodotto> doRetrieveAll() {
-        String sql = "SELECT * FROM Prodotto";
+        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat ON pro.id_categoria = cat.id_categoria";
         List<Prodotto> list;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -126,8 +126,7 @@ public class ProdottoDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Prodotto product = ProdottoConstructor.constructProduct(rs);
-                CartItem item = new CartItem(product, 1);
-                return item;
+                return new CartItem(product, 1);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -157,7 +156,7 @@ public class ProdottoDAO {
     }
 
     public boolean doUpdateProdottobyId(Prodotto p) {
-        int result = 0;
+        int result;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement("UPDATE Prodotto SET " +
                      "nome = ?, marchio = ?, descrizione = ?, caratteristiche = ?, prezzo = ?, peso = ?, sconto = ?" +

@@ -1,18 +1,79 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Title</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath + "js/createProduct.js"}" defer></script>
+    <script src="${pageContext.request.contextPath}js/createProduct.js" defer></script>
+    <style>
+        .rtable {
+            display: inline-block;
+            vertical-align: top;
+            max-width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .rtable {
+            -webkit-overflow-scrolling: touch;
+            background-size: 10px 100%, 10px 100%;
+            /*background: radial-gradient(left, ellipse, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, 0) 75%) 0 center,
+            radial-gradient(right, ellipse, rgba(0, 0, 0, .2) 0%, rgba(0, 0, 0, 0) 75%) 100% center;
+*/
+        }
+
+        .rtable td:first-child {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+            background-repeat: no-repeat;
+            background-size: 20px 100%;
+        }
+
+        .rtable td:last-child {
+            background-image: linear-gradient(to left, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+            background-repeat: no-repeat;
+            background-position: 100% 0;
+            background-size: 20px 100%;
+        }
+
+        .rtable th {
+            font-size: 11px;
+            text-align: left;
+            text-transform: uppercase;
+            background: #f2f0e6;
+        }
+
+        .rtable th,
+        .rtable td {
+            padding: 6px 12px;
+            border: 1px solid #d9d7ce;
+        }
+
+
+        body {
+            margin: 0;
+            padding: 25px;
+            color: #494b4d;
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        table {
+            margin-bottom: 30px;
+        }
+
+        a {
+            color: #ff6680;
+        }
+
+    </style>
 </head>
 <body>
 
 <fieldset>
     <legend>Pannello di controllo</legend>
-    <!--<form id="test" action="ShowProducts" method="post">
-        <button form="test">Visualizza prodotti</button>
-    </form>-->
-    <form action="create" method="post">
+    <form id="formCreate" action="create" method="post" enctype="multipart/form-data">
         <label for="fieldProductName">Nome prodotto:</label>
         <input id="fieldProductName" type="text" name="productName"><br><br>
 
@@ -35,11 +96,45 @@
         <input id="fieldProductDiscount" type="number" name="productDiscount"><br><br>
 
         <label for="fieldProductCategory">Categoria:</label>
-        <input id="fieldProductCategory" type="text" name="productCategory"><br><br>
+        <select id="fieldProductCategory" name="productCategory" form="formCreate">
+            <option>
+                Stampanti 3D
+            </option>
+            <option>
+                Materiale plastico
+            </option>
+        </select>
+        <label for="fieldImage">File: </label>
+        <input type="file" name="productImage" id="fieldImage">
 
         <input type="submit" value="Crea prodotto">
     </form>
 </fieldset>
+
+<table class="rtable">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>nome</th>
+        <th>marchio</th>
+        <th>prezzo</th>
+        <th>peso</th>
+        <th>categoria</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach items="${applicationScope.listProducts}" var="product">
+        <tr>
+            <td>${product.id}</td>
+            <td>${product.nome}</td>
+            <td>${product.marchio}</td>
+            <td>${product.prezzo}</td>
+            <td>${product.peso}</td>
+            <td>${product.categoria.nome}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 <br>
 <br>
 <br>

@@ -1,5 +1,6 @@
 package controller;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+
 
 @WebServlet(urlPatterns = "/controlpanel/*")
 public class AdminServlet extends HttpServlet {
@@ -17,10 +18,10 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "/";
+        String resource;
 
         switch (path) {
-            case "/panel":
+            case "/":
                 resource = "/WEB-INF/results/controlpanel.jsp";
                 break;
             default:
@@ -42,8 +43,6 @@ public class AdminServlet extends HttpServlet {
 
         switch (path) {
             case "/create":
-                List<String> list = FormExtractor.retrieveParameterValues(request);
-                System.out.println("Lista parametri:" + list);
                 break;
             default:
                 break;
