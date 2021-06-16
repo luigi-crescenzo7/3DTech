@@ -44,4 +44,38 @@ public class CategoriaDAO {
         }
         return categoria;
     }
+
+    public List<Integer> doRetrieveAllCategoriesId() {
+        List<Integer> integers = new ArrayList<>();
+
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT id_categoria FROM categoria")) {
+
+            ResultSet set = statement.executeQuery();
+
+            while (set.next())
+                integers.add(set.getInt("id_categoria"));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return integers;
+    }
+
+    public int doRetrieveIdCategory(String category) {
+        int id = 0;
+
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT id_categoria FROM categoria WHERE nome = ?")) {
+            statement.setString(1, category);
+
+            ResultSet set = statement.executeQuery();
+
+            if (set.next())
+                id = set.getInt("id_categoria");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return id;
+    }
 }
+

@@ -32,27 +32,29 @@ public class ProdottoDAO {
         return s;
     }*/
 
-
-    public void doUpdateById(Prodotto p) {
+    public boolean doUpdateById(Prodotto p) {
+        int result;
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE prodotto" +
-                     " SET nome = ?, marchio = ?, descrizione = ?, caratteristiche = ?," +
-                     "prezzo = ?, peso = ?, sconto = ? WHERE id_prodotto = ?")) {
+             PreparedStatement ps = connection.prepareStatement("UPDATE Prodotto SET " +
+                     "nome = ?, marchio = ?, descrizione = ?, image_name = ?, caratteristiche = ?, prezzo = ?, peso = ?, sconto = ?" +
+                     " WHERE id_prodotto = ?")) {
+
             ps.setString(1, p.getNome());
             ps.setString(2, p.getMarchio());
             ps.setString(3, p.getDescrizione());
-            ps.setString(4, p.getCaratteristiche().toString());
-            ps.setDouble(5, p.getPrezzo());
-            ps.setDouble(6, p.getPeso());
-            ps.setDouble(7, p.getSconto());
-            ps.setInt(8, p.getId());
+            ps.setString(4, p.getUrlImage());
+            ps.setObject(5, p.getCaratteristiche().toString());
+            ps.setDouble(6, p.getPrezzo());
+            ps.setDouble(7, p.getPeso());
+            ps.setDouble(8, p.getSconto());
+            ps.setInt(9, p.getId());
 
-            if (ps.executeUpdate() != 1)
-                throw new RuntimeException();
+            result = ps.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return result == 1;
     }
 
     public boolean doDeleteById(int idProdotto) {
@@ -137,49 +139,30 @@ public class ProdottoDAO {
     public void doSave(Prodotto p) {
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement("INSERT INTO " +
-                     "Prodotto(nome, marchio, descrizione, caratteristiche, prezzo, peso, sconto, id_categoria)" +
-                     "VALUES(?,?,?,?,?,?,?,?)")) {
+                     "Prodotto(nome, marchio, descrizione, image_name, caratteristiche, prezzo, peso, sconto, id_categoria)" +
+                     "VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, p.getNome());
             ps.setString(2, p.getMarchio());
             ps.setString(3, p.getDescrizione());
-            ps.setString(4, p.getCaratteristiche().toString());
-            ps.setDouble(5, p.getPrezzo());
-            ps.setDouble(6, p.getPeso());
-            ps.setDouble(7, p.getSconto());
-            ps.setInt(8, p.getCategoria().getId());
+            ps.setString(4, p.getUrlImage());
+            ps.setString(5, p.getCaratteristiche().toString());
+            ps.setDouble(6, p.getPrezzo());
+            ps.setDouble(7, p.getPeso());
+            ps.setDouble(8, p.getSconto());
+            ps.setInt(9, p.getCategoria().getId());
             if (ps.executeUpdate() != 1) {
                 throw new RuntimeException("INSERT error.");
             }
+
+            ResultSet set = ps.getGeneratedKeys();
+            if (set.next())
+                p.setId(set.getInt(1));
+            //Todo eliminare stampa
+            System.out.println(p.getId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
-    public boolean doUpdateProdottobyId(Prodotto p) {
-        int result;
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE Prodotto SET " +
-                     "nome = ?, marchio = ?, descrizione = ?, caratteristiche = ?, prezzo = ?, peso = ?, sconto = ?" +
-                     " WHERE id_prodotto = ?")) {
-
-            ps.setString(1, p.getNome());
-            ps.setString(2, p.getMarchio());
-            ps.setString(3, p.getDescrizione());
-            ps.setObject(4, p.getCaratteristiche().toString());
-            ps.setDouble(5, p.getPrezzo());
-            ps.setDouble(6, p.getPeso());
-            ps.setDouble(7, p.getSconto());
-            ps.setInt(8, p.getId());
-
-            result = ps.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return result == 1;
-    }
-
-
     //TODO forse da eliminare
     /*public String doRetrieveCaratteristiche(int id) {
         try (Connection connection = ConPool.getConnection();

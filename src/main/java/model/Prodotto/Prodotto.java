@@ -8,6 +8,7 @@ public class Prodotto {
     private String nome;
     private String descrizione;
     private String marchio;
+    private String urlImage;
     private JSONObject caratteristiche;
     private double prezzo;
     private double peso;
@@ -75,6 +76,14 @@ public class Prodotto {
         return peso;
     }
 
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
     public void setPeso(double peso) {
         this.peso = peso;
     }
@@ -95,7 +104,7 @@ public class Prodotto {
         return id == prodotto.id;
     }
 
-    public String toString(){
-        return "Prodotto{id: "+id+"}";
+    public String toString() {
+        return "Prodotto{id: " + id + "}";
     }
 }

@@ -45,7 +45,7 @@ public class FileServlet extends HttpServlet {
     public void init() throws ServletException {
 
         //TODO cambiare stringa "uploads"
-        this.basePath = System.getenv("CATALINA_HOME") + File.separator + "uploads";
+        this.basePath = System.getenv("CATALINA_HOME") + File.separator + "special_folder" + File.separator;
 
         // Validate base path.
         if (this.basePath == null) {

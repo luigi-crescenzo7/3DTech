@@ -2,9 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <%@include file="common.jsp" %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}js/createProduct.js" defer></script>
+    <script src="${contextPath}/js/createProduct.js" defer></script>
     <style>
         .rtable {
             display: inline-block;
@@ -73,7 +73,9 @@
 
 <fieldset>
     <legend>Pannello di controllo</legend>
-    <form id="formCreate" action="create" method="post" enctype="multipart/form-data">
+    <form id="formCreate" action="${contextPath}/ll/create" method="post"
+          enctype="multipart/form-data">
+
         <label for="fieldProductName">Nome prodotto:</label>
         <input id="fieldProductName" type="text" name="productName"><br><br>
 
@@ -81,7 +83,7 @@
         <input id="fieldProductMark" type="text" name="productMark"><br><br>
 
         <label for="fieldProductDescription">Descrizione:</label>
-        <textarea id="fieldProductDescription"></textarea><br><br>
+        <textarea id="fieldProductDescription" name="productDescription"></textarea><br><br>
 
         <label for="fieldProductCaratheristics">Caratteristiche:</label>
         <input id="fieldProductCaratheristics" type="text" name="productCaratheristics"><br><br>
@@ -110,7 +112,7 @@
         <input type="submit" value="Crea prodotto">
     </form>
 </fieldset>
-
+<img src="${contextPath}/covers/logo.png" alt="aa">
 <table class="rtable">
     <thead>
     <tr>

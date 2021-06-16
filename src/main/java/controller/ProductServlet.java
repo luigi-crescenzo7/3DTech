@@ -3,6 +3,7 @@ package controller;
 import model.Cart;
 import model.CartItem;
 import model.Categoria.Categoria;
+import model.Categoria.CategoriaDAO;
 import model.Ordine.Ordine;
 import model.Ordine.OrdineDAO;
 import model.Prodotto.Prodotto;
@@ -15,15 +16,18 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @MultipartConfig
 @WebServlet(urlPatterns = "/ll/*")
 public class ProductServlet extends HttpServlet {
+    private static String uploadRoot = System.getenv("CATALINA_HOME") + File.separator + "special_folder" + File.separator;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -92,26 +96,49 @@ public class ProductServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                 break;
             case "/create":
-                Part part = request.getPart("");
+                Part part = request.getPart("productImage");
                 String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                 List<String> list = FormExtractor.retrieveParameterValues(request);
                 String category = request.getParameter("productCategory");
-                List<String> parameters = FormExtractor.retrieveParameterValues(request);
-                System.out.println(category);
+                //List<String> parameters = FormExtractor.retrieveParameterValues(request);
+                Map<String, String[]> map = request.getParameterMap();
+                Set<Map.Entry<String, String[]>> set = map.entrySet();
+                for (Map.Entry<String, String[]> entry : set) {
+                    System.out.println(entry.getKey() + "   " + Arrays.toString(entry.getValue()));
+                }
+                System.out.println("Categoria: " + category);
+
+                try (InputStream fileStream = part.getInputStream()) {
+                    File file = new File(uploadRoot + fileName);
+                    if (!file.exists())
+                        Files.copy(fileStream, file.toPath());
+                } catch (IOException e) {
+                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    return;
+                }
                 switch (category) {
                     case "Materiale plastico":
+                        System.out.println("file name: " + fileName);
                         Prodotto p = new Prodotto();
-                        p.setNome("");
-                        p.setMarchio("");
-                        p.setDescrizione("");
-                        p.setCaratteristiche(ProductBuilder.createMaterialePlastico(parameters));
-                        p.setPrezzo(0.0);
-                        p.setPeso(0.0);
-                        p.setSconto(0.0);
-                        p.setCategoria(new Categoria());
-                        //dao.doSave(p);
+                        p.setNome(map.get("productName")[0]);
+                        p.setMarchio(map.get("productMark")[0]);
+                        p.setDescrizione(map.get("productDescription")[0]);
+                        p.setUrlImage(fileName);
+                        //p.setCaratteristiche(ProductBuilder.createMaterialePlastico(parameters));
+                        p.setCaratteristiche(new JSONObject("{\"ciao\":1}"));
+                        p.setPrezzo(1);
+                        p.setPeso(2);
+                        p.setSconto(3);
+                        Categoria cat = new Categoria();
+                        cat.setId(new CategoriaDAO().doRetrieveIdCategory(category));
+                        System.out.println(cat.getId());
+                        cat.setNome(category);
+                        p.setCategoria(cat);
+                        dao.doSave(p);
+                        request.setAttribute("createdProduct", p);
+                        request.getRequestDispatcher("/WEB-INF/results/productinfo.jsp").forward(request, response);
                         break;
-                    case "":
+                    case "thrgh":
                         break;
                     case "Stampanti 3D":
                         System.out.println("Case: Stampanti 3D");

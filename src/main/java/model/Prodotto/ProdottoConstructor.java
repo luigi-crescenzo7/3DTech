@@ -18,6 +18,7 @@ public class ProdottoConstructor {
         p.setNome(rs.getString("pro.nome"));
         p.setMarchio(rs.getString("marchio"));
         p.setDescrizione(rs.getString("descrizione"));
+        p.setUrlImage(rs.getString("image_name"));
         p.setCaratteristiche(new JSONObject(rs.getString("caratteristiche")));
         p.setPrezzo(rs.getDouble("prezzo"));
         p.setPeso(rs.getDouble("peso"));
