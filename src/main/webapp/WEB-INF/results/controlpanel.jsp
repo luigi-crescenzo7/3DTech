@@ -10,7 +10,7 @@
 <body>
 <nav>
     <div class="barra_di_nav">
-        <a href="#"><img class="three_hor_lines" src="${contextPath}/imgs/three_horizontal_lines_white.png" alt="menu"></a>
+        <a id="img-menu" href="#"><img class="three_hor_lines" src="${contextPath}/imgs/three_horizontal_lines_white.png" alt="menu"></a>
         <div class="search">
             <form>
                 <input type="search" name="search" placeholder="Cerca...">

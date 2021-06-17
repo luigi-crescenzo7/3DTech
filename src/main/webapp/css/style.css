@@ -333,7 +333,7 @@ ul.hamburger_menu {
     background-color: #DBDCDB;
     display: none;
     width: 20%;
-    height: 100%;
+    height: 670px;
     margin: 0;
     list-style: none;
     padding: 0;
@@ -341,7 +341,7 @@ ul.hamburger_menu {
 }
 
 ul.hamburger_menu a {
-    display: block;
+    display: inline-block;
     background-color: #DBDCDB;
     color: black;
     text-decoration: none;
@@ -358,6 +358,10 @@ ul.hamburger_menu a {
 
 ul.hamburger_menu a:hover {
     background-color: #D1D2D1;
+}
+
+.hamburger_menu_visible li {
+    display: flex;
 }
 
 ul.hamburger_menu_visible {
