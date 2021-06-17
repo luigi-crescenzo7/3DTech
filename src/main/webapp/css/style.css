@@ -1,112 +1,569 @@
-/**{
-   width: 100%;
-   margin: 0;
-   padding: 0;
-}*/
+/* todo: eliminare selettore header e includere gli elementi in un div*/
+header {
+    float: right;
+    display: flex;
+}
+
+.accesso {
+    float: right;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.accesso a {
+    color: black;
+    text-decoration: none;
+    padding: 5px;
+}
+
+.accesso a:link {
+    color: black;
+}
+
+.accesso a:visited {
+    color: black;
+}
+
+.accesso a:hover {
+    color: white;
+    background-color: #007763;
+    margin: 0;
+}
+
+.barra_di_nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #007763;
+    width: 100%;
+}
+
+nav a {
+    float: left;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 15px 15px;
+    display: block;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    background-color: #009687;
+}
+
+.search input {
+    outline: none;
+    width: 25%;
+    margin-right: 5%;
+    border: none;
+    float: right;
+}
+
+.prima {
+    border: solid;
+    color: black;
+    float: left;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    width: 49%;
+    height: 40%;
+}
+
+.seconda {
+    border: solid;
+    color: black;
+    float: right;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 1%;
+    width: 49%;
+    height: 40%;
+}
+
+.terza {
+    border: solid;
+    color: black;
+    float: left;
+    margin-bottom: 2%;
+    width: 49%;
+    height: 40%;
+}
+
+.quarta {
+    border: solid;
+    color: black;
+    float: right;
+    margin-bottom: 2%;
+    margin-left: 1%;
+    width: 49%;
+    height: 40%;
+}
+
+footer {
+    border: solid;
+    color: black;
+    margin-bottom: 2%;
+    width: 100%;
+    height: 10%;
+    float: right;
+}
 
 body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-p {
     margin: 0;
 }
 
-a {
-    text-decoration: none;
-    color: inherit;
-    font-family: "Roboto Slab", serif;
-    font-size: 80%
-}
-
-
-/* #001f3f #001f3f  #0e0e60*/
-header {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: whitesmoke;
-    font-family: "Roboto Slab", serif;
-}
-
-h1 {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    font-size: 50px;
-}
-
-ul {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    text-align: right;
-}
-
-div.xxt {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    /*margin-top: 50px;*/
-    background-color: #00acb8;
-}
-
-ul#categories > li {
+.login {
     box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 32px;
+    margin: 40px auto 24px;
+    width: 284px;
+    min-width: 0;
+    height: 200px;
+}
+
+.registrazione {
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 32px;
+    margin: 40px auto 24px;
+    width: 284px;
+    min-width: 0;
+    height: 620px;
+}
+
+.btn-submit {
+    color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    min-height: 24px;
+    border: none;
+    background-image: linear-gradient(#009687 0%, #007763 100%);
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+}
+
+.input {
+    border-style: solid;
+    border-radius: 2px;
+    width: 100%;
+    outline: none;
+}
+
+.input:hover {
+    border-color: #007763;
+}
+
+.accedi:hover {
+    background-image: linear-gradient(#007763 0%, #009687 100%);
+}
+
+.completed {
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 32px;
+    margin: 40px auto 24px;
+    width: 220px;
+    min-width: 0;
+    height: 220px;
+}
+
+.check_mark {
+    float: right;
+    height: 100px;
+}
+
+.utente_loggato {
+    /*padding-top: 20px;*/
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    position: relative;
+    top: 17px;
+}
+
+.utente_loggato:hover .opzioni {
+    display: block;
+}
+
+.utente_loggato .opzioni {
+    display: none;
+    position: absolute;
+    color: black;
+    background-color: #f8f8f8;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    border: 2px solid black;
+    width: 142px;
+}
+
+/*
+.down {
+    display: block;
+    position: absolute;
+    color: black;
+    background-color: #f8f8f8;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}*/
+
+#logout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+div.opzioni a, div.opzioni #logout-btn {
+    text-decoration: none;
+    box-sizing: content-box;
+    width: 135px;
+    margin-right: 0;
+    text-align: center;
+    /*    padding: 12px 16px;*/
+    line-height: 70px;
+    display: block;
+    color: black;
+}
+
+div.opzioni a:hover, div.opzioni #logout-btn:hover {
+    background-color: lightgrey;
+    text-decoration: none;
+    color: black;
+}
+
+.email_user {
+    border: none;
+    background-color: white;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    padding: 8px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.email_user:hover {
+    border: none;
+    background-color: #007763;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 8px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+div.opzioni ul {
+    padding: 0;
+    margin: 0;
+    max-width: 120px;
+}
+
+div.opzioni li {
+    list-style: none;
+    width: 100%;
+    float: left;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.carrello {
+    width: 35px;
+    height: 32px;
+    float: right;
+}
+
+div.cat1 {
+    border: solid;
+    color: #007763;
+    float: left;
+    margin-left: 7.5%;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    width: 40%;
+    height: 30%;
+}
+
+div.cat2 {
+    border: solid;
+    color: #007763;
+    float: left;
+    margin: 2% 7.5% 2.5%;
+    width: 40%;
+    height: 30%;
+}
+
+div.cat2 img {
+    width: 50%;
+    height: 90%;
+}
+
+div.cat1 img {
+    width: 50%;
+    height: 100%;
+}
+
+div.cat1 * {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.three_hor_lines {
+    height: 18px;
+    width: 18px;
+}
+
+ul.hamburger_menu {
+    background-color: #DBDCDB;
+    display: none;
+    width: 20%;
+    height: 100%;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    position: absolute;
+}
+
+ul.hamburger_menu a {
+    display: block;
+    background-color: #DBDCDB;
+    color: black;
+    text-decoration: none;
+    padding: 20px;
+    margin: 0;
+    font-family: "Franklin Gothic Medium", sans-serif;
+    text-transform: uppercase;
+}
+
+/*ul.hamburger_menu a.logout{
+    position: absolute;
+    top: 93%;
+}*/
+
+ul.hamburger_menu a:hover {
+    background-color: #D1D2D1;
+}
+
+ul.hamburger_menu_visible {
+    display: block;
+}
+
+.posizione_corrente {
+    background-color: #007763;
     color: white;
 }
 
-li {
-    width: 100%;
-    margin: 0;
-    display: inline;
-    padding: 5px 10px;
-    font-size: 30px;
-    color: black;
-    text-align: center;
-}
-
-li:hover {
-    opacity: 60%;
-}
-
-.elem {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    position: sticky;
-    top: 0;
-}
-
-.logo {
-    height: 60px;
-}
-
-/*img {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    max-width: 50px;
-    height: auto;
-}*/
-
-/*@media (max-width: 1000px)
-#sp-cc{
-    display: block;
-}*/
-
-/*.sp-cc {
-    background-color: #f6f6f6;
-    border: 1px #ddd solid;
-    bottom: 0;
+.product {
     display: flex;
-    left: 0;
-    margin: 0;
-    padding: 60px 15%;
-    position: fixed;
-    right: 0;
-    z-index: 1000;
-    line-height: 24px;
-}*/
+}
+
+.add_product {
+    width: 300px;
+    height: 510px;
+    border: solid 1px lightgrey;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.add_product_label {
+    text-align: center;
+    background-color: #007763;
+    color: white;
+    border: solid 1px lightgrey;
+    margin: 1px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.add_product_input {
+    padding: 20px;
+}
+
+div.add_product_input input[type="submit"] {
+    float: right;
+}
+
+.agg {
+    color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    min-height: 24px;
+    border: none;
+    background-image: linear-gradient(#009687 0%, #007763 100%);
+    width: 150px;
+    height: 20px;
+}
+
+.agg:hover {
+    background-image: linear-gradient(#007763 0%, #009687 100%);
+}
+
+.rem_product {
+    width: 300px;
+    height: 165px;
+    border: solid 1px lightgrey;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.rem_product_label {
+    text-align: center;
+    background-color: #007763;
+    color: white;
+    border: solid 1px lightgrey;
+    margin: 1px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.rem_product_input {
+    padding: 20px;
+}
+
+div.rem_product_input input[type="submit"] {
+    float: right;
+}
+
+.mod_product {
+    width: 300px;
+    height: 570px;
+    border: solid 1px lightgrey;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.mod_product_label {
+    text-align: center;
+    background-color: #007763;
+    color: white;
+    border: solid 1px lightgrey;
+    margin: 1px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.mod_product_input {
+    padding: 20px;
+}
+
+div.mod_product_input input[type="submit"] {
+    float: right;
+}
+
+/* Tabella utenti/prodotti/etc*/
+.rtable {
+    display: inline-block;
+    vertical-align: top;
+    max-width: 100%;
+    width: 75%;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.rtable {
+    -webkit-overflow-scrolling: touch;
+    background-size: 10px 100%, 10px 100%;
+}
+
+.rtable td:first-child {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-size: 20px 100%;
+}
+
+.rtable td:last-child {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+    background-size: 20px 100%;
+}
+
+.rtable th {
+    font-size: 11px;
+    text-align: left;
+    text-transform: uppercase;
+    background: #007763;
+    color: white;
+}
+
+.rtable th, .rtable td {
+    padding: 6px 12px;
+    border: 1px solid #d9d7ce;
+}
+
+table {
+    margin-top: 30px;
+}
+
+
+/* Login admin */
+body.admin {
+    background-color: #007Fcc;
+}
+
+.login_admin {
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 32px;
+    margin: 180px auto 24px;
+    width: 300px;
+    line-height: 25px;
+    min-width: 0;
+    height: 330px;
+}
+
+.accedi_admin {
+    color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    min-height: 24px;
+    border: none;
+    background-image: linear-gradient(#57B5E0 0%, #007FCC 100%);
+    width: 100%;
+    height: 20px;
+}
+
+.accedi_admin:hover {
+    background-image: linear-gradient(#007FCC 0%, #57B5E0 100%);
+}
+
+.input_admin {
+    border-style: solid;
+    border-radius: 2px;
+    width: 100%;
+    outline: none;
+}
+
+.input_admin:hover {
+    border-color: #007FCC;
+}
+
+.login_admin p {
+    margin: 11px 0;
+    text-align: center;
+    font-size: 22px;
+    font-family: "Orienta", sans-serif;
+    text-transform: uppercase;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+}

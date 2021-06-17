@@ -2,8 +2,6 @@ package model;
 
 import model.Prodotto.Prodotto;
 
-import java.util.Objects;
-
 public class CartItem {
     private Prodotto prodotto;
     private int quantita;

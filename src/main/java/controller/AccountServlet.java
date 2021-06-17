@@ -25,6 +25,7 @@ public class AccountServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
 
+        System.out.println(path);
         RequestValidator.validateRequest(request);
         String contextPath = request.getContextPath();
         UtenteDAO dao = new UtenteDAO();
@@ -92,8 +93,10 @@ public class AccountServlet extends HttpServlet {
         String resource = "/";
         RequestDispatcher dispatcher;
         boolean flag = true;
+        System.out.println("Path: " + path);
 
         switch (path) {
+
             case "/admin":
                 resource = "/WEB-INF/results/loginadmin.jsp";
                 break;
