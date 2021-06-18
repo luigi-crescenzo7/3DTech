@@ -7,7 +7,7 @@
     <script src="${contextPath}/js/checkUser.js" defer></script>
 </head>
 <body>
-<%@include file="NavigationBar.jsp" %>
+<%@include file="nav-bar.jsp" %>
 <div class="registrazione">
     <form action="${contextPath}/xx/registration" method="post">
         <label for="email">Email</label>

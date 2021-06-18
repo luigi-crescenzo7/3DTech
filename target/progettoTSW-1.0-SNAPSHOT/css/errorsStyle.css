@@ -9,3 +9,8 @@ body {
     margin-right: auto;
     text-align: center;
 }
+
+#home-anchor {
+    text-decoration: none;
+    font-family: "Orienta", sans-serif;
+}

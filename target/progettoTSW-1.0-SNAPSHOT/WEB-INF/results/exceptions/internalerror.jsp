@@ -8,5 +8,6 @@
 <div id="center-text">
     <h1>500: Errore Interno al Server</h1>
 </div>
+<%@include file="liberrors.jsp"%>
 </body>
 </html>

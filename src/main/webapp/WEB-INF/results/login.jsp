@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
 </head>
 <body>
-<%@include file="NavigationBar.jsp" %>
+<%@include file="nav-bar.jsp" %>
 <div class="login">
     <form action="${contextPath}/xx/login" method="post">
         <label for="email">Email</label>
