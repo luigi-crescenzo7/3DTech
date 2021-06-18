@@ -340,9 +340,11 @@ ul.hamburger_menu {
     width: 20%;
     height: 670px;
     margin: 0;
+    overflow: hidden;
     list-style: none;
     padding: 0;
     position: absolute;
+    max-height: 100vw;
 }
 
 ul.hamburger_menu a {
@@ -371,6 +373,7 @@ ul.hamburger_menu a:hover {
 
 ul.hamburger_menu_visible {
     display: block;
+    max-height: 100vw;
 }
 
 .posizione_corrente {
@@ -565,6 +568,17 @@ body.admin {
 
 .input_admin:hover {
     border-color: #007FCC;
+}
+
+#test-text {
+    font-family: "Orienta", sans-serif;
+    font-style: italic;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: white;
+    position: absolute;
+    left: 100px;
+    margin: 5px 0 0;
 }
 
 .login_admin p {
