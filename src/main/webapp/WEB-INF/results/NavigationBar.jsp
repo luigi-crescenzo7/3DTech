@@ -16,8 +16,8 @@
             <div class="opzioni">
                 <ul>
                     <form action="${contextPath}/xx/logout" method="post">
-                        <li><a href="#account">Account</a></li>
-                        <li><a href="#ordini">Ordini</a></li>
+                        <li><a href="${contextPath}/xx/account">Account</a></li>
+                        <li><a href="${contextPath}">Ordini</a></li>
                         <li>
                             <button id="logout-btn">Logout
                             </button>

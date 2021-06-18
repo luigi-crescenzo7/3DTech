@@ -232,7 +232,7 @@ div.opzioni a, div.opzioni #logout-btn {
     width: 135px;
     margin-right: 0;
     text-align: center;
-    /*    padding: 12px 16px;*/
+    /*padding: 12px 16px;*/
     line-height: 70px;
     display: block;
     color: black;
@@ -240,8 +240,6 @@ div.opzioni a, div.opzioni #logout-btn {
 
 div.opzioni a:hover, div.opzioni #logout-btn:hover {
     background-color: lightgrey;
-    text-decoration: none;
-    color: black;
 }
 
 .email_user {
