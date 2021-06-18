@@ -7,7 +7,6 @@
 </head>
 <body>
 <%@include file="WEB-INF/results/NavigationBar.jsp" %>
-
 <section class="prima">
     Sconti
 </section>

@@ -2,10 +2,11 @@
 <html>
 <head>
     <title>Title</title>
+    <link type="text/css" href="${pageContext.request.contextPath}/css/errorsStyle.css" rel="stylesheet">
 </head>
 <body>
-
-<h1>Test</h1>
-
+<div id="center-text">
+    <h1>500: Errore Interno al Server</h1>
+</div>
 </body>
 </html>

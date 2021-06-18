@@ -298,6 +298,13 @@ div.cat1 {
     height: 30%;
 }
 
+#logo {
+    margin: 0 15px 0;
+    padding: 0;
+    width: 20em;
+    /*filter: invert(100%) sepia(5%) saturate(2761%) hue-rotate(313deg) brightness(89%) contrast(67%);*/
+}
+
 div.cat2 {
     border: solid;
     color: #007763;

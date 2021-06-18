@@ -45,7 +45,7 @@ public class AccountServlet extends HttpServlet {
 
                 if (user.isAdmin()) {
                     resource = "/controlpanel/";
-                    session.setAttribute("administrator", user);
+                    session.setAttribute("user", user);
                 } else {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                     flag = false;

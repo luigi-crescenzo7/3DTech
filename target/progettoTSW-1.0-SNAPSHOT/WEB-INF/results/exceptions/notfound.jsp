@@ -3,23 +3,11 @@
 <html lang="it">
 <head>
     <title>Title</title>
-    <style>
-        body {
-            margin: 0;
-            background: linear-gradient(blue, blue);
-        }
-
-        #center-text {
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
-    </style>
+    <link type="text/css" href="${pageContext.request.contextPath}/css/errorsStyle.css" rel="stylesheet">
 </head>
 <body>
 <div id="center-text">
-    <h1>400: Risorsa non trovata</h1>
+    <h1>404: Risorsa non trovata</h1>
 </div>
 </body>
 </html>

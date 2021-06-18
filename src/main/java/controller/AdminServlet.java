@@ -1,12 +1,15 @@
 package controller;
 
 
+import model.Utente.Utente;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/controlpanel/*")
@@ -18,10 +21,18 @@ public class AdminServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource;
+        HttpSession session = request.getSession();
+        Utente administrator = (Utente) session.getAttribute("administrator");
+        Utente user = (Utente) session.getAttribute("user");
 
         switch (path) {
             case "/":
-                resource = "/WEB-INF/results/controlpanel.jsp";
+                if (administrator != null || user.isAdmin()) {
+                    resource = "/WEB-INF/results/controlpanel.jsp";
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);

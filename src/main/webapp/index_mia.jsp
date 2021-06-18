@@ -13,7 +13,7 @@
 <body>
 <header>
     <!--<h1>3DTech</h1>-->
-    <img class="logo" src="${pageContext.request.contextPath}/imgs/logoNew.png" alt="aa">
+    <img class="logo" src="${pageContext.request.contextPath}/imgs/logoNew.svg" alt="aa">
     <div class="test">
         <ul>
             <li>Home</li>
