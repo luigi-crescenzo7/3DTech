@@ -2,7 +2,7 @@
 <dataSource name="MySQL - progettotsw@localhost">
   <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.21">
     <root id="1">
-      <ServerVersion>8.0.23</ServerVersion>
+      <ServerVersion>8.0.25</ServerVersion>
       <Grants>|root||root|localhost|ALTER|G
 |root||root|localhost|ALTER ROUTINE|G
 |root||root|localhost|APPLICATION_PASSWORD_ADMIN|G
