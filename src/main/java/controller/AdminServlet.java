@@ -28,7 +28,7 @@ public class AdminServlet extends HttpServlet {
         switch (path) {
             case "/":
                 if (administrator != null || user.isAdmin()) {
-                    resource = "/WEB-INF/results/controlpanel.jsp";
+                    resource = "/WEB-INF/results/admin-dashboard.jsp";
                 } else {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                     return;

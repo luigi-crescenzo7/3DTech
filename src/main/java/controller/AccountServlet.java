@@ -101,7 +101,7 @@ public class AccountServlet extends HttpServlet {
                 resource = "/WEB-INF/results/loginadmin.jsp";
                 break;
             case "/controlpanel":
-                resource = "/WEB-INF/results/controlpanel.jsp";
+                resource = "/WEB-INF/results/admin-dashboard.jsp";
                 break;
             case "/login":
                 resource = "/WEB-INF/results/login.jsp";
