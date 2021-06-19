@@ -31,7 +31,7 @@ public class AdminServlet extends HttpServlet {
 
         switch (path) {
             case "/":
-                if (administrator != null || user.isAdmin()) {
+                if (user.isAdmin()) {
                     resource = "/WEB-INF/results/admin-dashboard.jsp";
                 } else {
                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
@@ -53,7 +53,7 @@ public class AdminServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
-        System.out.println("doPost "+path);
+        System.out.println("doPost " + path);
 
 
         switch (path) {

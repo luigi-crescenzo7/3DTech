@@ -2,3 +2,49 @@
     font-family: "Orienta";
     src: url("../font/Orienta-Regular.ttf");
 }
+
+.rtable {
+    display: inline-block;
+    vertical-align: top;
+    max-width: 100%;
+    width: 75%;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.rtable {
+    -webkit-overflow-scrolling: touch;
+    background-size: 10px 100%, 10px 100%;
+}
+
+.rtable td:first-child {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-size: 20px 100%;
+}
+
+.rtable td:last-child {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+    background-size: 20px 100%;
+}
+
+.rtable th {
+    font-size: 11px;
+    text-align: left;
+    text-transform: uppercase;
+    background: #007763;
+    color: white;
+}
+
+.rtable th, .rtable td {
+    padding: 6px 12px;
+    border: 1px solid #d9d7ce;
+}
+
+table {
+    margin-top: 30px;
+}

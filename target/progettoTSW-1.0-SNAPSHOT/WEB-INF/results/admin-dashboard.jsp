@@ -6,24 +6,29 @@
     <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js" defer ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js" defer></script>
+    <script src="${contextPath}/js/chart.js" defer></script>
     <script src="${contextPath}/js/hamburger.js" defer></script>
-    <script src="${contextPath}/js/chart.js" defer> let contextPath = "${contextPath}"</script>
 </head>
 <body>
 <%@ include file="admin-nav.jsp" %>
+<input id="hidden-path" type="hidden" value="${contextPath}">
 <aside class="sidebar">
-    <ul class="hamburger_menu">
-        <li><a href="${contextPath}/">Gestisci prodotti</a></li>
+    <div class="hamburger_menu">
+        <a href="${contextPath}/">Gestisci prodotti</a>
         <!-- agg, elimina e modifica -->
-        <li><a href="#">Gestisci utenti</a></li>
-        <li><a href="#">Gestione ordini</a></li>
-        <li><a class="logout" href="#">Logout</a></li>
-    </ul>
+        <a href="#">Gestisci utenti</a>
+        <a href="#">Gestione ordini</a>
+        <a class="logout" href="#">Logout</a>
+    </div>
 </aside>
-<div id="canvas" title="${contextPath}">
-    <canvas id="chart" title="${contextPath}">
+<div class="container">
+    <canvas id="chart">
     </canvas>
 </div>
+<!--
+<div id="canvas">
+
+</div>-->
 </body>
 </html>

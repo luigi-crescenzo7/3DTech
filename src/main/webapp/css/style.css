@@ -341,25 +341,29 @@ div.cat1 * {
     width: 18px;
 }
 
-ul.hamburger_menu {
+.hamburger_menu {
     background-color: #DBDCDB;
     display: none;
     width: 20%;
-    height: 670px;
     margin: 0;
+    height: 100vh;
     overflow: hidden;
     list-style: none;
     padding: 0;
-    position: absolute;
-    max-height: 100vw;
+    position: fixed;
 }
 
-ul.hamburger_menu a {
-    display: inline-block;
+.hamburger_menu_visible {
+    display: block;
+}
+
+.hamburger_menu a {
+    display: block;
     background-color: #DBDCDB;
     color: black;
     text-decoration: none;
-    padding: 20px;
+    padding-top: 20px;
+    padding-left: 8px;
     margin: 0;
     font-family: "Franklin Gothic Medium", sans-serif;
     text-transform: uppercase;
@@ -370,18 +374,10 @@ ul.hamburger_menu a {
     top: 93%;
 }*/
 
-ul.hamburger_menu a:hover {
+.hamburger_menu a:hover {
     background-color: #D1D2D1;
 }
 
-.hamburger_menu_visible li {
-    display: flex;
-}
-
-ul.hamburger_menu_visible {
-    display: block;
-    max-height: 100vw;
-}
 
 .posizione_corrente {
     background-color: #007763;
@@ -602,10 +598,16 @@ body.admin {
     margin: 20px;
     max-height: 700px;
 }
+*/
 
-#chart {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    height: 100px;
-}*/
+.container {
+    padding-top: 20px;
+    margin-left: 200px;
+    margin-right: 200px;
+    max-height: 600px;
+}
+
+.container #chart {
+    max-height: 100%;
+    max-width: 100%;
+}
