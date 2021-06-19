@@ -11,7 +11,6 @@ import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
 import model.Utente.Utente;
 import org.json.JSONObject;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;

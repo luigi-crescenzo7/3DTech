@@ -1,7 +1,9 @@
 package controller;
 
 
+import model.Categoria.CategoriaDAO;
 import model.Utente.Utente;
+import org.json.JSONArray;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/controlpanel/*")
 public class AdminServlet extends HttpServlet {
@@ -49,10 +53,24 @@ public class AdminServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
+        System.out.println("doPost "+path);
 
 
         switch (path) {
-            case "/create":
+            case "/chart":
+                response.setContentType("text/json");
+
+                JSONArray array = new JSONArray();
+                CategoriaDAO dao = new CategoriaDAO();
+                List<Integer> nums = dao.doCountCategories();
+                List<String> names = dao.doRetrieveCategoriesName();
+
+                array.put(0, names);
+                array.put(1, nums);
+
+                PrintWriter writer = response.getWriter();
+                writer.println(array);
+                writer.close();
                 break;
             default:
                 break;
