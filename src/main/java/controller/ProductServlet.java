@@ -11,6 +11,9 @@ import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
 import model.Utente.Utente;
 import org.json.JSONObject;
+
+import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -134,8 +137,11 @@ public class ProductServlet extends HttpServlet {
                         cat.setNome(category);
                         p.setCategoria(cat);
                         dao.doSave(p);
-                        request.setAttribute("createdProduct", p);
-                        request.getRequestDispatcher("/WEB-INF/results/productinfo.jsp").forward(request, response);
+                        ServletContext ctx = request.getServletContext();
+                        List<Prodotto> list2 = (List<Prodotto>) ctx.getAttribute("listProducts");
+                        if (list2 != null)
+                            list2.add(p);
+                        request.getRequestDispatcher("/WEB-INF/results/manage-products.jsp").forward(request, response);
                         break;
                     case "thrgh":
                         break;
@@ -148,6 +154,7 @@ public class ProductServlet extends HttpServlet {
                 }
                 break;
             case "/checkout":
+                //todo: refattorizzare in OrderServlet
                 if (products != null && products.size() > 0) {
                     Ordine order = new Ordine();
                     order.setCarrello(new Cart(products));

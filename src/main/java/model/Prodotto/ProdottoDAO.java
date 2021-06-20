@@ -150,15 +150,13 @@ public class ProdottoDAO {
             ps.setDouble(7, p.getPeso());
             ps.setDouble(8, p.getSconto());
             ps.setInt(9, p.getCategoria().getId());
-            if (ps.executeUpdate() != 1) {
+
+            if (ps.executeUpdate() != 1)
                 throw new RuntimeException("INSERT error.");
-            }
 
             ResultSet set = ps.getGeneratedKeys();
             if (set.next())
                 p.setId(set.getInt(1));
-            //Todo eliminare stampa
-            System.out.println(p.getId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

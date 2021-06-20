@@ -7,6 +7,4 @@ menu.addEventListener("click", function hor_lines_click() {
     //container.style.marginLeft = "250px"
     let container = document.querySelector(".container")
     hamburger.classList.toggle("hamburger_menu_visible")
-    console.log(menuSize)
-
 })

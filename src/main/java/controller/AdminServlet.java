@@ -29,18 +29,21 @@ public class AdminServlet extends HttpServlet {
         Utente administrator = (Utente) session.getAttribute("administrator");
         Utente user = (Utente) session.getAttribute("user");
 
-        switch (path) {
-            case "/":
-                if (user.isAdmin()) {
+        if (user.isAdmin()) {
+            switch (path) {
+                case "/":
                     resource = "/WEB-INF/results/admin-dashboard.jsp";
-                } else {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                    break;
+                case "/products":
+                    resource = "/WEB-INF/results/manage-products.jsp";
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
-                }
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(resource);

@@ -15,7 +15,7 @@
 <input id="hidden-path" type="hidden" value="${contextPath}">
 <aside class="sidebar">
     <div class="hamburger_menu">
-        <a href="${contextPath}/">Gestisci prodotti</a>
+        <a href="${contextPath}/controlpanel/products">Gestisci prodotti</a>
         <!-- agg, elimina e modifica -->
         <a href="#">Gestisci utenti</a>
         <a href="#">Gestione ordini</a>

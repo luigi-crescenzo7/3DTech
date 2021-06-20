@@ -386,16 +386,26 @@ div.cat1 * {
 
 .product {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* proprietà importante per responsiveness */
+    justify-content: space-around;
+    flex: 1;
+    flex-basis: auto;
 }
 
-.add_product {
-    width: 300px;
-    height: 510px;
+.product .add_product {
+    /*width: 300px;
+    height: 510px;*/
+    max-width: 300px;
     border: solid 1px lightgrey;
-    margin-left: 20px;
-    margin-top: 20px;
+    flex-basis: auto;
+    /*margin-left: 20px;
+    margin-top: 20px;*/
 }
 
+#division-line {
+    border: 1px solid lightgray;
+}
 .add_product_label {
     text-align: center;
     background-color: #007763;
@@ -430,11 +440,11 @@ div.add_product_input input[type="submit"] {
 }
 
 .rem_product {
-    width: 300px;
-    height: 165px;
+    max-width: 300px;
     border: solid 1px lightgrey;
-    margin-left: 20px;
-    margin-top: 20px;
+    /*margin-left: 20px;
+    margin-top: 20px;*/
+    flex-basis: 300px;
 }
 
 .rem_product_label {
@@ -459,8 +469,8 @@ div.rem_product_input input[type="submit"] {
     width: 300px;
     height: 570px;
     border: solid 1px lightgrey;
-    margin-left: 20px;
-    margin-top: 20px;
+    /*margin-left: 20px;
+    margin-top: 20px;*/
 }
 
 .mod_product_label {
@@ -486,7 +496,7 @@ div.mod_product_input input[type="submit"] {
     display: inline-block;
     vertical-align: top;
     max-width: 100%;
-    width: 75%;
+    width: 50%;
     overflow-x: auto;
     white-space: nowrap;
     border-collapse: collapse;
@@ -574,6 +584,8 @@ body.admin {
 }
 
 #test-text {
+    padding: 0;
+    text-decoration: none;
     font-family: "Orienta", sans-serif;
     font-style: italic;
     font-size: 2em;
@@ -582,6 +594,11 @@ body.admin {
     position: absolute;
     left: 100px;
     margin: 5px 0 0;
+    text-underline: none;
+}
+
+#test-text:hover {
+    text-decoration: none;
 }
 
 .login_admin p {
@@ -610,4 +627,13 @@ body.admin {
 .container #chart {
     max-height: 100%;
     max-width: 100%;
+}
+
+.table-items {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
 }

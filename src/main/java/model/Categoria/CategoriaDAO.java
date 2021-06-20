@@ -81,7 +81,7 @@ public class CategoriaDAO {
     public List<Integer> doCountCategories() {
         List<Integer> list = new ArrayList<>();
         String query = "SELECT COUNT(pro.id_prodotto) FROM prodotto as pro JOIN categoria as cat" +
-                " ON pro.id_categoria = cat.id_categoria GROUP BY cat.id_categoria";
+                " ON pro.id_categoria = cat.id_categoria GROUP BY pro.id_categoria";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
 
@@ -96,10 +96,10 @@ public class CategoriaDAO {
         return list;
     }
 
-
+    //todo: togliere questo metodo in modo tale da far ritornare una lista di categorie (id, nome) al metodo di sopra
     public List<String> doRetrieveCategoriesName() {
         List<String> names = new ArrayList<>();
-        String query = "SELECT nome FROM categoria";
+        String query = "SELECT cat.nome FROM categoria AS cat JOIN prodotto p on cat.id_categoria = p.id_categoria GROUP BY p.id_categoria";
 
         try (Connection connection = ConPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement(query)) {
