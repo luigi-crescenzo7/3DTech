@@ -7,6 +7,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
+    <script src="${contextPath}/js/acaso.js" defer></script>
 </head>
 <body>
 <%@ include file="admin-nav.jsp" %>
@@ -37,8 +38,13 @@
                 <input class="input" type="number" id="peso" name="productWeight"><br><br>
                 <label for="sconto">Sconto</label>
                 <input class="input" type="number" id="sconto" name="productDiscount" value=""><br><br>
+                <div id="div-test">
+                </div>
                 <label for="fieldProductCategory">Categoria</label>
                 <select id="fieldProductCategory" name="productCategory" form="formBello">
+                    <option selected>
+                        -- Seleziona Categoria --
+                    </option>
                     <option>
                         Stampanti 3D
                     </option>
