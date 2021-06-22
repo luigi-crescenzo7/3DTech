@@ -26,7 +26,7 @@ public class AdminServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource;
         HttpSession session = request.getSession();
-        Utente administrator = (Utente) session.getAttribute("administrator");
+
         Utente user = (Utente) session.getAttribute("user");
 
         if (user.isAdmin()) {
@@ -55,7 +55,6 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "/";
         System.out.println("doPost " + path);
 
 
