@@ -4,7 +4,6 @@ package controller;
 import model.Categoria.CategoriaDAO;
 import model.Utente.Utente;
 import org.json.JSONArray;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
