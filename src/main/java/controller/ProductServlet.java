@@ -34,30 +34,6 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*String productId = request.getParameter("productId");
-        String fieldName = request.getParameter("fieldName");
-        String fieldMaxVolume = request.getParameter("fieldMaxVolume");
-        String fieldMaxSpeed = request.getParameter("fieldMaxSpeed");
-
-        if(fieldName.isEmpty() || fieldMaxVolume.isEmpty() || fieldMaxSpeed.isEmpty())
-            return;
-
-        JSONObject obj = new JSONObject();
-        obj.put("max-volume", fieldMaxVolume);
-        obj.put("max-speed", fieldMaxSpeed);
-
-        Prodotto p = new Prodotto();
-        p.setId(Integer.parseInt(productId));
-        p.setNome(fieldName);
-        p.setMarchio("marchio88");
-        p.setDescrizione("desc11");
-        p.setCaratteristiche(obj);
-        p.setPrezzo(99);
-        p.setPeso(1);
-        p.setSconto(77);
-
-        ProdottoDAO dao = new ProdottoDAO();
-        dao.doUpdateById(p);*/
     }
 
     @Override
@@ -100,9 +76,7 @@ public class ProductServlet extends HttpServlet {
             case "/create":
                 Part part = request.getPart("productImage");
                 String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                List<String> list = FormExtractor.retrieveParameterValues(request);
                 String category = request.getParameter("productCategory");
-                //List<String> parameters = FormExtractor.retrieveParameterValues(request);
                 Map<String, String[]> map = request.getParameterMap();
                 Set<Map.Entry<String, String[]>> set = map.entrySet();
                 for (Map.Entry<String, String[]> entry : set) {
@@ -121,20 +95,8 @@ public class ProductServlet extends HttpServlet {
                 switch (category) {
                     case "Materiale plastico":
                         System.out.println("file name: " + fileName);
-                        Prodotto p = new Prodotto();
-                        p.setNome(map.get("productName")[0]);
-                        p.setMarchio(map.get("productMark")[0]);
-                        p.setDescrizione(map.get("productDescription")[0]);
-                        p.setUrlImage(fileName);
-                        //p.setCaratteristiche(ProductBuilder.createMaterialePlastico(parameters));
-                        p.setCaratteristiche(new JSONObject("{\"ciao\":1}"));
-                        p.setPrezzo(1);
-                        p.setPeso(2);
-                        p.setSconto(3);
-                        Categoria cat = new Categoria();
-                        cat.setId(new CategoriaDAO().doRetrieveIdCategory(category));
-                        System.out.println(cat.getId());
-                        cat.setNome(category);
+                        Prodotto p = ProductBuilder.createMaterialePlastico(map, fileName);
+                        Categoria cat = new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]);
                         p.setCategoria(cat);
                         dao.doSave(p);
                         ServletContext ctx = request.getServletContext();

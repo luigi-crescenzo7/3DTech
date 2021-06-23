@@ -45,14 +45,12 @@
                     <option selected>
                         -- Seleziona Categoria --
                     </option>
-                    <option>
-                        Stampanti 3D
-                    </option>
-                    <option>
-                        Materiale plastico
-                    </option>
+                    <c:forEach items="${applicationScope.listCategories}" var="category">
+                        <option>
+                                ${category.nome}
+                        </option>
+                    </c:forEach>
                 </select>
-
                 <label for="fieldImage">File: </label>
                 <input type="file" name="productImage" id="fieldImage"><br><br>
                 <input class="agg" type="submit" value="Aggiungi prodotto">

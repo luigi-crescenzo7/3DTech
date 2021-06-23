@@ -112,5 +112,41 @@ public class CategoriaDAO {
         }
         return names;
     }
+
+    public List<Categoria> doRetrieveAll() {
+        List<Categoria> categories = new ArrayList<>();
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM categoria")) {
+
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                Categoria c = new Categoria();
+                c.setId(set.getInt("id_categoria"));
+                c.setNome(set.getString("nome"));
+                categories.add(c);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return categories;
+    }
+
+    public Categoria doRetrieveByName(String name) {
+        Categoria categoria = new Categoria();
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Categoria")) {
+
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                categoria.setId(set.getInt("id_categoria"));
+                categoria.setNome(set.getString("nome"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return categoria;
+    }
 }
 

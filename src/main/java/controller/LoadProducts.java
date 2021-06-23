@@ -1,5 +1,6 @@
 package controller;
 
+import model.Categoria.Categoria;
 import model.Categoria.CategoriaDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
@@ -20,8 +21,8 @@ public class LoadProducts extends HttpServlet {
         ProdottoDAO dao = new ProdottoDAO();
         CategoriaDAO catDao = new CategoriaDAO();
         List<Prodotto> list = dao.doRetrieveAll();
-        List<Integer> categoriesId = catDao.doRetrieveAllCategoriesId();
+        List<Categoria> categories = catDao.doRetrieveAll();
         context.setAttribute("listProducts", list);
-        context.setAttribute("listCategoriesId", categoriesId);
+        context.setAttribute("listCategories", categories);
     }
 }

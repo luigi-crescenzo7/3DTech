@@ -3,7 +3,6 @@ package controller;
 
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,7 +31,6 @@ public class AccountServlet extends HttpServlet {
         HttpSession session = request.getSession();
         List<String> list;
         Utente user = null;
-        boolean flag = true;
 
         switch (path) {
             case "/loginadmin":
@@ -40,15 +38,12 @@ public class AccountServlet extends HttpServlet {
                 user = FormExtractor.extractLogin(list);
                 user = dao.doRetrieveEmailPassword(user);
 
-                if (user == null)
-                    resource = "";
-
-                if (user.isAdmin()) {
+                if (user != null && user.isAdmin()) {
                     resource = "/controlpanel/";
                     session.setAttribute("user", user);
                 } else {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    flag = false;
+                    return;
                 }
                 break;
             case "/registration":
@@ -64,6 +59,7 @@ public class AccountServlet extends HttpServlet {
                 user = dao.doRetrieveEmailPassword(user);
                 if (user == null) {
                     System.out.println("Utente non esistente");
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                     return;
                 }
                 session.setAttribute("user", user);
@@ -71,17 +67,16 @@ public class AccountServlet extends HttpServlet {
                 break;
             case "/logout":
                 session.removeAttribute("user");
+                session.invalidate();
                 resource = "/index.jsp";
                 break;
             default:
-                flag = false;
+                //request.setAttribute("errorMsg", "Risorsa '" + path + "' non trovata");
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+                return;
         }
-        if (flag) {
-            System.out.println(resource);
-            response.sendRedirect(contextPath + resource);
-        }
+
+        response.sendRedirect(contextPath + resource);
     }
 
 
@@ -91,12 +86,9 @@ public class AccountServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
-        RequestDispatcher dispatcher;
-        boolean flag = true;
         System.out.println("Path: " + path);
 
         switch (path) {
-
             case "/admin":
                 resource = "/WEB-INF/results/loginadmin.jsp";
                 break;
@@ -113,14 +105,11 @@ public class AccountServlet extends HttpServlet {
                 resource = "/WEB-INF/results/account.jsp";
                 break;
             default:
-                flag = false;
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+                return;
         }
 
-        if (flag) {
-            dispatcher = request.getRequestDispatcher(resource);
-            dispatcher.forward(request, response);
-        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher(resource);
+        dispatcher.forward(request, response);
     }
 }
