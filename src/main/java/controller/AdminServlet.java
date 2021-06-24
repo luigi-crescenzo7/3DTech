@@ -4,6 +4,7 @@ package controller;
 import model.Categoria.CategoriaDAO;
 import model.Utente.Utente;
 import org.json.JSONArray;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,6 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/controlpanel/*")
 public class AdminServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class AdminServlet extends HttpServlet {
         String resource;
         HttpSession session = request.getSession();
 
-        Utente user = (Utente) session.getAttribute("user");
+        Utente user = (Utente) session.getAttribute("userSession");
 
         if (user.isAdmin()) {
             switch (path) {

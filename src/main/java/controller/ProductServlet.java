@@ -10,9 +10,7 @@ import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
 import model.Utente.Utente;
-import org.json.JSONObject;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -74,6 +72,7 @@ public class ProductServlet extends HttpServlet {
                 request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                 break;
             case "/create":
+                RequestValidator.authorization(session, "userSession");
                 Part part = request.getPart("productImage");
                 String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                 String category = request.getParameter("productCategory");
@@ -122,7 +121,7 @@ public class ProductServlet extends HttpServlet {
                     order.setCarrello(new Cart(products));
                     order.setQuantita(products.size());
                     order.setDataOrdine(LocalDate.now());
-                    order.setUser((Utente) session.getAttribute("user"));
+                    order.setUser((Utente) session.getAttribute("userSession"));
                     OrdineDAO orderDao = new OrdineDAO();
                     orderDao.doSave(order);
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);

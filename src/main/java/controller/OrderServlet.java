@@ -31,7 +31,7 @@ public class OrderServlet extends HttpServlet {
 
         switch(path) {
             case "/orders":
-                user = (Utente) session.getAttribute("user");
+                user = (Utente) session.getAttribute("userSession");
                 user.setOrdini(dao.doRetrieveOrders(user));
                 request.setAttribute("orders", user.getOrdini());
                 dispatcher = request.getRequestDispatcher("/WEB-INF/results/showOrders.jsp");

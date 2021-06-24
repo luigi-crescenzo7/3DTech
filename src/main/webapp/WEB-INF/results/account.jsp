@@ -8,8 +8,8 @@
 </head>
 <body>
 <h1>
-    Email: ${sessionScope.user.email}<br>
-    Nome: ${sessionScope.user.name}<br>
+    Email: ${sessionScope.userSession.email}<br>
+    Nome: ${sessionScope.userSession.name}<br>
 </h1>
 <ul>
     <c:forEach items="${applicationScope.listProducts}" var="product">

@@ -1,16 +1,16 @@
 <!--<script src="/js/user_logged.js" defer></script>-->
 <img id="logo" src="${contextPath}/imgs/logoNew.svg" alt="Logo">
 <header>
-    <c:if test="${sessionScope.user == null}">
+    <c:if test="${sessionScope.userSession == null}">
         <div class="accesso">
             <a href="${contextPath}/xx/registration">Registrati</a>
             <a href="${contextPath}/xx/login">Login</a>
         </div>
     </c:if>
     <!-- todo: mettere controllo sullo user memorizzato in sessione se non è admin-->
-    <c:if test="${sessionScope.user != null}"> <!--pageContext.request.getSession().getAttribute('user') != null -->
+    <c:if test="${sessionScope.userSession != null}"> <!--pageContext.request.getSession().getAttribute('user') != null -->
         <div class="utente_loggato">
-            <button class="email_user">${sessionScope.user.email}</button>
+            <button class="email_user">${sessionScope.userSession.email}</button>
             <a href="#pagina_carello">
                 <img class="carrello" src="${contextPath}img/carrello.png">
             </a>

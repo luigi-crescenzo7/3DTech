@@ -3,6 +3,8 @@ package controller;
 
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
+import model.Utente.UtenteValidator;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,56 +27,66 @@ public class AccountServlet extends HttpServlet {
         String resource = "/";
 
         System.out.println(path);
-        RequestValidator.validateRequest(request);
         String contextPath = request.getContextPath();
         UtenteDAO dao = new UtenteDAO();
         HttpSession session = request.getSession();
         List<String> list;
         Utente user = null;
+        RequestValidator validator;
 
-        switch (path) {
-            case "/loginadmin":
-                list = FormExtractor.retrieveParameterValues(request);
-                user = FormExtractor.extractLogin(list);
-                user = dao.doRetrieveEmailPassword(user);
+        try {
+            switch (path) {
+                case "/loginadmin":
+                    list = FormExtractor.retrieveParameterValues(request);
+                    user = FormExtractor.extractLogin(list);
+                    user = dao.doRetrieveEmailPassword(user);
+                    validator = UtenteValidator.validateLogin(request);
+                    validator.hasErrors();
 
-                if (user != null && user.isAdmin()) {
-                    resource = "/controlpanel/";
-                    session.setAttribute("user", user);
-                } else {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    if (user != null && user.isAdmin()) {
+                        resource = "/controlpanel/";
+                        session.setAttribute("userSession", user);
+                    } else {
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                        return;
+                    }
+                    break;
+                case "/registration":
+                    list = FormExtractor.retrieveParameterValues(request);
+                    user = FormExtractor.extractRegistration(list);
+                    dao.doSave(user);
+                    session.setAttribute("userSession", user);
+                    resource = "/index.jsp";
+                    break;
+                case "/login":
+                    list = FormExtractor.retrieveParameterValues(request);
+                    validator = UtenteValidator.validateLogin(request);
+                    validator.hasErrors();
+                    user = FormExtractor.extractLogin(list);
+                    user = dao.doRetrieveEmailPassword(user);
+                    if (user != null) {
+                        session.setAttribute("userSession", user);
+                        resource = "/index.jsp";
+                    } else {
+                        request.setAttribute("errorLogin", "Utente non esistente!");
+                        request.getRequestDispatcher("/WEB-INF/results/index.jsp").forward(request, response);
+                        return;
+                    }
+                    break;
+                case "/logout":
+                    session.removeAttribute("user");
+                    session.invalidate();
+                    resource = "/index.jsp";
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
-                }
-                break;
-            case "/registration":
-                list = FormExtractor.retrieveParameterValues(request);
-                user = FormExtractor.extractRegistration(list);
-                dao.doSave(user);
-                session.setAttribute("user", user);
-                resource = "/index.jsp";
-                break;
-            case "/login":
-                list = FormExtractor.retrieveParameterValues(request);
-                user = FormExtractor.extractLogin(list);
-                user = dao.doRetrieveEmailPassword(user);
-                if (user == null) {
-                    System.out.println("Utente non esistente");
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                    return;
-                }
-                session.setAttribute("user", user);
-                resource = "/index.jsp";
-                break;
-            case "/logout":
-                session.removeAttribute("user");
-                session.invalidate();
-                resource = "/index.jsp";
-                break;
-            default:
-                //request.setAttribute("errorMsg", "Risorsa '" + path + "' non trovata");
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
+            }
+        } catch (RequestNotValidException e) {
+            e.dispatchErrors(request, response);
+            return;
         }
+
 
         response.sendRedirect(contextPath + resource);
     }

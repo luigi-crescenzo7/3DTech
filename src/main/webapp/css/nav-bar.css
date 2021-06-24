@@ -1,0 +1,69 @@
+html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border: 0;
+}
+
+#logo {
+    margin: 0 15px 0;
+    padding: 0;
+    width: 20em;
+}
+
+.nav {
+    background-color: #007763;
+    width: 100vw;
+    border: 1px solid black;
+    overflow: hidden;
+}
+
+.nav > .bar {
+    width: 100%;
+    margin: 0;
+    padding-top: 10px;
+}
+
+.nav a {
+    float: left;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    padding-right: 8px;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.accesso {
+    border: 1px solid black;
+    float: right;
+}
+
+.accesso a {
+    color: black;
+    text-decoration: none;
+}
+
+.accesso a:link {
+    color: black;
+}
+
+.accesso a:visited {
+    color: black;
+}
+
+.accesso a:hover {
+    color: white;
+    background-color: #007763;
+    margin: 0;
+}
+
+.nav .search {
+    position: absolute;
+    right: 0;
+}
+
+#x {
+    margin: 0;
+    padding: 0;
+}
