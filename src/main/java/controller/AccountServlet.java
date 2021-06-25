@@ -32,7 +32,7 @@ public class AccountServlet extends HttpServlet {
         HttpSession session = request.getSession();
         List<String> list;
         Utente user = null;
-        RequestValidator validator;
+        RequestValidator validator = null;
 
         try {
             switch (path) {
@@ -46,7 +46,9 @@ public class AccountServlet extends HttpServlet {
                     if (user != null && user.isAdmin()) {
                         resource = "/controlpanel/";
                         session.setAttribute("userSession", user);
+                        System.out.println("Ok??");
                     } else {
+                        System.out.println("WTF??");
                         response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                         return;
                     }
@@ -83,6 +85,8 @@ public class AccountServlet extends HttpServlet {
                     return;
             }
         } catch (RequestNotValidException e) {
+            System.out.println("error??? " + e.getMessage());
+            System.out.println(e.getErrors());
             e.dispatchErrors(request, response);
             return;
         }

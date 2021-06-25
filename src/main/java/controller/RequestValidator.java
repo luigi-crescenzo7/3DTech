@@ -3,6 +3,7 @@ package controller;
 import model.Utente.Utente;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -117,12 +118,12 @@ public class RequestValidator {
         return assertMatch(param, USR_NAME_PATTERN, msg);
     }
 
-    private List<String> getList() {
+    public List<String> getList() {
         return list;
     }
 
     public void hasErrors() {
         if (!list.isEmpty())
-            throw new RequestNotValidException(11);
+            throw new RequestNotValidException(getList(), HttpServletResponse.SC_BAD_REQUEST);
     }
 }

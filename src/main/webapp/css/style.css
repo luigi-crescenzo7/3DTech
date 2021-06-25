@@ -488,8 +488,8 @@ div.mod_product_input input[type="submit"] {
 .rtable {
     display: inline-block;
     vertical-align: top;
-    max-width: 100%;
-    width: 50%;
+    max-width: 600px;
+    width: 600px;
     overflow-x: auto;
     white-space: nowrap;
     border-collapse: collapse;
@@ -584,7 +584,6 @@ body.admin {
     font-size: 2em;
     text-transform: uppercase;
     color: white;
-    position: absolute;
     left: 100px;
     margin: 5px 0 0;
     text-underline: none;
@@ -640,4 +639,20 @@ footer {
     margin: 0;
     position: absolute;
     bottom: 0;
+}
+
+@media screen and (max-device-width: 480px){
+    .table-items {
+        display: flex;
+        margin-right: auto;
+        margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .rtable{
+        max-width: 450px;
+        width: min-content;
+        height: min-content;
+    }
 }
