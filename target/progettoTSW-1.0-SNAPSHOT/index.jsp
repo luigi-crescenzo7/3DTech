@@ -2,13 +2,14 @@
 <html>
 <head>
     <%@include file="WEB-INF/results/common.jsp" %>
-    <!--<link rel="stylesheet" href="${contextPath}/css/nav-bar.css" type="text/css">-->
-    <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
     <title>3DTech</title>
 </head>
 <body>
 <%@include file="WEB-INF/results/nav-bar.jsp" %>
-<!--<section class="prima">
+<section class="prima">
     Sconti
 </section>
 <section class="seconda">
@@ -19,7 +20,7 @@
 </section>
 <section class="quarta">
     Recenti
-</section>-->
+</section>
 <jsp:include page="WEB-INF/results/footer.jsp"/>
 </body>
 </html>

@@ -2,7 +2,9 @@
 <html>
 <head>
     <%@ include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/login.css" type="text/css">
     <title>Registrazione Utente - 3DTech</title>
     <script src="${contextPath}/js/checkUser.js" defer></script>
 </head>

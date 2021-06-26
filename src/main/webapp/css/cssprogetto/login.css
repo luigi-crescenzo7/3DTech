@@ -1,0 +1,94 @@
+.login {
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 32px;
+    margin: 40px auto 24px;
+    width: 284px;
+    min-width: 0;
+    height: 200px;
+}
+
+.registrazione {
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 32px;
+    margin: 40px auto 24px;
+    width: 284px;
+    min-width: 0;
+    height: 620px;
+}
+
+.btn-submit {
+    color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    min-height: 24px;
+    border: none;
+    background-image: linear-gradient(#009687 0%, #007763 100%);
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* forse da eliminare*/
+.btn-submit:hover {
+    background-image: linear-gradient(#007763 0%, #009687 100%);
+}
+
+.admin {
+    background-color: #007Fcc;
+}
+
+.login_admin {
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 32px;
+    margin: 180px auto 24px;
+    width: 300px;
+    line-height: 25px;
+    min-width: 0;
+    height: 330px;
+}
+
+.accedi_admin {
+    color: white;
+    border-radius: 4px;
+    padding: 4px 8px;
+    min-height: 24px;
+    border: none;
+    background-image: linear-gradient(#57B5E0 0%, #007FCC 100%);
+    width: 100%;
+    height: 20px;
+}
+
+.accedi_admin:hover {
+    background-image: linear-gradient(#007FCC 0%, #57B5E0 100%);
+}
+
+.input_admin {
+    border-style: solid;
+    border-radius: 2px;
+    width: 100%;
+    outline: none;
+}
+
+.input_admin:hover {
+    border-color: #007FCC;
+}
+
+.login_admin p {
+    margin: 11px 0;
+    text-align: center;
+    font-size: 22px;
+    font-family: "Orienta", sans-serif;
+    text-transform: uppercase;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 7px;
+}
+

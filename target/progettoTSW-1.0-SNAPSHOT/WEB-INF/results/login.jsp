@@ -4,7 +4,8 @@
 <head>
     <%@include file="common.jsp" %>
     <title>Login Utente - 3DTech</title>
-    <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/login.css" type="text/css">
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>

@@ -1,11 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
 <head>
     <%@include file="common.jsp" %>
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/product.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
     <script src="${contextPath}/js/acaso.js" defer></script>
 </head>

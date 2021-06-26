@@ -7,10 +7,19 @@ import java.util.List;
 public class Categoria {
     private int id;
     private String nome;
+    private String urlImage;
     private List<Prodotto> prodotti;
 
     public int getId() {
         return id;
+    }
+
+    public void setUrlImage(String url) {
+        this.urlImage = url;
+    }
+
+    public String getUrlImage() {
+        return urlImage;
     }
 
     public void setId(int id) {

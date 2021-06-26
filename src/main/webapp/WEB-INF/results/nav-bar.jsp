@@ -32,16 +32,14 @@
 </header>
 <nav>
     <ul class="barra_di_nav">
-        <li><a href="#">Home</a></li>
-        <li><a href="${contextPath}Categorie.jsp">Categorie</a></li>
+        <li><a href="${contextPath}/">Home</a></li>
+        <li><a href="${contextPath}/categorie/">Categorie</a></li>
         <li><a href="#">Chi Siamo</a></li>
         <li><a href="#">Contatti</a></li>
-        <li>
-            <div class="search">
-                <form>
-                    <input type="search" name="search" placeholder="Cerca...">
-                </form>
-            </div>
-        </li>
     </ul>
+    <div class="search">
+        <form>
+            <input type="search" name="search" placeholder="Cerca...">
+        </form>
+    </div>
 </nav>

@@ -3,7 +3,8 @@
 <head>
     <%@include file="common.jsp" %>
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js" defer></script>
     <script src="${contextPath}/js/chart.js" defer></script>
     <script src="${contextPath}/js/hamburger.js" defer></script>

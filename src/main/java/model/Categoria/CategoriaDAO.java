@@ -24,6 +24,7 @@ public class CategoriaDAO {
                 Categoria cat = new Categoria();
                 cat.setId(set.getInt("cat.id_categoria"));
                 cat.setNome(set.getString("cat.nome"));
+                cat.setUrlImage(set.getString("cat.url_image"));
                 List<Prodotto> prodotti = new ArrayList<>();
                 while (set.next()) {
                     Prodotto p = new Prodotto();
@@ -123,6 +124,7 @@ public class CategoriaDAO {
                 Categoria c = new Categoria();
                 c.setId(set.getInt("id_categoria"));
                 c.setNome(set.getString("nome"));
+                c.setUrlImage(set.getString("url_image"));
                 categories.add(c);
             }
         } catch (SQLException e) {
@@ -141,6 +143,7 @@ public class CategoriaDAO {
             if (set.next()) {
                 categoria.setId(set.getInt("id_categoria"));
                 categoria.setNome(set.getString("nome"));
+                categoria.setUrlImage((set.getString("url_image")));
             }
 
         } catch (SQLException e) {

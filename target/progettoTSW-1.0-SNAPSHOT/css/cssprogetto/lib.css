@@ -1,0 +1,108 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@font-face {
+    font-family: "Orienta";
+    src: url("../../font/Orienta-Regular.ttf");
+}
+
+.input {
+    border-style: solid;
+    border-radius: 2px;
+    width: 100%;
+    outline: none;
+}
+
+.input:hover {
+    border-color: #007763;
+}
+
+#logo {
+    margin: 0 15px 0;
+    padding: 0;
+    width: 20em;
+    /*filter: invert(100%) sepia(5%) saturate(2761%) hue-rotate(313deg) brightness(89%) contrast(67%);*/
+}
+
+/* Tabella utenti/prodotti/etc*/
+.rtable {
+    display: inline-block;
+    vertical-align: top;
+    max-width: 600px;
+    width: 600px;
+    overflow-x: auto;
+    white-space: nowrap;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.rtable {
+    -webkit-overflow-scrolling: touch;
+    background-size: 10px 100%, 10px 100%;
+}
+
+.rtable td:first-child {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-size: 20px 100%;
+}
+
+.rtable td:last-child {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+    background-size: 20px 100%;
+}
+
+.rtable th {
+    font-size: 11px;
+    text-align: left;
+    text-transform: uppercase;
+    background: #007763;
+    color: white;
+}
+
+.rtable th, .rtable td {
+    padding: 6px 12px;
+    border: 1px solid #d9d7ce;
+}
+
+table {
+    margin-top: 30px;
+}
+
+.table-items {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-device-width: 480px) {
+    .table-items {
+        display: flex;
+        margin-right: auto;
+        margin-left: auto;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .rtable {
+        max-width: 450px;
+        width: min-content;
+        height: min-content;
+    }
+}

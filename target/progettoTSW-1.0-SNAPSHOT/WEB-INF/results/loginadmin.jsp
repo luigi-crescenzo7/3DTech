@@ -2,7 +2,8 @@
 <html>
 <head>
     <%@ include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/login.css" type="text/css">
     <title>LoginAdmin</title>
 </head>
 <body class="admin">
