@@ -2,11 +2,11 @@ header {
     display: flex;
 }
 
+
 .accesso {
-    position: fixed;
+    position: absolute;
     top: 0;
-    right: 0;
-    text-decoration: none;
+    right: 10px;
 }
 
 .accesso a {
@@ -34,7 +34,7 @@ nav {
     display: flex;
     background-color: #007763;
     width: 100vw;
-    border: 1px solid black;
+    box-sizing: border-box;
     overflow: hidden;
     text-align: center;
     flex-wrap: wrap;
@@ -43,8 +43,10 @@ nav {
 
 .barra_di_nav {
     list-style-type: none;
+    overflow: hidden; /**/
     margin: 0;
     padding: 0;
+    display: inline-block;
 }
 
 .barra_di_nav li {
@@ -244,12 +246,4 @@ nav .search input {
 .container #chart {
     max-height: 100%;
     max-width: 100%;
-}
-
-section {
-    display: inline-block;
-    border: 1px solid black;
-    color: black;
-    width: 25%;
-    height: 25%;
 }

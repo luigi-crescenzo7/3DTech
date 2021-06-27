@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/product.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
-    <script src="${contextPath}/js/acaso.js" defer></script>
+    <script src="${contextPath}/js/suffixes.js" defer></script>
 </head>
 <body>
 <%@ include file="admin-nav.jsp" %>

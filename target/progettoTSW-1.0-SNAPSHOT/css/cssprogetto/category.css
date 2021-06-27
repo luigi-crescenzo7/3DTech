@@ -1,12 +1,14 @@
 .category {
-    display: flex;
+    box-sizing: border-box;
     flex-wrap: wrap;
+    display: flex;
     justify-content: center;
     gap: 10px;
+    width: 100vw;
     min-width: 640px;
     background-color: #f3f3f3;
     padding: 50px 5px;
-    margin-right: 0;
+    height: min-content;
 }
 
 .cat {
@@ -16,10 +18,11 @@
 }
 
 .cat img {
-    padding-left: 40px;
+    padding: 0;
     width: 300px;
     height: 300px;
 }
+
 
 .text_category {
     display: block;

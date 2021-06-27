@@ -1,6 +1,6 @@
 <!--<script src="/js/user_logged.js" defer></script>-->
-<img id="logo" src="${contextPath}/imgs/logoNew.svg" alt="Logo">
 <header>
+    <img id="logo" src="${contextPath}/imgs/logoNew.svg" alt="Logo">
     <c:if test="${sessionScope.userSession == null}">
         <div class="accesso">
             <a href="${contextPath}/xx/registration">Registrati</a>
