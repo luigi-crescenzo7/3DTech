@@ -33,7 +33,7 @@ public class OrderServlet extends HttpServlet {
                 user = (Utente) session.getAttribute("userSession");
                 user.setOrdini(dao.doRetrieveOrdersWithProductsByUser(user.getId()));
                 request.setAttribute("userOrders", user.getOrdini());
-                dispatcher = request.getRequestDispatcher("/WEB-INF/results/showOrders.jsp");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/results/orders.jsp");
                 dispatcher.forward(request, response);
                 break;
             default:
