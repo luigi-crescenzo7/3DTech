@@ -121,7 +121,11 @@ public class ProductServlet extends HttpServlet {
                     order.setCarrello(new Cart(products));
                     order.setQuantita(products.size());
                     order.setDataOrdine(LocalDate.now());
-                    order.setUser((Utente) session.getAttribute("userSession"));
+                    Utente user = (Utente) session.getAttribute("userSession");
+                    if (user != null) {
+                        order.setUserId(user.getId());
+                        System.out.println("User not null");
+                    }
                     OrdineDAO orderDao = new OrdineDAO();
                     orderDao.doSave(order);
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);

@@ -16,14 +16,17 @@
             </a>
             <div class="opzioni">
                 <ul>
-                    <form action="${contextPath}/xx/logout" method="post">
-                        <li><a href="${contextPath}/xx/account">Account</a></li>
-                        <li><a href="${contextPath}">Ordini</a></li>
-                        <li>
-                            <button id="logout-btn">Logout
-                            </button>
-                        </li>
-                    </form>
+                    <li><a href="${contextPath}/xx/account">Account</a></li>
+                    <li>
+                        <form action="${contextPath}/tt/orders" method="post">
+                            <button class="btn-list">Ordini</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="${contextPath}/xx/logout" method="post">
+                            <button class="btn-list">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>

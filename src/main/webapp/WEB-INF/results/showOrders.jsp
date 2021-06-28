@@ -2,15 +2,20 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Ordini - 3DTech</title>
+    <%@include file="common.jsp" %>
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
 </head>
 <body>
-<ul>
-    <c:forEach items="${orders}" var="order">
-        <li>
-            <b>${order.id}   -   ${order.dataOrdine}</b>
-        </li>
-    </c:forEach>
-</ul>
+<%@include file="nav-bar.jsp" %>
+<c:forEach items="${requestScope.userOrders}" var="order">
+    <span>id: ${order.id} - data: ${order.dataOrdine}</span>
+    <ul>
+        <c:forEach items="${order.carrello.prodotti}" var="item">
+            <li>id prodotto: ${item.prodotto.id} - nome: ${item.prodotto.nome}</li>
+        </c:forEach>
+    </ul>
+</c:forEach>
 </body>
 </html>

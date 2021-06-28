@@ -121,7 +121,7 @@ public class ProdottoDAO {
     }
 
     public CartItem doRetrieveById(int id) {
-        String sql = "SELECT * FROM Prodotto WHERE id_prodotto=?";
+        String sql = "SELECT * FROM Prodotto as pro WHERE id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);

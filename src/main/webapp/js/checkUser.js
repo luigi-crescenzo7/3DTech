@@ -10,7 +10,8 @@ formElement.addEventListener('submit', function (event) {
 })
 
 function reset(event) {
-    event.target.nextElementSibling.textContent = ''
+    const elem = document.getElementById("alert-box")
+    elem.style.display = "none";
 }
 
 const entries = formElement.elements
@@ -25,7 +26,7 @@ for (let i = 0; i < entries.length; ++i) {
 
 function reportError(event) {
     const eventTarget = event.target
-    const nextElem = eventTarget.nextElementSibling
+    const nextElem = document.getElementById("alert-box")
     const errors = [];
     const regExp = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     console.log(eventTarget.type)
@@ -35,11 +36,17 @@ function reportError(event) {
             console.log("Success")
         } else {
             console.log("input not valid")
-            errors.push("Email invalid");
+            errors.push("Errata composizione dell'email, deve contenere " +
+                "almeno 'nome'@'dominio'");
         }
+    }else if(event.target.type === "password"){
+
     }
 
     console.log(errors)
+
+    nextElem.style.display = "block"
+    nextElem.className = "alert"
     nextElem.textContent = errors.join("-")
 }
 

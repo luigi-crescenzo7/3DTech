@@ -115,14 +115,15 @@ nav .search input {
     width: 142px;
 }
 
-#logout-btn {
+.btn-list {
+    display: block; /*todo: eliminare???*/
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
 }
 
-.opzioni a, .opzioni #logout-btn {
+.opzioni a, .opzioni .btn-list {
     text-decoration: none;
     box-sizing: content-box;
     width: 135px;
@@ -134,7 +135,7 @@ nav .search input {
     color: black;
 }
 
-.opzioni a:hover, .opzioni #logout-btn:hover {
+.opzioni a:hover, .opzioni .btn-list:hover {
     background-color: lightgrey;
 }
 

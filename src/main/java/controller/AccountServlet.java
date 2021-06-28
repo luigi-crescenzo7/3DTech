@@ -1,11 +1,14 @@
 package controller;
 
 
+import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoConstructor;
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
 import model.Utente.UtenteValidator;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,8 +29,6 @@ public class AccountServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
-
-
 
         System.out.println(path);
         String contextPath = request.getContextPath();
@@ -68,12 +70,13 @@ public class AccountServlet extends HttpServlet {
                     validator.hasErrors();
                     user = FormExtractor.extractLogin(list);
                     user = dao.doRetrieveEmailPassword(user);
+
                     if (user != null) {
                         session.setAttribute("userSession", user);
                         resource = "/index.jsp";
                     } else {
                         request.setAttribute("errorLogin", "Utente non esistente!");
-                        request.getRequestDispatcher("/WEB-INF/results/index.jsp").forward(request, response);
+                        response.sendRedirect(contextPath + "/xx/login");
                         return;
                     }
                     break;

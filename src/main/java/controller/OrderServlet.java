@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-
 @WebServlet(urlPatterns = "/tt/*")
 public class OrderServlet extends HttpServlet {
 
@@ -29,11 +28,11 @@ public class OrderServlet extends HttpServlet {
         Utente user;
         RequestDispatcher dispatcher;
 
-        switch(path) {
+        switch (path) {
             case "/orders":
                 user = (Utente) session.getAttribute("userSession");
-                user.setOrdini(dao.doRetrieveOrders(user));
-                request.setAttribute("orders", user.getOrdini());
+                user.setOrdini(dao.doRetrieveOrdersWithProductsByUser(user.getId()));
+                request.setAttribute("userOrders", user.getOrdini());
                 dispatcher = request.getRequestDispatcher("/WEB-INF/results/showOrders.jsp");
                 dispatcher.forward(request, response);
                 break;

@@ -1,6 +1,6 @@
 .login {
     box-sizing: border-box;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
     border-radius: 2px;
     position: relative;
     padding: 24px 24px 32px;
@@ -10,9 +10,20 @@
     height: 200px;
 }
 
+.form-input{
+    box-sizing: border-box;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    position: relative;
+    padding: 24px 24px 0;
+    margin: 40px auto 24px;
+    width: 284px;
+    min-width: 200px;
+    height: min-content;
+}
 .registrazione {
     box-sizing: border-box;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
     border-radius: 2px;
     position: relative;
     padding: 24px 24px 32px;
@@ -92,3 +103,36 @@
     padding-bottom: 7px;
 }
 
+.error {
+    display: block;
+    width: 100%;
+    padding: 0;
+    font-size: 1.2em;
+    color: white;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #900;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+}
+
+.alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
