@@ -5,6 +5,7 @@
     <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
+    <script src="${contextPath}/js/search.js" defer></script>
     <title>3DTech</title>
 </head>
 <body>
