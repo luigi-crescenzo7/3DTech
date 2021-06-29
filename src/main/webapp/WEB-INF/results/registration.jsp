@@ -19,15 +19,17 @@
         <label for="cognome">Cognome</label>
         <input class="input" type="text" id="cognome" name="fieldSurname"><br><br>
         <label for="password">Password</label>
-        <input class="input" type="password" id="password" name="fieldPassword"><br><br><br>
+        <input class="input" type="password" id="password" name="fieldPassword"><br><br>
+        <label for="date_birth">Data di nascita</label>
+        <input class="input" type="date" id="date_birth" name="fieldDateOfBirth"><br><br>
         <label for="telefono">Telefono</label>
-        <input class="input" type="tel" id="telefono" name="telefono"><br><br>
+        <input class="input" type="tel" id="telefono" name="fieldPhoneNumber"><br><br>
         <label for="indirizzo">Indirizzo</label>
-        <input class="input" type="text" id="indirizzo" name="indirizzo"><br><br>
+        <input class="input" type="text" id="indirizzo" name="fieldStreet"><br><br>
         <label for="citta">Città</label>
-        <input class="input" type="text" id="citta" name="citta"><br><br>
+        <input class="input" type="text" id="citta" name="fieldCity"><br><br>
         <label for="cap">CAP</label>
-        <input class="input" type="text" id="cap" name="cap"><br><br>
+        <input class="input" type="text" id="cap" name="fieldZIPCode"><br><br>
 
         <input class="btn-submit" type="submit" value="Registrati">
     </form>

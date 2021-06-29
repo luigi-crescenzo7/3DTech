@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 @WebServlet(urlPatterns = "/xx/*")
@@ -32,12 +33,12 @@ public class AccountServlet extends HttpServlet {
         List<String> list;
         Utente user = null;
         RequestValidator validator = null;
+        Map<String, String[]> map = request.getParameterMap();
 
         try {
             switch (path) {
                 case "/loginadmin":
-                    list = FormExtractor.retrieveParameterValues(request);
-                    user = FormExtractor.extractLogin(list);
+                    user = FormExtractor.extractLogin(map);
                     user = dao.doRetrieveEmailPassword(user);
                     validator = UtenteValidator.validateLogin(request);
                     validator.hasErrors();
@@ -53,17 +54,15 @@ public class AccountServlet extends HttpServlet {
                     }
                     break;
                 case "/registration":
-                    list = FormExtractor.retrieveParameterValues(request);
-                    user = FormExtractor.extractRegistration(list);
+                    user = FormExtractor.extractRegistration(map);
                     dao.doSave(user);
                     session.setAttribute("userSession", user);
                     resource = "/index.jsp";
                     break;
                 case "/login":
-                    list = FormExtractor.retrieveParameterValues(request);
                     validator = UtenteValidator.validateLogin(request);
                     validator.hasErrors();
-                    user = FormExtractor.extractLogin(list);
+                    user = FormExtractor.extractLogin(map);
                     user = dao.doRetrieveEmailPassword(user);
 
                     if (user != null) {
@@ -90,8 +89,6 @@ public class AccountServlet extends HttpServlet {
             e.dispatchErrors(request, response);
             return;
         }
-
-
         response.sendRedirect(contextPath + resource);
     }
 

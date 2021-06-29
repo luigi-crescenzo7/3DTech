@@ -1,6 +1,18 @@
 $(document).ready(function () {
-    console.log("ciao")
-    $("input[type='search']").bind('input', function (event) {
-        console.log(event.target)
-    })
+    const contextPath = $('#path').val()
+    console.log(contextPath)
+    let arr = ["Italia", "Francia", "Svizzera"]
+    $(".search-bar").bind('input', function (event) {
+            if (event.target.value !== '') {
+                $.post(contextPath + "/search/", {textContent: event.target.value}, function (data) {
+                    console.log(data)
+                    $('#tags').autocomplete({
+                        source: data,
+                        delay: 100,
+                        autofocus: true
+                    })
+                })
+            }
+        }
+    )
 })

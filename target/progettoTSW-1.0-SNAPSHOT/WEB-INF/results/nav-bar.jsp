@@ -42,7 +42,9 @@
     </ul>
     <div class="search">
         <form>
-            <input type="search" name="search" placeholder="Cerca...">
+            <div class="ui-widget">
+                <input id="tags" class="search-bar" type="text" name="search" placeholder="Cerca...">
+            </div>
         </form>
     </div>
 </nav>

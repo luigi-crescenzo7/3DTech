@@ -9,6 +9,7 @@
     <title>3DTech</title>
 </head>
 <body>
+<input id="path" type="hidden" value="${contextPath}">
 <%@include file="WEB-INF/results/nav-bar.jsp" %>
 <section class="prima">
     Sconti
