@@ -11,8 +11,11 @@
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
-<div id="alert-box">
-</div>
+<c:if test="${not empty requestScope.errorMsg}">
+    <div id="alert-box">
+        <p>${requestScope.errorMsg}</p>
+    </div>
+</c:if>
 <div class="form-input">
     <form action="${contextPath}/xx/login" method="post">
         <label for="email">Email</label>

@@ -65,6 +65,12 @@ public class AccountServlet extends HttpServlet {
                     user = FormExtractor.extractLogin(map);
                     user = dao.doRetrieveEmailPassword(user);
 
+                    if (user == null) {
+                        request.setAttribute("errorMsg", "Utente non presente");
+                        System.out.println("Utente non presente!!!");
+                        request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
+                        return;
+                    }
                     if (user != null) {
                         session.setAttribute("userSession", user);
                         resource = "/index.jsp";

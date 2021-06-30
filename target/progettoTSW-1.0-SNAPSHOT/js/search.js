@@ -1,7 +1,6 @@
 $(document).ready(function () {
     const contextPath = $('#path').val()
     console.log(contextPath)
-    let arr = ["Italia", "Francia", "Svizzera"]
     $(".search-bar").bind('input', function (event) {
             if (event.target.value !== '') {
                 $.post(contextPath + "/search/", {textContent: event.target.value}, function (data) {
