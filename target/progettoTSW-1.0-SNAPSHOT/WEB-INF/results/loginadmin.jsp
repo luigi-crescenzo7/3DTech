@@ -13,33 +13,12 @@
     </div>
     <form action="${contextPath}/xx/loginadmin" method="post">
         <label for="email">Email</label>
-        <input class="input_admin" type="email" id="email" name="email" value=""><br><br>
+        <input class="input_admin" type="email" id="email" name="fieldEmail"><br><br>
         <label for="password">Password</label>
-        <input class="input_admin" type="password" id="password" name="password" value=""><br><br><br>
+        <input class="input_admin" type="password" id="password" name="fieldPassword"><br><br><br>
         <input class="accedi_admin" type="submit" name="Submit" value="Accedi">
     </form>
     <br>
 </div>
 </body>
 </html>
-
-<!--
-<html>
-<head>
-<title>Title</title>
-</head>
-<body>
-<form action="loginadmin" method="post">
-<fieldset>
-<legend>Login amministratore</legend>
-Email:
-<input type="text" name="fieldEmail">
-<br>
-Password:
-<input type="password" name="fieldPassword">
-<input type="submit" value="Invia">
-</fieldset>
-</form>
-</body>
-</html>
--->

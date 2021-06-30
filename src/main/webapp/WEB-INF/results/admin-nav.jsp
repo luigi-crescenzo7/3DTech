@@ -9,4 +9,5 @@
             </form>
         </div>
     </div>
+    <input id="ctxPath" type="hidden" value="${contextPath}">
 </nav>
