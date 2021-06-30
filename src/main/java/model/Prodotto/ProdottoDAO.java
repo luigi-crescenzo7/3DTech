@@ -104,7 +104,7 @@ public class ProdottoDAO {
     }
 
     public List<Prodotto> doRetrieveAll() {
-        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat ON pro.id_categoria = cat.id_categoria";
+        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat ON pro.id_categoria = cat.id_categoria ORDER BY id_prodotto";
         List<Prodotto> list;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {

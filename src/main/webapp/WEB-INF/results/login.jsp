@@ -11,19 +11,22 @@
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
-<c:if test="${not empty requestScope.errorMsg}">
-    <div id="alert-box">
+<div id="alert-box" class="alert">
+    <c:if test="${not empty requestScope.errorMsg}">
+        <script>
+            document.querySelector("#alert-box").style.display = "block"
+        </script>
         <p>${requestScope.errorMsg}</p>
-    </div>
-</c:if>
+    </c:if>
+</div>
 <div class="form-input">
-    <form action="${contextPath}/xx/login" method="post">
+    <form id="loginForm" action="${contextPath}/xx/login" method="post">
         <label for="email">Email</label>
         <input class="input" type="email" id="email" name="fieldEmail" required>
         <span class="error"></span>
         <br><br>
         <label for="password">Password:</label>
-        <input class="input" type="password" id="password" name="fieldPassword" required>
+        <input class="input" type="password" id="password" minlength="8" maxlength="16" name="fieldPassword" required>
         <span class="error"></span>
         <br><br><br>
         <button class="btn-submit" type="submit">Accedi</button>
@@ -32,19 +35,3 @@
 </div>
 </body>
 </html>
-<!--
-<html>
-<head>
-<title>Title</title>
-</head>
-<body>
-<form action="login" method="post">
-<label for="email">Email:</label>
-<input type="email" id="email" name="fieldEmail">
-<label for="password">Password:</label>
-<input type="password" id="password" name="fieldPassword">
-<input type="submit" value="Invia">
-</form>
-</body>
-</html>
--->

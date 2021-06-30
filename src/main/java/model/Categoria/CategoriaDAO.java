@@ -137,8 +137,8 @@ public class CategoriaDAO {
     public Categoria doRetrieveByName(String name) {
         Categoria categoria = new Categoria();
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Categoria")) {
-
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Categoria WHERE nome = ?")) {
+            statement.setString(1, name);
             ResultSet set = statement.executeQuery();
             if (set.next()) {
                 categoria.setId(set.getInt("id_categoria"));

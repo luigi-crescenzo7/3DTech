@@ -15,8 +15,9 @@ public class RequestValidator {
     private final List<String> list;
     private static final Pattern INT_PATTERN = Pattern.compile("^\\d*$");
     private static final Pattern DOUBLE_PATTERN = Pattern.compile("^(-)?(0|[1-9]\\d+)\\.\\d+$");
+    // ^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+){1,2}$ <- email (buona(?))
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
-    private static final Pattern PASSW_PATTERN = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,16}$");
+    private static final Pattern PASSW_PATTERN = Pattern.compile("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,16}$");//todo: da cambiare
     private static final Pattern USR_NAME_PATTERN = Pattern.compile("^([a-zA-Z\\s]){3,25}$");
 
     public RequestValidator(HttpServletRequest request) {

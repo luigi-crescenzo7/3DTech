@@ -44,7 +44,7 @@ public class FileServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-        //TODO cambiare stringa "uploads"
+        //TODO cambiare stringa "uploads", ipotetica variabile d'ambiente non trovata quando si deploya il SNAPSHOT
         this.basePath = System.getenv("CATALINA_HOME") + File.separator + "special_folder" + File.separator;
 
         // Validate base path.
