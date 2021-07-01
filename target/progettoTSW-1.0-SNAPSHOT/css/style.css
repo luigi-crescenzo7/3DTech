@@ -384,7 +384,7 @@ div.opzioni li {
     color: white;
 }*/
 
-.product {
+.product-container {
     display: flex;
     align-items: center;
     flex-wrap: wrap; /* proprietà importante per responsiveness */
@@ -393,7 +393,7 @@ div.opzioni li {
     flex-basis: auto;
 }
 
-.product .add_product {
+.product-container .add_product {
     /*width: 300px;
     height: 510px;*/
     max-width: 300px;
@@ -629,7 +629,7 @@ table {
     max-width: 100%;
 }
 
-.table-items {
+.table-container {
     display: flex;
     margin-right: auto;
     margin-left: auto;
@@ -650,7 +650,7 @@ table {
 }*/
 
 @media screen and (max-device-width: 480px) {
-    .table-items {
+    .table-container {
         display: flex;
         margin-right: auto;
         margin-left: auto;
