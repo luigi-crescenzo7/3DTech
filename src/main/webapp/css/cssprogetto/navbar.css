@@ -2,7 +2,6 @@ header {
     display: flex;
 }
 
-
 .accesso {
     position: absolute;
     top: 0;
@@ -33,9 +32,9 @@ header {
 nav {
     display: flex;
     background-color: #007763;
-    width: 100vw;
+    width: 100%;
     box-sizing: border-box;
-    overflow: hidden;
+    overflow: auto;
     text-align: center;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -193,6 +192,7 @@ nav .search input {
     background-color: #DBDCDB;
     display: none;
     width: 20%;
+    min-width: 154px;
     margin: 0;
     height: 100vh;
     overflow: hidden;

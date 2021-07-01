@@ -23,7 +23,39 @@
     </div>
 </aside>
 
-<div class="product">
+<div class="table-container">
+    <table class="rtable">
+        <thead>
+        <tr>
+            <th>info</th>
+            <th>id</th>
+            <th>nome</th>
+            <th>marchio</th>
+            <th>prezzo</th>
+            <th>peso</th>
+            <th>categoria</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${applicationScope.listProducts}" var="product">
+            <tr>
+                <td>
+                    <button class="show-info" value="${product.id}">clicca</button>
+                    <input type="hidden" value="${product.id}">
+                </td>
+                <td>${product.id}</td>
+                <td>${product.nome}</td>
+                <td>${product.marchio}</td>
+                <td>${product.prezzo}</td>
+                <td>${product.peso}</td>
+                <td>${product.categoria.nome}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<hr id="division-line">
+<div class="product-container">
     <div class="add_product">
         <div class="add_product_label"> Aggiungi prodotto</div>
         <div class="add_product_input">
@@ -97,45 +129,8 @@
         </div>
     </div>
 </div>
-<hr id="division-line">
-<button id="show-modal">Click me</button>
-
-<div class="table-items">
-    <table class="rtable">
-        <thead>
-        <tr>
-            <th>info</th>
-            <th>id</th>
-            <th>nome</th>
-            <th>marchio</th>
-            <th>prezzo</th>
-            <th>peso</th>
-            <th>categoria</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${applicationScope.listProducts}" var="product">
-            <tr>
-                <td>
-                    <button class="show-info" value="${product.id}">clicca</button>
-                    <input type="hidden" id="valoreNascosto" value="${product.id}">
-                </td>
-                <td>${product.id}</td>
-                <td>${product.nome}</td>
-                <td>${product.marchio}</td>
-                <td>${product.prezzo}</td>
-                <td>${product.peso}</td>
-                <td>${product.categoria.nome}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-</div>
 <div class="modal" id="modal-box">
     <div class="modal-content">
-        <p>Nome: Nome bello</p>
-        <p>Cognome: Cognome bello</p>
-        <img src="${contextPath}/imgs/logoNew.svg" alt="aa">
     </div>
 </div>
 </body>

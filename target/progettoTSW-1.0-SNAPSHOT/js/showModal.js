@@ -2,7 +2,6 @@ $(document).ready(function () {
     let modalElement = document.querySelector("#modal-box")
     let buttons = document.querySelectorAll('.show-info')
     let content = document.querySelector(".modal-content")
-    let id = document.querySelector("#valoreNascosto").value
     let ctx = document.querySelector("#ctxPath").value
 
     function showModal() {
