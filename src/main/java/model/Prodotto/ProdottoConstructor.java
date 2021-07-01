@@ -8,11 +8,7 @@ import java.sql.SQLException;
 
 /*Alias tabella: pro */
 public class ProdottoConstructor {
-    /**
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
+
     public static Prodotto constructProduct(ResultSet rs) throws SQLException {
         Prodotto p = new Prodotto();
         p.setId(rs.getInt("pro.id_prodotto"));

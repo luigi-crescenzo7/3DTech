@@ -3,14 +3,13 @@ package model.Utente;
 import controller.RequestValidator;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class UtenteValidator {
 
     public static RequestValidator validateLogin(HttpServletRequest request) {
         RequestValidator validator = new RequestValidator(request);
         //validator.assertEmail("fieldEmail", "Cattiva composizione email");
-        //validator.assertPassword("fieldPassword", "..");
+        //validator.assertPassword("fieldPassword", "Cattiva composizione password");
         return validator;
     }
 

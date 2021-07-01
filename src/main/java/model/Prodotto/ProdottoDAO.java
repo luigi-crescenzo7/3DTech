@@ -8,30 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProdottoDAO {
-
-    /*public void doSaveJson(String s) {
-        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO test VALUE(?)")) {
-            ps.setString(1, s);
-            if (ps.executeUpdate() != 1) throw new RuntimeException();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public String doRetrieveJson() {
-        String s = "";
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * from test WHERE json_column->'$.name' = ?")) {
-            ps.setString(1, "gigi");
-            ResultSet set = ps.executeQuery();
-            while (set.next()) {
-                s = set.getString("json_column");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return s;
-    }*/
-
     public boolean doUpdateById(Prodotto p) {
         int result;
         try (Connection connection = ConPool.getConnection();
@@ -120,7 +96,7 @@ public class ProdottoDAO {
         return list;
     }
 
-    public CartItem doRetrieveById(int id) {
+    public CartItem doRetrieveCartItemById(int id) {
         String sql = "SELECT * FROM Prodotto as pro WHERE id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -134,6 +110,24 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public Prodotto doRetrieveById(int id) {
+        Prodotto prodotto = null;
+        String query = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat" +
+                " ON pro.id_categoria = cat.id_categoria WHERE pro.id_prodotto = ?";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next())
+                prodotto = ProdottoConstructor.constructProduct(set);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return prodotto;
     }
 
     public List<String> doRetrieveProductsByName(String name) {

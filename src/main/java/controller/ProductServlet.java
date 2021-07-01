@@ -60,7 +60,7 @@ public class ProductServlet extends HttpServlet {
             switch (path) {
                 case "/select":
                     int id = Integer.parseInt(param);
-                    CartItem item = dao.doRetrieveById(id);
+                    CartItem item = dao.doRetrieveCartItemById(id);
                     // Se il prodotto non è nella lista dei prodotti della sessione allora lo aggiungo
                     if (!products.contains(item)) {
                         if (quantity != null && !quantity.isBlank())
@@ -79,7 +79,7 @@ public class ProductServlet extends HttpServlet {
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                     break;
                 case "/create":
-                    RequestValidator.authorization(session, "userSession");
+                    RequestValidator.authorize(session, "userSession");
                     Part part = request.getPart("productImage");
                     String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                     String category = request.getParameter("productCategory");

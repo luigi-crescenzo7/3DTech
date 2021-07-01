@@ -1,10 +1,7 @@
 package model.Prodotto;
 
-import model.Categoria.Categoria;
-import model.Categoria.CategoriaDAO;
 import org.json.JSONObject;
 
-import java.util.List;
 import java.util.Map;
 
 public class ProductBuilder {
@@ -23,5 +20,20 @@ public class ProductBuilder {
         prodotto.setPeso(Double.parseDouble(map.get("productWeight")[0]));
         prodotto.setSconto(Double.parseDouble(map.get("productDiscount")[0]));
         return prodotto;
+    }
+
+    public static JSONObject fromObjectToJson(Prodotto p) {
+        JSONObject object = new JSONObject();
+        object.put("id", p.getId());
+        object.put("nome", p.getNome());
+        object.put("Descrizione", p.getDescrizione());
+        object.put("marchio", p.getMarchio());
+        object.put("immagine", p.getUrlImage());
+        object.put("caratteristiche", p.getCaratteristiche());
+        object.put("prezzo", p.getPrezzo());
+        object.put("peso", p.getPeso());
+        object.put("sconto", p.getSconto());
+        object.put("categoria", p.getCategoria().getNome());
+        return object;
     }
 }

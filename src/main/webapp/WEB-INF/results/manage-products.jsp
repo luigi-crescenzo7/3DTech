@@ -7,8 +7,10 @@
     <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/product.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/modal.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
     <script src="${contextPath}/js/suffixes.js" defer></script>
+    <script src="${contextPath}/js/showModal.js" defer></script>
 </head>
 <body>
 <%@ include file="admin-nav.jsp" %>
@@ -96,10 +98,13 @@
     </div>
 </div>
 <hr id="division-line">
+<button id="show-modal">Click me</button>
+
 <div class="table-items">
     <table class="rtable">
         <thead>
         <tr>
+            <th>info</th>
             <th>id</th>
             <th>nome</th>
             <th>marchio</th>
@@ -111,6 +116,10 @@
         <tbody>
         <c:forEach items="${applicationScope.listProducts}" var="product">
             <tr>
+                <td>
+                    <button class="show-info" value="${product.id}">clicca</button>
+                    <input type="hidden" id="valoreNascosto" value="${product.id}">
+                </td>
                 <td>${product.id}</td>
                 <td>${product.nome}</td>
                 <td>${product.marchio}</td>
@@ -121,6 +130,13 @@
         </c:forEach>
         </tbody>
     </table>
+</div>
+<div class="modal" id="modal-box">
+    <div class="modal-content">
+        <p>Nome: Nome bello</p>
+        <p>Cognome: Cognome bello</p>
+        <img src="${contextPath}/imgs/logoNew.svg" alt="aa">
+    </div>
 </div>
 </body>
 </html>

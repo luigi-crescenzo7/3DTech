@@ -38,46 +38,50 @@ public class AccountServlet extends HttpServlet {
         try {
             switch (path) {
                 case "/loginadmin":
-                    user = FormExtractor.extractLogin(map);
-                    user = dao.doRetrieveEmailPassword(user);
                     validator = UtenteValidator.validateLogin(request);
-                    validator.hasErrors();
+                    if (!validator.hasErrors()) {
+                        user = FormExtractor.extractLogin(map);
+                        user = dao.doRetrieveEmailPassword(user);
+                        if (user == null) {
+                            request.setAttribute("errorMsg", "Account inesistente");
+                            System.out.println("Email o password non validi");
+                            request.getRequestDispatcher("/WEB-INF/results/loginadmin.jsp").forward(request, response);
+                            return;
+                        }
 
-                    if (user != null && user.isAdmin()) {
-                        resource = "/controlpanel/";
-                        session.setAttribute("userSession", user);
-                        System.out.println("Ok??");
-                    } else {
-                        System.out.println("WTF??");
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                        return;
+                        if (user.isAdmin()) {
+                            resource = "/controlpanel/";
+                            session.setAttribute("userSession", user);
+                            System.out.println("Ok??");
+                        } else {
+                            System.out.println("WTF??");
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                            return;
+                        }
                     }
                     break;
                 case "/registration":
-                    user = FormExtractor.extractRegistration(map);
-                    dao.doSave(user);
-                    session.setAttribute("userSession", user);
-                    resource = "/index.jsp";
+                    validator = UtenteValidator.validateRegistration(request);
+                    if (!validator.hasErrors()) {
+                        user = FormExtractor.extractRegistration(map);
+                        dao.doSave(user);
+                        session.setAttribute("userSession", user);
+                        resource = "/index.jsp";
+                    }
                     break;
                 case "/login":
                     validator = UtenteValidator.validateLogin(request);
-                    validator.hasErrors();
-                    user = FormExtractor.extractLogin(map);
-                    user = dao.doRetrieveEmailPassword(user);
-
-                    if (user == null) {
-                        request.setAttribute("errorMsg", "Utente non presente");
-                        System.out.println("Utente non presente!!!");
-                        request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
-                        return;
-                    }
-                    if (user != null) {
+                    if (!validator.hasErrors()) {
+                        user = FormExtractor.extractLogin(map);
+                        user = dao.doRetrieveEmailPassword(user);
+                        if (user == null) {
+                            request.setAttribute("errorMsg", "Account inesistente");
+                            System.out.println("Email o password non validi");
+                            request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
+                            return;
+                        }
                         session.setAttribute("userSession", user);
                         resource = "/index.jsp";
-                    } else {
-                        request.setAttribute("errorLogin", "Utente non esistente!");
-                        response.sendRedirect(contextPath + "/xx/login");
-                        return;
                     }
                     break;
                 case "/logout":

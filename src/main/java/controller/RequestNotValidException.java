@@ -12,8 +12,9 @@ public class RequestNotValidException extends RuntimeException {
         super();
     }
 
-    public RequestNotValidException(String msg) {
+    public RequestNotValidException(int errorCode, String msg) {
         super(msg);
+        this.errorCode = errorCode;
     }
 
     public RequestNotValidException(List<String> errors, int errorCode) {

@@ -2,8 +2,12 @@ package controller;
 
 
 import model.Categoria.CategoriaDAO;
+import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoDAO;
+import model.Prodotto.ProductBuilder;
 import model.Utente.Utente;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,6 +45,7 @@ public class AdminServlet extends HttpServlet {
                     return;
             }
         } else {
+            System.out.println("ma che ca...");
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -55,7 +60,7 @@ public class AdminServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         System.out.println("doPost " + path);
-
+        PrintWriter writer = null;
 
         switch (path) {
             case "/chart":
@@ -69,9 +74,30 @@ public class AdminServlet extends HttpServlet {
                 array.put(0, names);
                 array.put(1, nums);
 
-                PrintWriter writer = response.getWriter();
+                writer = response.getWriter();
                 writer.println(array);
                 writer.close();
+                break;
+            case "/product-info":
+                System.out.println("product info called");
+                response.setContentType("application/json");
+                String id = request.getParameter("productId");
+
+                Prodotto p = new ProdottoDAO().doRetrieveById(Integer.parseInt(id));
+                JSONObject obj = ProductBuilder.fromObjectToJson(p);
+                String category = (String) obj.get("categoria");
+
+                writer = response.getWriter();
+                writer.println(obj);
+                writer.close();
+                /*switch (category) {
+                    case "Materiale plastico":
+                        obj.put("caratteristiche", p.getCaratteristiche());
+                        break;
+                    default:
+                        System.out.println("Errore stranissimo...");
+                        break;
+                }*/
                 break;
             default:
                 break;
