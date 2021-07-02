@@ -20,6 +20,9 @@ public class RequestValidator {
     // ^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,16}$ <-vecchia regexp (brutta)
     private static final Pattern PASSW_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[._-])[A-Za-z\\d._-]{8,16}$");//todo: da cambiare
     private static final Pattern NAME_PATTERN = Pattern.compile("^([a-zA-Z\\s]){3,25}$");
+    private static final Pattern SURNAME_PATTERN = Pattern.compile("^([a-zA-Z\\s]){3,25}$");
+    // Solo per numeri di telefonia mobile italiani
+    private static final Pattern PHONE_PATTERN = Pattern.compile("");
 
     public RequestValidator(HttpServletRequest request) {
         this.request = request;
@@ -34,13 +37,13 @@ public class RequestValidator {
 
     public static void authorize(HttpSession session, String attribute) {
         authenticate(session, attribute);
-        Object obj = session.getAttribute(attribute);
-        if (obj instanceof Utente) {
+        Object object = session.getAttribute(attribute);
+        if (object instanceof Utente) {
             Utente user = (Utente) session.getAttribute(attribute);
             if (!user.isAdmin())
                 throw new RequestNotValidException(HttpServletResponse.SC_BAD_REQUEST, "Utente non autorizzato");
         } else {
-            throw new RequestNotValidException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Class cast exception");
+            throw new RequestNotValidException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore interno al server");
         }
     }
 
@@ -58,6 +61,10 @@ public class RequestValidator {
         } else {
             return true;
         }
+    }
+
+    public boolean assertPhoneNumber(String param, String msg) {
+        return assertMatch(param, PHONE_PATTERN, msg);
     }
 
     public boolean assertEmail(String param, String msg) {
@@ -78,6 +85,10 @@ public class RequestValidator {
 
     public boolean assertName(String param, String msg) {
         return assertMatch(param, NAME_PATTERN, msg);
+    }
+
+    public boolean assertSurname(String param, String msg) {
+        return assertMatch(param, SURNAME_PATTERN, msg);
     }
 
     public List<String> getList() {
