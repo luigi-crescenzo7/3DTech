@@ -20,7 +20,7 @@ for (let i = 0; i < entries.length; i++) {
     if (entries[i].willValidate && validInput) {
         console.log(entries[i])
         entries[i].addEventListener('change', reportError)
-        entries[i].addEventListener('focus', reset)
+        //entries[i].addEventListener('focus', reset)
     }
 }
 

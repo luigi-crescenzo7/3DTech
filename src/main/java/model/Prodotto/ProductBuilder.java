@@ -26,7 +26,7 @@ public class ProductBuilder {
         JSONObject object = new JSONObject();
         object.put("id", p.getId());
         object.put("nome", p.getNome());
-        object.put("Descrizione", p.getDescrizione());
+        object.put("descrizione", p.getDescrizione());
         object.put("marchio", p.getMarchio());
         object.put("immagine", p.getUrlImage());
         object.put("caratteristiche", p.getCaratteristiche());

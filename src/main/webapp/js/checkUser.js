@@ -16,11 +16,11 @@ let errors = []
 const entries = formElement.elements
 console.log(entries.length)
 for (let i = 0; i < entries.length; i++) {
-    let validInput = entries[i].nodeName.match('INPUT|TEXTAREA|SELECT')
+    let validInput = entries[i].nodeName.match('INPUT')
     if (entries[i].willValidate && validInput) {
         console.log(entries[i])
         entries[i].addEventListener('change', reportError)
-        entries[i].addEventListener('focus', reset)
+        //entries[i].addEventListener('focus', reset)
     }
 }
 
@@ -70,5 +70,4 @@ function reportError() {
 function reset() {
     const elem = document.getElementById("alert-box")
     elem.style.display = "none";
-    errors = []
 }

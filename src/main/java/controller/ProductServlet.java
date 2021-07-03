@@ -94,10 +94,6 @@ public class ProductServlet extends HttpServlet {
                         file = new File(uploadRoot + fileName);
                         if (!file.exists())
                             Files.copy(fileStream, file.toPath());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, file.toPath().toString() + Arrays.toString(e.getStackTrace()));
-                        return;
                     }
                     switch (category) {
                         case "Materiale plastico":
@@ -144,12 +140,11 @@ public class ProductServlet extends HttpServlet {
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                    return;
+                    break;
             }
         } catch (IOException e) {
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
-            return;
         }
     }
 }

@@ -1085,14 +1085,12 @@ id_ordine</ColNames>
       <RefTableName>prodotto</RefTableName>
       <RefColNames>id_prodotto</RefColNames>
       <OnUpdate>cascade</OnUpdate>
-      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <foreign-key id="312" parent="289" name="ordine_prodotto_ibfk_2">
       <ColNames>id_ordine</ColNames>
       <RefTableName>ordine</RefTableName>
       <RefColNames>id_ordine</RefColNames>
       <OnUpdate>cascade</OnUpdate>
-      <OnDelete>cascade</OnDelete>
     </foreign-key>
     <column id="313" parent="290" name="id_prodotto">
       <Position>1</Position>
