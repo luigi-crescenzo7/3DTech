@@ -22,19 +22,24 @@
         </form>
     </c:forEach>
 </ul>
-<form action="${contextPath}/ll/checkout" method="post">
+<form action="${contextPath}/tt/checkout" method="post">
     <input type="submit" value="Procedi con l'ordine">
 </form>
-<c:if test="${sessionScope.products != null}">
-    <b>Prodotti nel carrello:</b><br>
-    <ul>
-        <c:forEach items="${sessionScope.products}" var="cartitem">
-            <c:set var="prodotto" scope="page" value="${cartitem.prodotto}"/>
-            <li> ${prodotto.nome} - ${prodotto.id}</li>
-            <label for="quantity">Quantità: ${cartitem.quantita}</label>
-        </c:forEach>
-    </ul>
-</c:if>
+<c:choose>
+    <c:when test="${sessionScope.sessionCart.prodotti.size() > 0}">
+        <b>Prodotti nel carrello:</b><br>
+        <ul>
+            <c:forEach items="${sessionScope.sessionCart.prodotti}" var="cartitem">
+                <c:set var="prodotto" scope="page" value="${cartitem.prodotto}"/>
+                <li> ${prodotto.nome} - ${prodotto.id}</li>
+                <label for="quantity">Quantità: ${cartitem.quantita}</label>
+            </c:forEach>
+        </ul
+    </c:when>
+    <c:otherwise>
+        <p>Non ci sono prodotti nel carrello</p>
+    </c:otherwise>
+</c:choose>
 <fieldset>
     <legend>
         <form action="${contextPath}/tt/orders" method="post">
@@ -43,7 +48,7 @@
     </legend>
 </fieldset>
 <br>
-<form action="logout" method="post">
+<form action="" method="post">
     <input type="submit" value="Logout">
 </form>
 </body>

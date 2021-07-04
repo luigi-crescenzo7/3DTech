@@ -10,7 +10,7 @@
 <body>
 <%@include file="nav-bar.jsp" %>
 <c:forEach items="${requestScope.userOrders}" var="order">
-    <span>id: ${order.id} - data: ${order.dataOrdine}</span>
+    <span>id: ${order.id} - data: ${order.dataOrdine} -  totale: ${order.carrello.total}</span>
     <ul>
         <c:forEach items="${order.carrello.prodotti}" var="item">
             <li>id prodotto: ${item.prodotto.id} - nome: ${item.prodotto.nome}</li>

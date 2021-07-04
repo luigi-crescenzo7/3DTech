@@ -85,6 +85,7 @@ public class AccountServlet extends HttpServlet {
                     }
                     break;
                 case "/logout":
+                    RequestValidator.authenticate(session, "userSession");
                     session.removeAttribute("user");
                     session.invalidate();
                     resource = "/index.jsp";

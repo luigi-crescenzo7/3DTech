@@ -7,7 +7,7 @@
     <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/login.css" type="text/css">
-    <script src="${contextPath}/js/checkUser.js" defer></script>
+    <script src="${contextPath}/js/validateLogin.js" defer></script>
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>

@@ -9,6 +9,7 @@ import model.Ordine.OrdineDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
+import model.Utente.UserSession;
 import model.Utente.Utente;
 
 import javax.servlet.ServletContext;
@@ -46,35 +47,27 @@ public class ProductServlet extends HttpServlet {
         try {
             String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
             String resource = "/";
-            String param = request.getParameter("productId");
-            String quantity = request.getParameter("fieldQuantity");
+
             HttpSession session = request.getSession();
             List<CartItem> products = null;
+            Cart cart = null;
+            Prodotto p = null;
             ProdottoDAO dao = new ProdottoDAO();
-            if (session.getAttribute("products") == null) {
-                products = new ArrayList<>();
+            if (session.getAttribute("sessionCart") == null) {
+                cart = new Cart(new ArrayList<>());
+                session.setAttribute("sessionCart", cart);
             } else {
-                products = (List<CartItem>) session.getAttribute("products");
+                cart = (Cart) session.getAttribute("sessionCart");
             }
 
             switch (path) {
                 case "/select":
-                    int id = Integer.parseInt(param);
-                    CartItem item = dao.doRetrieveCartItemById(id);
-                    // Se il prodotto non è nella lista dei prodotti della sessione allora lo aggiungo
-                    if (!products.contains(item)) {
-                        if (quantity != null && !quantity.isBlank())
-                            item.setQuantita(Integer.parseInt(quantity));
-                        products.add(item);
-                        session.setAttribute("products", products);
-                    } else { // Se invece è presente ed è definita la quantità, allora vecchiaQuantità + nuovaQuantità
-                        int pos = products.indexOf(item);
-                        item = products.get(pos);
-
-                        if (quantity != null && !quantity.isBlank())
-                            item.setQuantita(item.getQuantita() + Integer.parseInt(quantity));
-                        else
-                            item.setQuantita(item.getQuantita() + 1);
+                    RequestValidator.authenticate(session, "userSession");
+                    String productId = request.getParameter("productId");
+                    String quantity = request.getParameter("fieldQuantity");
+                    CartItem item = dao.doRetrieveCartItemById(Integer.parseInt(productId));
+                    if (item != null) {
+                        cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
                     }
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                     break;
@@ -98,7 +91,7 @@ public class ProductServlet extends HttpServlet {
                     switch (category) {
                         case "Materiale plastico":
                             System.out.println("file name: " + fileName);
-                            Prodotto p = ProductBuilder.createMaterialePlastico(map, fileName);
+                            p = ProductBuilder.createMaterialePlastico(map, fileName);
                             Categoria cat = new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]);
                             p.setCategoria(cat);
                             dao.doSave(p);
@@ -108,10 +101,21 @@ public class ProductServlet extends HttpServlet {
                                 list2.add(p);
                             request.getRequestDispatcher("/WEB-INF/results/manage-products.jsp").forward(request, response);
                             break;
-                        case "thrgh":
+                        case "Ricambi":
+                            p = ProductBuilder.createRicambio(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            break;
+                        case "Accessori":
+                            p = ProductBuilder.createAccessorio(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            break;
+                        case "Utensili":
+                            p = ProductBuilder.createUtensile(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
                             break;
                         case "Stampanti 3D":
-                            System.out.println("Case: Stampanti 3D");
+                            p = ProductBuilder.createStampante3D(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
                             break;
                         default:
                             System.out.println("Default case");
@@ -119,17 +123,16 @@ public class ProductServlet extends HttpServlet {
                     }
                     break;
                 case "/checkout":
+                    RequestValidator.authenticate(session, "userSession");
+                    Utente user = UserSession.getUserFromSession(session, "userSession");
                     //todo: refattorizzare in OrderServlet
                     if (products != null && products.size() > 0) {
                         Ordine order = new Ordine();
                         order.setCarrello(new Cart(products));
                         order.setQuantita(products.size());
                         order.setDataOrdine(LocalDate.now());
-                        Utente user = (Utente) session.getAttribute("userSession");
-                        if (user != null) {
-                            order.setUserId(user.getId());
-                            System.out.println("User not null");
-                        }
+                        order.setUserId(user.getId());
+
                         OrdineDAO orderDao = new OrdineDAO();
                         orderDao.doSave(order);
                         request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);

@@ -40,8 +40,8 @@ public class OrdineDAO {
             String query1 = "INSERT INTO Ordine (quantita, data_ordine, id_utente) VALUES" +
                     " (?,?,?);";
 
-            String query2 = "INSERT INTO ordine_prodotto (id_prodotto, id_ordine, quantita) VALUES" +
-                    " (?,?,?);";
+            String query2 = "INSERT INTO ordine_prodotto (id_prodotto, id_ordine, quantita, prezzo_acquisto) VALUES" +
+                    " (?,?,?,?);";
 
             try (PreparedStatement set1 = connection.prepareStatement(query1, PreparedStatement.RETURN_GENERATED_KEYS);
                  PreparedStatement set2 = connection.prepareStatement(query2);) {
@@ -61,6 +61,7 @@ public class OrdineDAO {
                     set2.setInt(1, item.getProdotto().getId());
                     set2.setInt(2, order.getId());
                     set2.setInt(3, item.getQuantita());
+                    set2.setDouble(4, item.getProdotto().getPrezzo());
                     total += set2.executeUpdate();
                 }
                 System.out.println("Total: " + total);

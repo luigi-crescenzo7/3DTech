@@ -27,28 +27,28 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource;
+        String resource = "";
         HttpSession session = request.getSession();
 
-        Utente user = (Utente) session.getAttribute("userSession");
-
-        if (user.isAdmin()) {
+        try {
             switch (path) {
                 case "/":
+                    RequestValidator.authorize(session, "userSession");
                     resource = "/WEB-INF/results/admin-dashboard.jsp";
                     break;
                 case "/products":
+                    RequestValidator.authorize(session, "userSession");
                     resource = "/WEB-INF/results/manage-products.jsp";
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
             }
-        } else {
-            System.out.println("ma che ca...");
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        } catch (RequestNotValidException e) {
+            response.sendRedirect(request.getContextPath() + "/xx/admin");
             return;
         }
+
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(resource);
         dispatcher.forward(request, response);
@@ -79,25 +79,15 @@ public class AdminServlet extends HttpServlet {
                 writer.close();
                 break;
             case "/product-info":
-                System.out.println("product info called");
                 response.setContentType("application/json");
                 String id = request.getParameter("productId");
 
                 Prodotto p = new ProdottoDAO().doRetrieveById(Integer.parseInt(id));
                 JSONObject obj = ProductBuilder.fromObjectToJson(p);
-                String category = (String) obj.get("categoria");
 
                 writer = response.getWriter();
                 writer.println(obj);
                 writer.close();
-                /*switch (category) {
-                    case "Materiale plastico":
-                        obj.put("caratteristiche", p.getCaratteristiche());
-                        break;
-                    default:
-                        System.out.println("Errore stranissimo...");
-                        break;
-                }*/
                 break;
             default:
                 break;

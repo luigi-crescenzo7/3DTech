@@ -97,7 +97,7 @@ public class ProdottoDAO {
     }
 
     public CartItem doRetrieveCartItemById(int id) {
-        String sql = "SELECT * FROM Prodotto as pro WHERE id_prodotto=?";
+        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat on pro.id_categoria = cat.id_categoria WHERE id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
