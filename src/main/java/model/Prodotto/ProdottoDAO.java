@@ -87,7 +87,7 @@ public class ProdottoDAO {
             ResultSet rs = ps.executeQuery();
             list = new ArrayList<>();
             while (rs.next()) {
-                Prodotto p = ProdottoConstructor.constructProduct(rs);
+                Prodotto p = ProdottoConstructor.constructProduct(rs, false);
                 list.add(p);
             }
         } catch (SQLException e) {
@@ -96,14 +96,19 @@ public class ProdottoDAO {
         return list;
     }
 
+    /*
+            todo: c'è un problema con la join di questa tabella risultante con la tabella
+            ordine_prodotto (evitare di fare join con questa, trovare una soluzione migliore)
+     */
     public CartItem doRetrieveCartItemById(int id) {
-        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat on pro.id_categoria = cat.id_categoria WHERE id_prodotto=?";
+        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat " +
+                "on pro.id_categoria = cat.id_categoria WHERE pro.id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Prodotto product = ProdottoConstructor.constructProduct(rs);
+                Prodotto product = ProdottoConstructor.constructProduct(rs, false);
                 return new CartItem(product, 1);
             }
         } catch (SQLException e) {
@@ -123,7 +128,7 @@ public class ProdottoDAO {
 
             ResultSet set = statement.executeQuery();
             if (set.next())
-                prodotto = ProdottoConstructor.constructProduct(set);
+                prodotto = ProdottoConstructor.constructProduct(set, false);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -174,21 +179,4 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
     }
-    //TODO forse da eliminare
-    /*public String doRetrieveCaratteristiche(int id) {
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM prodotto" +
-                     " WHERE id_prodotto = ?")) {
-            ps.setInt(1, id);
-
-            ResultSet set = ps.executeQuery();
-            if (set.next()) {
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return "";
-    }*/
 }

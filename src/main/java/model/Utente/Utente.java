@@ -59,19 +59,16 @@ public class Utente {
         return passwordhash;
     }
 
-    //TODO Testare questo metodo per future invocazioni
     public void setPasswordhash(String password) {
-        if (this.passwordhash == null) {
-            try {
-                MessageDigest digest =
-                        MessageDigest.getInstance("SHA-1");
-                digest.reset();
-                digest.update(password.getBytes(StandardCharsets.UTF_8));
-                this.passwordhash = String.format("%040x", new
-                        BigInteger(1, digest.digest()));
-            } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            MessageDigest digest =
+                    MessageDigest.getInstance("SHA-1");
+            digest.reset();
+            digest.update(password.getBytes(StandardCharsets.UTF_8));
+            this.passwordhash = String.format("%040x", new
+                    BigInteger(1, digest.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 

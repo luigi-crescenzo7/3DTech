@@ -13,7 +13,7 @@ $(document).ready(function () {
             let robe = ''
             console.log(jsonObj)
             const imgElement = document.createElement('img')
-            imgElement.src = ctx + '/covers/' + jsonObj.immagine
+            imgElement.src = ctx + '/images/' + jsonObj.immagine
 
             for (let property in json2) {
                 if (json2.hasOwnProperty(property)) {

@@ -5,11 +5,10 @@ import model.Cart;
 import model.CartItem;
 import model.Ordine.Ordine;
 import model.Ordine.OrdineDAO;
-import model.Prodotto.Prodotto;
 import model.Utente.UserSession;
 import model.Utente.Utente;
 
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,11 +28,9 @@ public class OrderServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "/";
         OrdineDAO dao = new OrdineDAO();
         HttpSession session = request.getSession();
         Utente user;
-        RequestDispatcher dispatcher;
 
         switch (path) {
             case "/orders":
@@ -47,16 +43,16 @@ public class OrderServlet extends HttpServlet {
             case "/checkout":
                 RequestValidator.authenticate(session, "userSession");
                 user = UserSession.getUserFromSession(session, "userSession");
-                List<CartItem> products = (List<CartItem>) session.getAttribute("products");
+                Cart c = (Cart) session.getAttribute("sessionCart");
+                List<CartItem> products = c.getProdotti();
                 if (products != null && products.size() > 0) {
                     Ordine order = new Ordine();
-                    order.setCarrello(new Cart(products));
+                    order.setCarrello(c);
                     order.setQuantita(products.size());
                     order.setDataOrdine(LocalDate.now());
                     order.setUserId(user.getId());
-                    Cart c = order.getCarrello();
                     OrdineDAO orderDao = new OrdineDAO();
-                    orderDao.doSave(order);
+                    orderDao.doSave(order, true);
                     c.reset();
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                 } else {

@@ -32,7 +32,7 @@ public class FormExtractor {
         user.setName(parameters.get("fieldName")[0]);
         user.setSurname(parameters.get("fieldSurname")[0]);
         user.setPasswordhash(parameters.get("fieldPassword")[0]);
-        user.setDataNascita(Date.valueOf(parameters.get("fieldDateOfBirth")[0])); //todo: da testare Date.valueOf()
+        user.setDataNascita(Date.valueOf(parameters.get("fieldDateOfBirth")[0]));
         user.setPhoneNumber(parameters.get("fieldPhoneNumber")[0]);
         user.setZIPCode(parameters.get("fieldZIPCode")[0]);
         user.setCity(parameters.get("fieldCity")[0]);

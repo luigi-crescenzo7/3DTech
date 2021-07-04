@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class OrdineDAO {
 
+    //todo: forse da eliminare
     public List<Ordine> doRetrieveOrders(Utente user) {
         List<Ordine> ordini = new ArrayList<>();
         try (Connection connection = ConPool.getConnection();
@@ -34,7 +35,7 @@ public class OrdineDAO {
         return ordini;
     }
 
-    public void doSave(Ordine order) {
+    public void doSave(Ordine order, boolean discount) {
         try (Connection connection = ConPool.getConnection()) {
             connection.setAutoCommit(false);
             String query1 = "INSERT INTO Ordine (quantita, data_ordine, id_utente) VALUES" +
@@ -61,7 +62,7 @@ public class OrdineDAO {
                     set2.setInt(1, item.getProdotto().getId());
                     set2.setInt(2, order.getId());
                     set2.setInt(3, item.getQuantita());
-                    set2.setDouble(4, item.getProdotto().getPrezzo());
+                    set2.setDouble(4, item.getProdotto().getPrezzo() - item.calcolaSconto());
                     total += set2.executeUpdate();
                 }
                 System.out.println("Total: " + total);
@@ -95,7 +96,7 @@ public class OrdineDAO {
                     order.setCarrello(new Cart(new ArrayList<>()));
                     ordersMap.put(idOrdine, order);
                 }
-                Prodotto prodotto = ProdottoConstructor.constructProduct(set);
+                Prodotto prodotto = ProdottoConstructor.constructProduct(set, true);
                 Categoria categoria = new Categoria();
                 categoria.setNome(set.getString("cat.nome"));
                 prodotto.setCategoria(categoria);
@@ -117,7 +118,7 @@ public class OrdineDAO {
             ResultSet set = stmt.executeQuery();
             List<Prodotto> products = new ArrayList<>();
             while (set.next()) {
-                Prodotto prodotto = ProdottoConstructor.constructProduct(set);
+                Prodotto prodotto = ProdottoConstructor.constructProduct(set, false);
                 products.add(prodotto);
             }
             return products;

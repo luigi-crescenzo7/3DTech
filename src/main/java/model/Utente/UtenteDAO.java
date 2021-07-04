@@ -45,8 +45,6 @@ public class UtenteDAO {
                 Utente user = new Utente();
                 user.setId(rs.getInt("id_utente"));
                 user.setEmail(rs.getString("Email"));
-                //TODO: problema con setPassword
-                user.setPasswordhash(rs.getString("Passwordhash"));
                 user.setName(rs.getString("Nome"));
                 user.setDataNascita(rs.getDate("data_di_nascita"));
                 user.setSurname(rs.getString("Cognome"));
@@ -102,7 +100,6 @@ public class UtenteDAO {
 
             if (ps.executeUpdate() != 1) throw new RuntimeException();
 
-            //TODO ??? da verificare
             ResultSet keys = ps.getGeneratedKeys();
             if (keys.next()) {
                 user.setId(keys.getInt(1));

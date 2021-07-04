@@ -16,7 +16,7 @@
         <form action="${contextPath}/ll/select" method="post">
             <li>${product.nome}</li>
             <label for="quantity">Quantità:</label>
-            <input id="quantity" type="number" name="fieldQuantity">
+            <input id="quantity" type="number" name="fieldQuantity" value="1">
             <input type="hidden" name="productId" value="${product.id}">
             <input type="submit" value="Seleziona">
         </form>

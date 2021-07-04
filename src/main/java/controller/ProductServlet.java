@@ -33,7 +33,7 @@ public class ProductServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        uploadRoot = "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0" + File.separator + "special_folder" + File.separator;
+        uploadRoot = FileServlet.getUploadPath() + File.separator + "special_folder" + File.separator;
     }
 
     @Override
@@ -65,7 +65,9 @@ public class ProductServlet extends HttpServlet {
                     RequestValidator.authenticate(session, "userSession");
                     String productId = request.getParameter("productId");
                     String quantity = request.getParameter("fieldQuantity");
-                    CartItem item = dao.doRetrieveCartItemById(Integer.parseInt(productId));
+                    int id = Integer.parseInt(productId);
+                    CartItem item = dao.doRetrieveCartItemById(id);
+                    System.out.println("id:"+id+ " "+(item != null));
                     if (item != null) {
                         cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
                     }
@@ -120,25 +122,6 @@ public class ProductServlet extends HttpServlet {
                         default:
                             System.out.println("Default case");
                             break;
-                    }
-                    break;
-                case "/checkout":
-                    RequestValidator.authenticate(session, "userSession");
-                    Utente user = UserSession.getUserFromSession(session, "userSession");
-                    //todo: refattorizzare in OrderServlet
-                    if (products != null && products.size() > 0) {
-                        Ordine order = new Ordine();
-                        order.setCarrello(new Cart(products));
-                        order.setQuantita(products.size());
-                        order.setDataOrdine(LocalDate.now());
-                        order.setUserId(user.getId());
-
-                        OrdineDAO orderDao = new OrdineDAO();
-                        orderDao.doSave(order);
-                        request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
-                    } else {
-                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        return;
                     }
                     break;
                 default:

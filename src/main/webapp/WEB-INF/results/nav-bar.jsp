@@ -12,7 +12,7 @@
         <div class="utente_loggato">
             <button class="email_user">${sessionScope.userSession.email}</button>
             <a href="#pagina_carello">
-                <img class="carrello" src="${contextPath}img/carrello.png">
+                <img class="carrello" src="${contextPath}img/carrello.png" alt="aa">
             </a>
             <div class="opzioni">
                 <ul>

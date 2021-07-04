@@ -20,8 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-//TODO cambiare urlPattern
-@WebServlet(name = "FileServlet", urlPatterns = "/covers/*")
+@WebServlet(name = "FileServlet", urlPatterns = "/images/*")
 public class FileServlet extends HttpServlet {
 
     // Constants ----------------------------------------------------------------------------------
@@ -36,6 +35,10 @@ public class FileServlet extends HttpServlet {
 
     // Actions ------------------------------------------------------------------------------------
 
+    public static String getUploadPath() {
+        return "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0";
+    }
+
     /**
      * Initialize the servlet.
      *
@@ -44,8 +47,8 @@ public class FileServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
 
-        //TODO cambiare stringa "uploads", ipotetica variabile d'ambiente non trovata quando si deploya il SNAPSHOT
-        this.basePath = System.getenv("CATALINA_HOME") + File.separator + "special_folder" + File.separator;
+        //TODO cambiare stringa "uploads", ipotetica variabile d'ambiente non trovata quando si deploya lo SNAPSHOT
+        this.basePath = FileServlet.getUploadPath() + File.separator + "special_folder" + File.separator;
 
         // Validate base path.
         if (this.basePath == null) {

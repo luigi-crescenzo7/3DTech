@@ -14,7 +14,7 @@
     Marchio: <b>${product.marchio}</b>
 </p>
 <p>
-    Immagine: <img src="${contextPath}/covers/${product.urlImage}" alt="${product.id}">
+    Immagine: <img src="${contextPath}/images/${product.urlImage}" alt="${product.id}">
 </p>
 
 </body>
