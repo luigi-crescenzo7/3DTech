@@ -24,6 +24,7 @@ public class CategoriaDAO {
                 Categoria cat = new Categoria();
                 cat.setId(set.getInt("cat.id_categoria"));
                 cat.setNome(set.getString("cat.nome"));
+                cat.setUrlImage(set.getString("cat.url_image"));
                 List<Prodotto> prodotti = new ArrayList<>();
                 while (set.next()) {
                     Prodotto p = new Prodotto();
@@ -111,6 +112,44 @@ public class CategoriaDAO {
             throw new RuntimeException(e);
         }
         return names;
+    }
+
+    public List<Categoria> doRetrieveAll() {
+        List<Categoria> categories = new ArrayList<>();
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM categoria")) {
+
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                Categoria c = new Categoria();
+                c.setId(set.getInt("id_categoria"));
+                c.setNome(set.getString("nome"));
+                c.setUrlImage(set.getString("url_image"));
+                categories.add(c);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return categories;
+    }
+
+    public Categoria doRetrieveByName(String name) {
+        Categoria categoria = new Categoria();
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Categoria WHERE nome = ?")) {
+            statement.setString(1, name);
+            ResultSet set = statement.executeQuery();
+            if (set.next()) {
+                categoria.setId(set.getInt("id_categoria"));
+                categoria.setNome(set.getString("nome"));
+                categoria.setUrlImage((set.getString("url_image")));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return categoria;
     }
 }
 

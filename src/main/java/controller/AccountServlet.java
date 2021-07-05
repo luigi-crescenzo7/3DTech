@@ -1,8 +1,8 @@
 package controller;
 
-
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
+import model.Utente.UtenteValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 
 @WebServlet(urlPatterns = "/xx/*")
@@ -26,62 +27,80 @@ public class AccountServlet extends HttpServlet {
         String resource = "/";
 
         System.out.println(path);
-        RequestValidator.validateRequest(request);
         String contextPath = request.getContextPath();
         UtenteDAO dao = new UtenteDAO();
         HttpSession session = request.getSession();
         List<String> list;
         Utente user = null;
-        boolean flag = true;
+        RequestValidator validator = null;
+        Map<String, String[]> map = request.getParameterMap();
 
-        switch (path) {
-            case "/loginadmin":
-                list = FormExtractor.retrieveParameterValues(request);
-                user = FormExtractor.extractLogin(list);
-                user = dao.doRetrieveEmailPassword(user);
+        try {
+            switch (path) {
+                case "/loginadmin":
+                    validator = UtenteValidator.validateLogin(request);
+                    if (!validator.hasErrors()) {
+                        user = FormExtractor.extractLogin(map);
+                        user = dao.doRetrieveEmailPassword(user);
+                        if (user == null) {
+                            request.setAttribute("errorMsg", "Account inesistente");
+                            System.out.println("Email o password non validi");
+                            request.getRequestDispatcher("/WEB-INF/results/loginadmin.jsp").forward(request, response);
+                            return;
+                        }
 
-                if (user == null)
-                    resource = "";
-
-                if (user.isAdmin()) {
-                    resource = "/controlpanel/";
-                    session.setAttribute("user", user);
-                } else {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    flag = false;
-                }
-                break;
-            case "/registration":
-                list = FormExtractor.retrieveParameterValues(request);
-                user = FormExtractor.extractRegistration(list);
-                dao.doSave(user);
-                session.setAttribute("user", user);
-                resource = "/index.jsp";
-                break;
-            case "/login":
-                list = FormExtractor.retrieveParameterValues(request);
-                user = FormExtractor.extractLogin(list);
-                user = dao.doRetrieveEmailPassword(user);
-                if (user == null) {
-                    System.out.println("Utente non esistente");
+                        if (user.isAdmin()) {
+                            resource = "/controlpanel/";
+                            session.setAttribute("userSession", user);
+                            System.out.println("Ok??");
+                        } else {
+                            System.out.println("WTF??");
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                            return;
+                        }
+                    }
+                    break;
+                case "/registration":
+                    validator = UtenteValidator.validateRegistration(request);
+                    if (!validator.hasErrors()) {
+                        user = FormExtractor.extractRegistration(map);
+                        dao.doSave(user);
+                        session.setAttribute("userSession", user);
+                        resource = "/index.jsp";
+                    }
+                    break;
+                case "/login":
+                    validator = UtenteValidator.validateLogin(request);
+                    if (!validator.hasErrors()) {
+                        user = FormExtractor.extractLogin(map);
+                        user = dao.doRetrieveEmailPassword(user);
+                        if (user == null) {
+                            request.setAttribute("errorMsg", "Account inesistente");
+                            System.out.println("Email o password non validi");
+                            request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
+                            return;
+                        }
+                        session.setAttribute("userSession", user);
+                        resource = "/index.jsp";
+                    }
+                    break;
+                case "/logout":
+                    RequestValidator.authenticate(session, "userSession");
+                    session.removeAttribute("user");
+                    session.invalidate();
+                    resource = "/index.jsp";
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
-                }
-                session.setAttribute("user", user);
-                resource = "/index.jsp";
-                break;
-            case "/logout":
-                session.removeAttribute("user");
-                resource = "/index.jsp";
-                break;
-            default:
-                flag = false;
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+            }
+        } catch (RequestNotValidException e) {
+            System.out.println("error??? " + e.getMessage());
+            System.out.println(e.getErrors());
+            e.dispatchErrors(request, response);
+            return;
         }
-        if (flag) {
-            System.out.println(resource);
-            response.sendRedirect(contextPath + resource);
-        }
+        response.sendRedirect(contextPath + resource);
     }
 
 
@@ -91,12 +110,9 @@ public class AccountServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = "/";
-        RequestDispatcher dispatcher;
-        boolean flag = true;
         System.out.println("Path: " + path);
 
         switch (path) {
-
             case "/admin":
                 resource = "/WEB-INF/results/loginadmin.jsp";
                 break;
@@ -113,14 +129,11 @@ public class AccountServlet extends HttpServlet {
                 resource = "/WEB-INF/results/account.jsp";
                 break;
             default:
-                flag = false;
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+                return;
         }
 
-        if (flag) {
-            dispatcher = request.getRequestDispatcher(resource);
-            dispatcher.forward(request, response);
-        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher(resource);
+        dispatcher.forward(request, response);
     }
 }

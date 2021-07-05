@@ -1,0 +1,257 @@
+header {
+    display: flex;
+}
+
+.accesso {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+
+.accesso a {
+    color: black;
+    text-decoration: none;
+    padding: 5px;
+    font-family: "Verdana", sans-serif;
+}
+
+.accesso a:link {
+    color: black;
+}
+
+.accesso a:visited {
+    color: black;
+}
+
+.accesso a:hover {
+    color: white;
+    background-color: #007763;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    background-color: #007763;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.barra_di_nav {
+    list-style-type: none;
+    overflow: hidden; /**/
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.barra_di_nav li {
+    display: inline-block;
+    text-decoration: none;
+    padding: 15px;
+}
+
+.barra_di_nav a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    color: white;
+    font-family: "Orienta", sans-serif;
+}
+
+.barra_di_nav li:hover {
+    background-color: #009687;
+}
+
+nav .search {
+    padding: 0;
+    margin: 0;
+    float: right;
+    height: min-content;
+    width: min-content;
+}
+
+nav .search form {
+    padding: 0;
+    margin: 0;
+}
+
+nav .search input {
+    outline: none;
+    width: auto;
+    height: 2em;
+    margin-top: 5px;
+    margin-right: 70px;
+    border: none;
+}
+
+
+.utente_loggato {
+    /*padding-top: 20px;*/
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    position: relative;
+    top: 17px;
+}
+
+.utente_loggato:hover .opzioni {
+    display: block;
+}
+
+.utente_loggato .opzioni {
+    display: none;
+    position: absolute;
+    color: black;
+    background-color: #f8f8f8;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    border: 2px solid black;
+    width: 142px;
+}
+
+.btn-list {
+    display: block; /*todo: eliminare???*/
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.opzioni a, .opzioni .btn-list {
+    text-decoration: none;
+    box-sizing: content-box;
+    width: 135px;
+    margin-right: 0;
+    text-align: center;
+    /*padding: 12px 16px;*/
+    line-height: 70px;
+    display: block;
+    color: black;
+}
+
+.opzioni a:hover, .opzioni .btn-list:hover {
+    background-color: lightgrey;
+}
+
+.email_user {
+    border: none;
+    background-color: white;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    padding: 8px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.email_user:hover {
+    border: none;
+    background-color: #007763;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 8px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.opzioni ul {
+    padding: 0;
+    margin: 0;
+    max-width: 120px;
+}
+
+.opzioni li {
+    list-style: none;
+    width: 100%;
+    float: left;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.carrello {
+    width: 35px;
+    height: 32px;
+    float: right;
+}
+
+.three_hor_lines {
+    height: 18px;
+    width: 18px;
+}
+
+.hamburger_menu {
+    background-color: #DBDCDB;
+    display: none;
+    width: 20%;
+    min-width: 154px;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    position: fixed;
+}
+
+.hamburger_menu_visible {
+    display: block;
+}
+
+.hamburger_menu a {
+    display: block;
+    background-color: #DBDCDB;
+    color: black;
+    text-decoration: none;
+    padding-top: 20px;
+    padding-left: 8px;
+    margin: 0;
+    font-family: "Franklin Gothic Medium", sans-serif;
+    text-transform: uppercase;
+}
+
+.hamburger_menu a:hover {
+    background-color: #D1D2D1;
+}
+
+#test-text {
+    padding: 0;
+    text-decoration: none;
+    font-family: "Orienta", sans-serif;
+    font-style: italic;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: white;
+    left: 100px;
+    margin: 5px 0 0;
+}
+
+#test-text:hover {
+    background-color: unset;
+}
+
+.container {
+    padding-top: 20px;
+    margin-left: 200px;
+    margin-right: 200px;
+    max-height: 600px;
+}
+
+.container #chart {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.show-info {
+    border: 0;
+    background-color: #007763;
+    color: white;
+    padding: 5px;
+}

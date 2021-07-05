@@ -8,30 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProdottoDAO {
-
-    /*public void doSaveJson(String s) {
-        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO test VALUE(?)")) {
-            ps.setString(1, s);
-            if (ps.executeUpdate() != 1) throw new RuntimeException();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public String doRetrieveJson() {
-        String s = "";
-        try (PreparedStatement ps = connection.prepareStatement("SELECT * from test WHERE json_column->'$.name' = ?")) {
-            ps.setString(1, "gigi");
-            ResultSet set = ps.executeQuery();
-            while (set.next()) {
-                s = set.getString("json_column");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return s;
-    }*/
-
     public boolean doUpdateById(Prodotto p) {
         int result;
         try (Connection connection = ConPool.getConnection();
@@ -104,14 +80,14 @@ public class ProdottoDAO {
     }
 
     public List<Prodotto> doRetrieveAll() {
-        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat ON pro.id_categoria = cat.id_categoria";
+        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat ON pro.id_categoria = cat.id_categoria ORDER BY id_prodotto";
         List<Prodotto> list;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
             list = new ArrayList<>();
             while (rs.next()) {
-                Prodotto p = ProdottoConstructor.constructProduct(rs);
+                Prodotto p = ProdottoConstructor.constructProduct(rs, false);
                 list.add(p);
             }
         } catch (SQLException e) {
@@ -120,20 +96,60 @@ public class ProdottoDAO {
         return list;
     }
 
-    public CartItem doRetrieveById(int id) {
-        String sql = "SELECT * FROM Prodotto WHERE id_prodotto=?";
+    //todo: query da testare.. sembra andare bene
+    public CartItem doRetrieveCartItemById(int id) {
+        String sql = "SELECT *, CAST(pro.prezzo - (pro.prezzo/100)*pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
+                " FROM prodotto AS pro INNER JOIN categoria AS cat " +
+                "on pro.id_categoria = cat.id_categoria WHERE pro.id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Prodotto product = ProdottoConstructor.constructProduct(rs);
+                Prodotto product = ProdottoConstructor.constructProduct(rs, true);
                 return new CartItem(product, 1);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public Prodotto doRetrieveById(int id) {
+        Prodotto prodotto = null;
+        String query = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat" +
+                " ON pro.id_categoria = cat.id_categoria WHERE pro.id_prodotto = ?";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+
+            ResultSet set = statement.executeQuery();
+            if (set.next())
+                prodotto = ProdottoConstructor.constructProduct(set, false);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return prodotto;
+    }
+
+    public List<String> doRetrieveProductsByName(String name) {
+        List<String> list = new ArrayList<>();
+        String query = "SELECT nome FROM prodotto WHERE nome LIKE ?";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, name + "%");
+
+            ResultSet set = statement.executeQuery();
+
+            while (set.next())
+                list.add(set.getString(1));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 
     public void doSave(Prodotto p) {
@@ -161,21 +177,4 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
     }
-    //TODO forse da eliminare
-    /*public String doRetrieveCaratteristiche(int id) {
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM prodotto" +
-                     " WHERE id_prodotto = ?")) {
-            ps.setInt(1, id);
-
-            ResultSet set = ps.executeQuery();
-            if (set.next()) {
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        return "";
-    }*/
 }

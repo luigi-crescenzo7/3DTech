@@ -9,10 +9,9 @@ import model.Ordine.OrdineDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
+import model.Utente.UserSession;
 import model.Utente.Utente;
-import org.json.JSONObject;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -21,156 +20,122 @@ import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
 @MultipartConfig
 @WebServlet(urlPatterns = "/ll/*")
 public class ProductServlet extends HttpServlet {
-    private static String uploadRoot = System.getenv("CATALINA_HOME") + File.separator + "special_folder" + File.separator;
+    private static String uploadRoot;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        uploadRoot = FileServlet.getUploadPath() + File.separator + "special_folder" + File.separator;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        /*String productId = request.getParameter("productId");
-        String fieldName = request.getParameter("fieldName");
-        String fieldMaxVolume = request.getParameter("fieldMaxVolume");
-        String fieldMaxSpeed = request.getParameter("fieldMaxSpeed");
-
-        if(fieldName.isEmpty() || fieldMaxVolume.isEmpty() || fieldMaxSpeed.isEmpty())
-            return;
-
-        JSONObject obj = new JSONObject();
-        obj.put("max-volume", fieldMaxVolume);
-        obj.put("max-speed", fieldMaxSpeed);
-
-        Prodotto p = new Prodotto();
-        p.setId(Integer.parseInt(productId));
-        p.setNome(fieldName);
-        p.setMarchio("marchio88");
-        p.setDescrizione("desc11");
-        p.setCaratteristiche(obj);
-        p.setPrezzo(99);
-        p.setPeso(1);
-        p.setSconto(77);
-
-        ProdottoDAO dao = new ProdottoDAO();
-        dao.doUpdateById(p);*/
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "/";
-        String param = request.getParameter("productId");
-        String quantity = request.getParameter("fieldQuantity");
-        HttpSession session = request.getSession();
-        List<CartItem> products = null;
-        ProdottoDAO dao = new ProdottoDAO();
-        if (session.getAttribute("products") == null) {
-            products = new ArrayList<>();
-        } else {
-            products = (List<CartItem>) session.getAttribute("products");
-        }
+        try {
+            String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
+            String resource = "/";
 
-        switch (path) {
-            case "/select":
-                int id = Integer.parseInt(param);
-                CartItem item = dao.doRetrieveById(id);
-                // Se il prodotto non è nella lista dei prodotti della sessione allora lo aggiungo
-                if (!products.contains(item)) {
-                    if (quantity != null && !quantity.isBlank())
-                        item.setQuantita(Integer.parseInt(quantity));
-                    products.add(item);
-                    session.setAttribute("products", products);
-                } else { // Se invece è presente ed è definita la quantità, allora vecchiaQuantità + nuovaQuantità
-                    int pos = products.indexOf(item);
-                    item = products.get(pos);
+            HttpSession session = request.getSession();
+            List<CartItem> products = null;
+            Cart cart = null;
+            Prodotto p = null;
+            ProdottoDAO dao = new ProdottoDAO();
+            if (session.getAttribute("sessionCart") == null) {
+                cart = new Cart(new ArrayList<>());
+                session.setAttribute("sessionCart", cart);
+            } else {
+                cart = (Cart) session.getAttribute("sessionCart");
+            }
 
-                    if (quantity != null && !quantity.isBlank())
-                        item.setQuantita(item.getQuantita() + Integer.parseInt(quantity));
-                    else
-                        item.setQuantita(item.getQuantita() + 1);
-                }
-                request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
-                break;
-            case "/create":
-                Part part = request.getPart("productImage");
-                String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                List<String> list = FormExtractor.retrieveParameterValues(request);
-                String category = request.getParameter("productCategory");
-                //List<String> parameters = FormExtractor.retrieveParameterValues(request);
-                Map<String, String[]> map = request.getParameterMap();
-                Set<Map.Entry<String, String[]>> set = map.entrySet();
-                for (Map.Entry<String, String[]> entry : set) {
-                    System.out.println(entry.getKey() + "   " + Arrays.toString(entry.getValue()));
-                }
-                System.out.println("Categoria: " + category);
-
-                try (InputStream fileStream = part.getInputStream()) {
-                    File file = new File(uploadRoot + fileName);
-                    if (!file.exists())
-                        Files.copy(fileStream, file.toPath());
-                } catch (IOException e) {
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    return;
-                }
-                switch (category) {
-                    case "Materiale plastico":
-                        System.out.println("file name: " + fileName);
-                        Prodotto p = new Prodotto();
-                        p.setNome(map.get("productName")[0]);
-                        p.setMarchio(map.get("productMark")[0]);
-                        p.setDescrizione(map.get("productDescription")[0]);
-                        p.setUrlImage(fileName);
-                        //p.setCaratteristiche(ProductBuilder.createMaterialePlastico(parameters));
-                        p.setCaratteristiche(new JSONObject("{\"ciao\":1}"));
-                        p.setPrezzo(1);
-                        p.setPeso(2);
-                        p.setSconto(3);
-                        Categoria cat = new Categoria();
-                        cat.setId(new CategoriaDAO().doRetrieveIdCategory(category));
-                        System.out.println(cat.getId());
-                        cat.setNome(category);
-                        p.setCategoria(cat);
-                        dao.doSave(p);
-                        ServletContext ctx = request.getServletContext();
-                        List<Prodotto> list2 = (List<Prodotto>) ctx.getAttribute("listProducts");
-                        if (list2 != null)
-                            list2.add(p);
-                        request.getRequestDispatcher("/WEB-INF/results/manage-products.jsp").forward(request, response);
-                        break;
-                    case "thrgh":
-                        break;
-                    case "Stampanti 3D":
-                        System.out.println("Case: Stampanti 3D");
-                        break;
-                    default:
-                        System.out.println("Default case");
-                        break;
-                }
-                break;
-            case "/checkout":
-                //todo: refattorizzare in OrderServlet
-                if (products != null && products.size() > 0) {
-                    Ordine order = new Ordine();
-                    order.setCarrello(new Cart(products));
-                    order.setQuantita(products.size());
-                    order.setDataOrdine(LocalDate.now());
-                    order.setUser((Utente) session.getAttribute("user"));
-                    OrdineDAO orderDao = new OrdineDAO();
-                    orderDao.doSave(order);
+            switch (path) {
+                case "/select":
+                    RequestValidator.authenticate(session, "userSession");
+                    String productId = request.getParameter("productId");
+                    String quantity = request.getParameter("fieldQuantity");
+                    int id = Integer.parseInt(productId);
+                    CartItem item = dao.doRetrieveCartItemById(id);
+                    System.out.println("id:" + id + " " + (item != null));
+                    if (item != null) {
+                        cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
+                        System.out.println("id: "+item.getProdotto().getId()+ "  prezzo scontato: "+item.getProdotto().getPrezzo());
+                    }
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
-                } else {
-                    response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                }
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+                    break;
+                case "/create":
+                    RequestValidator.authorize(session, "userSession");
+                    Part part = request.getPart("productImage");
+                    String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    String category = request.getParameter("productCategory");
+                    Map<String, String[]> map = request.getParameterMap();
+                    Set<Map.Entry<String, String[]>> set = map.entrySet();
+                    for (Map.Entry<String, String[]> entry : set) {
+                        System.out.println(entry.getKey() + "   " + Arrays.toString(entry.getValue()));
+                    }
+                    System.out.println("Categoria: " + category);
+                    File file = null;
+                    try (InputStream fileStream = part.getInputStream()) {
+                        file = new File(uploadRoot + fileName);
+                        if (!file.exists())
+                            Files.copy(fileStream, file.toPath());
+                    }
+                    switch (category) {
+                        case "Materiale plastico":
+                            System.out.println("file name: " + fileName);
+                            p = ProductBuilder.createMaterialePlastico(map, fileName);
+                            Categoria cat = new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]);
+                            p.setCategoria(cat);
+                            dao.doSave(p);
+                            ServletContext ctx = request.getServletContext();
+                            List<Prodotto> list2 = (List<Prodotto>) ctx.getAttribute("listProducts");
+                            if (list2 != null)
+                                list2.add(p);
+                            request.getRequestDispatcher("/WEB-INF/results/manage-products.jsp").forward(request, response);
+                            break;
+                        case "Ricambi":
+                            p = ProductBuilder.createRicambio(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            break;
+                        case "Accessori":
+                            p = ProductBuilder.createAccessorio(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            break;
+                        case "Utensili":
+                            p = ProductBuilder.createUtensile(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            break;
+                        case "Stampanti 3D":
+                            p = ProductBuilder.createStampante3D(map, fileName);
+                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            break;
+                        default:
+                            System.out.println("Default case");
+                            break;
+                    }
+                    break;
+                default:
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
 }

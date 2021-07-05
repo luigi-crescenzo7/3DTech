@@ -2,8 +2,13 @@ package controller;
 
 
 import model.Categoria.CategoriaDAO;
+import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoDAO;
+import model.Prodotto.ProductBuilder;
 import model.Utente.Utente;
 import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,33 +22,33 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/controlpanel/*")
 public class AdminServlet extends HttpServlet {
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource;
+        String resource = "";
         HttpSession session = request.getSession();
 
-        Utente user = (Utente) session.getAttribute("user");
-
-        if (user.isAdmin()) {
+        try {
             switch (path) {
                 case "/":
+                    RequestValidator.authorize(session, "userSession");
                     resource = "/WEB-INF/results/admin-dashboard.jsp";
                     break;
                 case "/products":
+                    RequestValidator.authorize(session, "userSession");
                     resource = "/WEB-INF/results/manage-products.jsp";
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
             }
-        } else {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        } catch (RequestNotValidException e) {
+            response.sendRedirect(request.getContextPath() + "/xx/admin");
             return;
         }
+
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(resource);
         dispatcher.forward(request, response);
@@ -55,7 +60,7 @@ public class AdminServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         System.out.println("doPost " + path);
-
+        PrintWriter writer = null;
 
         switch (path) {
             case "/chart":
@@ -69,8 +74,19 @@ public class AdminServlet extends HttpServlet {
                 array.put(0, names);
                 array.put(1, nums);
 
-                PrintWriter writer = response.getWriter();
+                writer = response.getWriter();
                 writer.println(array);
+                writer.close();
+                break;
+            case "/product-info":
+                response.setContentType("application/json");
+                String id = request.getParameter("productId");
+
+                Prodotto p = new ProdottoDAO().doRetrieveById(Integer.parseInt(id));
+                JSONObject obj = ProductBuilder.fromObjectToJson(p);
+
+                writer = response.getWriter();
+                writer.println(obj);
                 writer.close();
                 break;
             default:

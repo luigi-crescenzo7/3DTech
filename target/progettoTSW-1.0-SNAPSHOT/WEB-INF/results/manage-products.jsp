@@ -1,13 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
 <head>
     <%@include file="common.jsp" %>
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">
+    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/product.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/modal.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
-    <script src="${contextPath}/js/acaso.js" defer></script>
+    <script src="${contextPath}/js/suffixes.js" defer></script>
+    <script src="${contextPath}/js/showModal.js" defer></script>
 </head>
 <body>
 <%@ include file="admin-nav.jsp" %>
@@ -20,10 +23,42 @@
     </div>
 </aside>
 
-<div class="product">
+<div class="table-container">
+    <table class="rtable">
+        <thead>
+        <tr>
+            <th>info</th>
+            <th>id</th>
+            <th>nome</th>
+            <th>marchio</th>
+            <th>prezzo</th>
+            <th>peso</th>
+            <th>categoria</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${applicationScope.listProducts}" var="product">
+            <tr>
+                <td>
+                    <button class="show-info" value="${product.id}">clicca</button>
+                    <input type="hidden" value="${product.id}">
+                </td>
+                <td>${product.id}</td>
+                <td>${product.nome}</td>
+                <td>${product.marchio}</td>
+                <td>${product.prezzo}</td>
+                <td>${product.peso}</td>
+                <td>${product.categoria.nome}</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+<hr id="division-line">
+<div class="product-container">
     <div class="add_product">
         <div class="add_product_label"> Aggiungi prodotto</div>
-        <div class="add_product_input">
+        <div class="form-content">
             <form id="formBello" action="${contextPath}/ll/create" name="aggiungi" method="post"
                   enctype="multipart/form-data">
                 <label for="nome">Nome</label>
@@ -45,14 +80,12 @@
                     <option selected>
                         -- Seleziona Categoria --
                     </option>
-                    <option>
-                        Stampanti 3D
-                    </option>
-                    <option>
-                        Materiale plastico
-                    </option>
+                    <c:forEach items="${applicationScope.listCategories}" var="category">
+                        <option>
+                                ${category.nome}
+                        </option>
+                    </c:forEach>
                 </select>
-
                 <label for="fieldImage">File: </label>
                 <input type="file" name="productImage" id="fieldImage"><br><br>
                 <input class="agg" type="submit" value="Aggiungi prodotto">
@@ -96,32 +129,9 @@
         </div>
     </div>
 </div>
-<hr id="division-line">
-<div class="table-items">
-    <table class="rtable">
-        <thead>
-        <tr>
-            <th>id</th>
-            <th>nome</th>
-            <th>marchio</th>
-            <th>prezzo</th>
-            <th>peso</th>
-            <th>categoria</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${applicationScope.listProducts}" var="product">
-            <tr>
-                <td>${product.id}</td>
-                <td>${product.nome}</td>
-                <td>${product.marchio}</td>
-                <td>${product.prezzo}</td>
-                <td>${product.peso}</td>
-                <td>${product.categoria.nome}</td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+<div class="modal" id="modal-box">
+    <div class="modal-content">
+    </div>
 </div>
 </body>
 </html>

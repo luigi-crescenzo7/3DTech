@@ -11,6 +11,11 @@ public class CartItem {
         this.quantita = quantity;
     }
 
+    public double calcolaSconto() {
+        return (prodotto.getPrezzo() / 100) *
+                (prodotto.getSconto() > 1 && prodotto.getSconto() < 100 ? prodotto.getSconto() : 1);
+    }
+
     public Prodotto getProdotto() {
         return prodotto;
     }
@@ -24,7 +29,7 @@ public class CartItem {
     }
 
     public void setQuantita(int quantita) {
-        this.quantita = quantita;
+        this.quantita += quantita;
     }
 
     public double total() {

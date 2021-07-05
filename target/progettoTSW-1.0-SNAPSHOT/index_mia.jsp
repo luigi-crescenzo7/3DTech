@@ -21,7 +21,7 @@
             <li>Dove trovarci</li>
         </ul>
     </div>
-    <c:if test="${sessionScope.user != null}">
+    <c:if test="${sessionScope.userSession != null}">
         <p>
             Ciao ${user.email}!
         </p>
@@ -31,11 +31,11 @@
 <div class="xxt">
     <ul id="categories">
         <c:choose>
-            <c:when test="${sessionScope.user == null}">
+            <c:when test="${sessionScope.userSession == null}">
                 <li><a href="xx/login">Login</a></li>
                 <li><a href="xx/registration">Registrazione</a></li>
             </c:when>
-            <c:when test="${sessionScope.user.admin == true}">
+            <c:when test="${sessionScope.userSession.admin == true}">
                 <li><a href="xx/account">Il mio profilo</a></li>
                 <li><a href="">Pannello di controllo</a></li>
             </c:when>

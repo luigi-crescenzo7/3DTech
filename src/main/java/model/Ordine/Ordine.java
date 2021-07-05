@@ -10,12 +10,11 @@ public class Ordine {
     private int id;
     private int quantita;
     private LocalDate dataOrdine;
-    private Utente user;
+    private int userId;
     private Cart carrello;
-    private double total;
 
-    public Utente getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
 
@@ -23,20 +22,13 @@ public class Ordine {
         return carrello;
     }
 
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
-    }
 
     public void setCarrello(Cart carrello) {
         this.carrello = carrello;
     }
 
-    public void setUser(Utente user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getId() {

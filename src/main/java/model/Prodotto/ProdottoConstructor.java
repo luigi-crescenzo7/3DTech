@@ -3,26 +3,28 @@ package model.Prodotto;
 import model.Categoria.Categoria;
 import org.json.JSONObject;
 
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
+/*Alias tabella: pro */
 public class ProdottoConstructor {
-    /**
-     * @param rs
-     * @return
-     * @throws SQLException
-     */
-    public static Prodotto constructProduct(ResultSet rs) throws SQLException {
+
+    public static Prodotto constructProduct(ResultSet rs, boolean discount) throws SQLException {
         Prodotto p = new Prodotto();
-        p.setId(rs.getInt("id_prodotto"));
+        p.setId(rs.getInt("pro.id_prodotto"));
         p.setNome(rs.getString("pro.nome"));
-        p.setMarchio(rs.getString("marchio"));
-        p.setDescrizione(rs.getString("descrizione"));
-        p.setUrlImage(rs.getString("image_name"));
-        p.setCaratteristiche(new JSONObject(rs.getString("caratteristiche")));
-        p.setPrezzo(rs.getDouble("prezzo"));
-        p.setPeso(rs.getDouble("peso"));
-        p.setSconto(rs.getDouble("sconto"));
+        p.setMarchio(rs.getString("pro.marchio"));
+        p.setDescrizione(rs.getString("pro.descrizione"));
+        p.setUrlImage(rs.getString("pro.image_name"));
+        p.setCaratteristiche(new JSONObject(rs.getString("pro.caratteristiche")));
+        p.setPrezzo(rs.getDouble((discount ? "prezzo_scontato" : "pro.prezzo")));
+        p.setPeso(rs.getDouble("pro.peso"));
+        p.setSconto(rs.getDouble("pro.sconto"));
         Categoria cat = new Categoria();
         cat.setId(rs.getInt("cat.id_categoria"));
         cat.setNome(rs.getString("cat.nome"));
