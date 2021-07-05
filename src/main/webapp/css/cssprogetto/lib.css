@@ -9,6 +9,7 @@ html, body {
     src: url("../../font/Orienta-Regular.ttf");
 }
 
+
 .input {
     border-style: solid;
     border-radius: 2px;
@@ -31,7 +32,7 @@ html, body {
     margin-left: auto;
     width: 646px;
     min-height: 300px;
-    min-width: 646px;
+    /*min-width: 646px;*/
 }
 
 /* Tabella utenti/prodotti/etc*/
@@ -97,4 +98,14 @@ html, body {
         flex-wrap: wrap;
         justify-content: center;
     }*/
+}
+
+@media screen and (max-width: 650px) {
+    .table-container {
+        width: auto;
+    }
+
+    .rtable {
+        width: 80%;
+    }
 }

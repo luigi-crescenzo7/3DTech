@@ -3,8 +3,13 @@ package model.Prodotto;
 import model.Categoria.Categoria;
 import org.json.JSONObject;
 
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 /*Alias tabella: pro */
 public class ProdottoConstructor {
@@ -17,7 +22,7 @@ public class ProdottoConstructor {
         p.setDescrizione(rs.getString("pro.descrizione"));
         p.setUrlImage(rs.getString("pro.image_name"));
         p.setCaratteristiche(new JSONObject(rs.getString("pro.caratteristiche")));
-        p.setPrezzo(rs.getDouble((discount ? "op.prezzo_acquisto" : "pro.prezzo")));
+        p.setPrezzo(rs.getDouble((discount ? "prezzo_scontato" : "pro.prezzo")));
         p.setPeso(rs.getDouble("pro.peso"));
         p.setSconto(rs.getDouble("pro.sconto"));
         Categoria cat = new Categoria();

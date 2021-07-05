@@ -248,3 +248,10 @@ nav .search input {
     max-height: 100%;
     max-width: 100%;
 }
+
+.show-info {
+    border: 0;
+    background-color: #007763;
+    color: white;
+    padding: 5px;
+}

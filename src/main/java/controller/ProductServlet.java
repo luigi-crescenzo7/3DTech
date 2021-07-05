@@ -20,8 +20,12 @@ import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -67,9 +71,10 @@ public class ProductServlet extends HttpServlet {
                     String quantity = request.getParameter("fieldQuantity");
                     int id = Integer.parseInt(productId);
                     CartItem item = dao.doRetrieveCartItemById(id);
-                    System.out.println("id:"+id+ " "+(item != null));
+                    System.out.println("id:" + id + " " + (item != null));
                     if (item != null) {
                         cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
+                        System.out.println("id: "+item.getProdotto().getId()+ "  prezzo scontato: "+item.getProdotto().getPrezzo());
                     }
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                     break;

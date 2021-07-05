@@ -96,19 +96,17 @@ public class ProdottoDAO {
         return list;
     }
 
-    /*
-            todo: c'è un problema con la join di questa tabella risultante con la tabella
-            ordine_prodotto (evitare di fare join con questa, trovare una soluzione migliore)
-     */
+    //todo: query da testare.. sembra andare bene
     public CartItem doRetrieveCartItemById(int id) {
-        String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat " +
+        String sql = "SELECT *, CAST(pro.prezzo - (pro.prezzo/100)*pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
+                " FROM prodotto AS pro INNER JOIN categoria AS cat " +
                 "on pro.id_categoria = cat.id_categoria WHERE pro.id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Prodotto product = ProdottoConstructor.constructProduct(rs, false);
+                Prodotto product = ProdottoConstructor.constructProduct(rs, true);
                 return new CartItem(product, 1);
             }
         } catch (SQLException e) {
