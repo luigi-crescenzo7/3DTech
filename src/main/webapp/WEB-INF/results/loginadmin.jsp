@@ -11,7 +11,7 @@
     <div>
         <p>Login Amministratore</p>
     </div>
-    <form action="${contextPath}/xx/loginadmin" method="post">
+    <form action="${contextPath}//loginadmin" method="post">
         <label for="email">Email</label>
         <input class="input_admin" type="email" id="email" name="fieldEmail"><br><br>
         <label for="password">Password</label>

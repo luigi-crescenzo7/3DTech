@@ -19,8 +19,7 @@ public class UtenteValidator {
         validator.assertName("fieldName", "Il nome deve essere compreso tra 3 e 25 caratteri");
         validator.assertSurname("fieldSurname", "Cattiva composizione cognome");
         validator.assertPassword("fieldPassword", "Cattiva composizione password");
-        validator.assertPhoneNumber("", "");
+        validator.assertPhoneNumber("fieldPhoneNumber", "Numero non valido");
         return validator;
     }
-
 }

@@ -3,21 +3,10 @@ package controller;
 
 import model.Utente.Utente;
 
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.Map;
 
 public class FormExtractor {
-    public static List<String> retrieveParameterValues(HttpServletRequest request) {
-        List<String> list = new ArrayList<>();
-        Enumeration<String> enumeration = request.getParameterNames();
-        while (enumeration.hasMoreElements())
-            list.add(request.getParameter(enumeration.nextElement()));
-        return list;
-    }
 
     public static Utente extractLogin(Map<String, String[]> parameters) {
         Utente user = new Utente();

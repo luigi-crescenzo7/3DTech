@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-@WebServlet(urlPatterns = "/tt/*")
+@WebServlet(urlPatterns = "/order/*")
 public class OrderServlet extends HttpServlet {
 
     @Override
@@ -52,7 +52,7 @@ public class OrderServlet extends HttpServlet {
                     order.setDataOrdine(LocalDate.now());
                     order.setUserId(user.getId());
                     OrdineDAO orderDao = new OrdineDAO();
-                    orderDao.doSave(order, true);
+                    orderDao.doSave(order);
                     c.reset();
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                 } else {

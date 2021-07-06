@@ -16,9 +16,17 @@
         </script>
         <p>${requestScope.errorMsg}</p>
     </c:if>
+    <c:if test="${not empty requestScope.errorMessages}">
+        <script>
+            document.querySelector("#alert-box").style.display = "block"
+        </script>
+        <c:forEach items="${requestScope.errorMessages}" var="message">
+            <p>${message}</p>
+        </c:forEach>
+    </c:if>
 </div>
 <div class="registrazione">
-    <form id="registrationForm" action="${contextPath}/xx/registration" method="post">
+    <form id="registrationForm" action="${contextPath}/account/registration" method="post">
         <label for="email">Email</label>
         <input class="input" type="email" id="email" name="fieldEmail" required><br><br>
         <label for="name">Nome</label>

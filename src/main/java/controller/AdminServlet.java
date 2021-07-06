@@ -5,7 +5,6 @@ import model.Categoria.CategoriaDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
-import model.Utente.Utente;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,7 +44,7 @@ public class AdminServlet extends HttpServlet {
                     return;
             }
         } catch (RequestNotValidException e) {
-            response.sendRedirect(request.getContextPath() + "/xx/admin");
+            response.sendRedirect(request.getContextPath() + "/account/admin");
             return;
         }
 
@@ -64,7 +63,7 @@ public class AdminServlet extends HttpServlet {
 
         switch (path) {
             case "/chart":
-                response.setContentType("text/json");
+                response.setContentType("application/json");
 
                 JSONArray array = new JSONArray();
                 CategoriaDAO dao = new CategoriaDAO();

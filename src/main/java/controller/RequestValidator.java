@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -15,13 +14,13 @@ public class RequestValidator {
     private final List<String> list;
     private static final Pattern INT_PATTERN = Pattern.compile("^\\d*$");
     private static final Pattern DOUBLE_PATTERN = Pattern.compile("^(-)?(0|[1-9]\\d+)\\.\\d+$");
-    // ^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+){1,2}$ <- email (buona(?))
+    // ^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+){1,2}$ <- email senza troppi caratteri speciali
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$");
     private static final Pattern PASSW_PATTERN = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[._-])[A-Za-z\\d._-]{8,16}$");
     private static final Pattern NAME_PATTERN = Pattern.compile("^([a-zA-Z\\s]){3,25}$");
     private static final Pattern SURNAME_PATTERN = Pattern.compile("^([a-zA-Z\\s]){3,25}$");
     // Solo per numeri di telefonia mobile italiani
-    private static final Pattern PHONE_PATTERN = Pattern.compile("");
+    private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\d){10}$");
 
     public RequestValidator(HttpServletRequest request) {
         this.request = request;
@@ -40,7 +39,7 @@ public class RequestValidator {
         if (object instanceof Utente) {
             Utente user = (Utente) session.getAttribute(attribute);
             if (!user.isAdmin())
-                throw new RequestNotValidException(HttpServletResponse.SC_BAD_REQUEST, "Utente non autorizzato");
+                throw new RequestNotValidException(HttpServletResponse.SC_UNAUTHORIZED, "Utente non autorizzato");
         } else {
             throw new RequestNotValidException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore interno al server");
         }

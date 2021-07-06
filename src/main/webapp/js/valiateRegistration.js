@@ -19,7 +19,7 @@ for (let i = 0; i < entries.length; i++) {
     let validInput = entries[i].nodeName.match('INPUT')
     if (entries[i].willValidate && validInput) {
         console.log(entries[i])
-        entries[i].addEventListener('change', reportError)
+        entries[i].addEventListener('input', reportError)
         //entries[i].addEventListener('focus', reset)
     }
 }
@@ -44,6 +44,10 @@ function isPsswd(param) {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[._-])[A-Za-z\d._-]{8,16}$/.test(param)
 }
 
+function checkZIPCode(param) {
+    return /^(\d){5}$/.test(param)
+}
+
 const email = document.getElementsByName("fieldEmail")[0]
 const psswd = document.getElementsByName("fieldPassword")[0]
 const name = document.getElementById('name')
@@ -57,12 +61,14 @@ const zipCode = document.getElementById('zipcode')
 
 function reportError() {
     const alertElement = document.getElementById('alert-box')
-    const emailMsg = 'Email non valida'
-    const psswdMsg = 'Password non valida. <br> Composizione: almeno una lettera maiuscola,' +
+    const emailMsg = '&#9898;Email non valida'
+    const psswdMsg = '&#9898; Password non valida. Composizione: almeno una lettera maiuscola,' +
         ' almeno una minuscola, almeno un numero ed un carattere speciale (.-_)'
-    const nameMsg = 'Nome non valido'
-    const surnameMsg = 'Cognome non valido'
-    const street = 'Indirizzo non valido'
+    const nameMsg = '&#9898; Nome non valido'
+    const surnameMsg = '&#9898; Cognome non valido'
+    const streetMsg = '&#9898; Indirizzo non valido'
+    const phoneMsg = '&#9898; Numero di telefono non valido'
+    const zipCodeMsg = '&#9898; CAP non valido'
 
     if (!checkSurname(surname.value)) {
         surname.setCustomValidity('surname invalid')
@@ -70,6 +76,7 @@ function reportError() {
             errors.push(surnameMsg)
     } else {
         surname.setCustomValidity('')
+        errors.splice(errors.indexOf(surnameMsg), 1)
         console.log('surname valid')
     }
 
@@ -79,6 +86,7 @@ function reportError() {
             errors.push(psswdMsg)
     } else {
         psswd.setCustomValidity("")
+        errors.splice(errors.indexOf(psswdMsg), 1)
         console.log("password valid")
     }
 
@@ -88,6 +96,7 @@ function reportError() {
             errors.push(emailMsg)
     } else {
         email.setCustomValidity("")
+        errors.splice(errors.indexOf(emailMsg), 1)
         console.log("email valid")
     }
 
@@ -97,7 +106,18 @@ function reportError() {
             errors.push(nameMsg)
     } else {
         name.setCustomValidity('')
+        errors.splice(errors.indexOf(nameMsg), 1)
         console.log('name valid')
+    }
+
+    if (!checkZIPCode(zipCode.value)) {
+        zipCode.setCustomValidity('zipcode invalid')
+        if (errors.indexOf(zipCodeMsg) === -1)
+            errors.push(zipCodeMsg)
+    } else {
+        zipCode.setCustomValidity('')
+        errors.splice(errors.indexOf(zipCodeMsg), 1)
+        console.log('zipcode valid')
     }
 
 

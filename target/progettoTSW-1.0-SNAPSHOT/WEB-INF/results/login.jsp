@@ -20,7 +20,7 @@
     </c:if>
 </div>
 <div class="form-input">
-    <form id="loginForm" action="${contextPath}/xx/login" method="post">
+    <form id="loginForm" action="${contextPath}/account/login" method="post">
         <label for="email">Email</label>
         <input class="input" type="email" id="email" name="fieldEmail" required>
         <span class="error"></span>

@@ -1,17 +1,14 @@
 package controller;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
 public class RequestNotValidException extends RuntimeException {
-    private int errorCode;
+    private final int errorCode;
     private List<String> errors;
-
-    public RequestNotValidException() {
-        super();
-    }
 
     public RequestNotValidException(int errorCode, String msg) {
         super(msg);
@@ -23,13 +20,11 @@ public class RequestNotValidException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public RequestNotValidException(int errorCode) {
-        this.errorCode = errorCode;
-    }
-
-    public void dispatchErrors(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void dispatchErrors(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (errorCode == HttpServletResponse.SC_BAD_REQUEST) {
-            request.setAttribute("alert", getErrors());
+            request.setAttribute("errorMessages", getErrors());
+            System.out.println(request.getAttribute("returnBack"));
+            request.getRequestDispatcher("/WEB-INF/results/" + request.getAttribute("returnBack")).forward(request, response);
         } else {
             response.sendError(errorCode, getErrors().get(0));
         }

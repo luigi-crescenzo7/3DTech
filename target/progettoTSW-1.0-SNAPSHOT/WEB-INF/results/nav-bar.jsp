@@ -3,27 +3,27 @@
     <img id="logo" src="${contextPath}/imgs/logoNew.svg" alt="Logo">
     <c:if test="${sessionScope.userSession == null}">
         <div class="accesso">
-            <a href="${contextPath}/xx/registration">Registrati</a>
-            <a href="${contextPath}/xx/login">Login</a>
+            <a href="${contextPath}/account/registration">Registrati</a>
+            <a href="${contextPath}/account/login">Login</a>
         </div>
     </c:if>
     <!-- todo: mettere controllo sullo user memorizzato in sessione se non è admin-->
     <c:if test="${sessionScope.userSession != null}"> <!--pageContext.request.getSession().getAttribute('user') != null -->
         <div class="utente_loggato">
             <button class="email_user">${sessionScope.userSession.email}</button>
-            <a href="#pagina_carello">
-                <img class="carrello" src="${contextPath}img/carrello.png" alt="aa">
+            <a href="#">
+                <img class="carrello" src="${contextPath}/img/carrello.png" alt="aa">
             </a>
             <div class="opzioni">
                 <ul>
-                    <li><a href="${contextPath}/xx/account">Account</a></li>
+                    <li><a href="${contextPath}/account/profile">Account</a></li>
                     <li>
-                        <form action="${contextPath}/tt/orders" method="post">
+                        <form action="${contextPath}/order/orders" method="post">
                             <button class="btn-list">Ordini</button>
                         </form>
                     </li>
                     <li>
-                        <form action="${contextPath}/xx/logout" method="post">
+                        <form action="${contextPath}/account/logout" method="post">
                             <button class="btn-list">Logout</button>
                         </form>
                     </li>

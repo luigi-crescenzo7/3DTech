@@ -2,12 +2,14 @@ package model.Prodotto;
 
 
 import model.*;
+import model.Categoria.CategoriaConstructor;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProdottoDAO {
+
     public boolean doUpdateById(Prodotto p) {
         int result;
         try (Connection connection = ConPool.getConnection();
@@ -45,6 +47,7 @@ public class ProdottoDAO {
         return result == 1;
     }
 
+    //todo: ????
     /*
     public List<Prodotto> doSearch(List<Condition> conditions) {
         List<Prodotto> products = new ArrayList<>();
@@ -84,10 +87,10 @@ public class ProdottoDAO {
         List<Prodotto> list;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ResultSet rs = ps.executeQuery();
+            ResultSet set = ps.executeQuery();
             list = new ArrayList<>();
-            while (rs.next()) {
-                Prodotto p = ProdottoConstructor.constructProduct(rs, false);
+            while (set.next()) {
+                Prodotto p = ProdottoConstructor.constructProduct(set, false);
                 list.add(p);
             }
         } catch (SQLException e) {
@@ -98,15 +101,16 @@ public class ProdottoDAO {
 
     //todo: query da testare.. sembra andare bene
     public CartItem doRetrieveCartItemById(int id) {
-        String sql = "SELECT *, CAST(pro.prezzo - (pro.prezzo/100)*pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
+        String sql = "SELECT *, CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
                 " FROM prodotto AS pro INNER JOIN categoria AS cat " +
                 "on pro.id_categoria = cat.id_categoria WHERE pro.id_prodotto=?";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                Prodotto product = ProdottoConstructor.constructProduct(rs, true);
+            ResultSet set = ps.executeQuery();
+            if (set.next()) {
+                Prodotto product = ProdottoConstructor.constructProduct(set, true);
+                product.setCategoria(CategoriaConstructor.constructCategory(set));
                 return new CartItem(product, 1);
             }
         } catch (SQLException e) {
@@ -125,8 +129,10 @@ public class ProdottoDAO {
             statement.setInt(1, id);
 
             ResultSet set = statement.executeQuery();
-            if (set.next())
+            if (set.next()) {
                 prodotto = ProdottoConstructor.constructProduct(set, false);
+                prodotto.setCategoria(CategoriaConstructor.constructCategory(set));
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

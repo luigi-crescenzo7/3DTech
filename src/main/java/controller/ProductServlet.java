@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 @MultipartConfig
-@WebServlet(urlPatterns = "/ll/*")
+@WebServlet(urlPatterns = "/product/*")
 public class ProductServlet extends HttpServlet {
     private static String uploadRoot;
 
@@ -41,10 +41,7 @@ public class ProductServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-            String resource = "/";
-
             HttpSession session = request.getSession();
-            List<CartItem> products = null;
             Cart cart = null;
             Prodotto p = null;
             ProdottoDAO dao = new ProdottoDAO();

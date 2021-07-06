@@ -1,15 +1,11 @@
 package model.Prodotto;
 
 import model.Categoria.Categoria;
+import model.Categoria.CategoriaConstructor;
 import org.json.JSONObject;
 
-import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Locale;
 
 /*Alias tabella: pro */
 public class ProdottoConstructor {
@@ -25,9 +21,7 @@ public class ProdottoConstructor {
         p.setPrezzo(rs.getDouble((discount ? "prezzo_scontato" : "pro.prezzo")));
         p.setPeso(rs.getDouble("pro.peso"));
         p.setSconto(rs.getDouble("pro.sconto"));
-        Categoria cat = new Categoria();
-        cat.setId(rs.getInt("cat.id_categoria"));
-        cat.setNome(rs.getString("cat.nome"));
+        Categoria cat = CategoriaConstructor.constructCategory(rs);
         p.setCategoria(cat);
         return p;
     }

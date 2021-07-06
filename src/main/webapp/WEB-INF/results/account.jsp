@@ -13,7 +13,7 @@
 </h1>
 <ul>
     <c:forEach items="${applicationScope.listProducts}" var="product">
-        <form action="${contextPath}/ll/select" method="post">
+        <form action="${contextPath}/product/select" method="post">
             <li>${product.nome}</li>
             <label for="quantity">Quantità:</label>
             <input id="quantity" type="number" name="fieldQuantity" value="1">
@@ -22,7 +22,7 @@
         </form>
     </c:forEach>
 </ul>
-<form action="${contextPath}/tt/checkout" method="post">
+<form action="${contextPath}/order/checkout" method="post">
     <input type="submit" value="Procedi con l'ordine">
 </form>
 <c:choose>
@@ -42,7 +42,7 @@
 </c:choose>
 <fieldset>
     <legend>
-        <form action="${contextPath}/tt/orders" method="post">
+        <form action="${contextPath}/order/orders" method="post">
             <input type="submit" value="Visualizza ordini">
         </form>
     </legend>

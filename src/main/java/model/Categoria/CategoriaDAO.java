@@ -46,22 +46,6 @@ public class CategoriaDAO {
         return categoria;
     }
 
-    public List<Integer> doRetrieveAllCategoriesId() {
-        List<Integer> integers = new ArrayList<>();
-
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT id_categoria FROM categoria")) {
-
-            ResultSet set = statement.executeQuery();
-
-            while (set.next())
-                integers.add(set.getInt("id_categoria"));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return integers;
-    }
-
     public int doRetrieveIdCategory(String category) {
         int id = 0;
 
@@ -117,14 +101,11 @@ public class CategoriaDAO {
     public List<Categoria> doRetrieveAll() {
         List<Categoria> categories = new ArrayList<>();
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM categoria")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM categoria AS cat")) {
 
             ResultSet set = statement.executeQuery();
             while (set.next()) {
-                Categoria c = new Categoria();
-                c.setId(set.getInt("id_categoria"));
-                c.setNome(set.getString("nome"));
-                c.setUrlImage(set.getString("url_image"));
+                Categoria c = CategoriaConstructor.constructCategory(set);
                 categories.add(c);
             }
         } catch (SQLException e) {
@@ -135,16 +116,14 @@ public class CategoriaDAO {
     }
 
     public Categoria doRetrieveByName(String name) {
-        Categoria categoria = new Categoria();
+        Categoria categoria = null;
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Categoria WHERE nome = ?")) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Categoria AS cat WHERE nome = ?")) {
             statement.setString(1, name);
             ResultSet set = statement.executeQuery();
-            if (set.next()) {
-                categoria.setId(set.getInt("id_categoria"));
-                categoria.setNome(set.getString("nome"));
-                categoria.setUrlImage((set.getString("url_image")));
-            }
+
+            if (set.next())
+                categoria = CategoriaConstructor.constructCategory(set);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

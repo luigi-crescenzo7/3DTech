@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 
-@WebServlet(urlPatterns = "/xx/*")
+@WebServlet(urlPatterns = "/account/*")
 public class AccountServlet extends HttpServlet {
 
     @Override
@@ -62,6 +62,7 @@ public class AccountServlet extends HttpServlet {
                     break;
                 case "/registration":
                     validator = UtenteValidator.validateRegistration(request);
+                    request.setAttribute("returnBack", "registration.jsp");
                     if (!validator.hasErrors()) {
                         user = FormExtractor.extractRegistration(map);
                         dao.doSave(user);
@@ -71,6 +72,7 @@ public class AccountServlet extends HttpServlet {
                     break;
                 case "/login":
                     validator = UtenteValidator.validateLogin(request);
+                    request.setAttribute("returnBack", "login.jsp");
                     if (!validator.hasErrors()) {
                         user = FormExtractor.extractLogin(map);
                         user = dao.doRetrieveEmailPassword(user);
@@ -95,8 +97,7 @@ public class AccountServlet extends HttpServlet {
                     return;
             }
         } catch (RequestNotValidException e) {
-            System.out.println("error??? " + e.getMessage());
-            System.out.println(e.getErrors());
+            System.out.println("error??? " + e.getErrors());
             e.dispatchErrors(request, response);
             return;
         }

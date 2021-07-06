@@ -59,7 +59,7 @@
     <div class="add_product">
         <div class="add_product_label"> Aggiungi prodotto</div>
         <div class="form-content">
-            <form id="formBello" action="${contextPath}/ll/create" name="aggiungi" method="post"
+            <form id="formBello" action="${contextPath}/product/create" name="aggiungi" method="post"
                   enctype="multipart/form-data">
                 <label for="nome">Nome</label>
                 <input class="input" type="text" id="nome" name="productName"><br><br>
