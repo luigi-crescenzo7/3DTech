@@ -4,13 +4,9 @@ import model.Cart;
 import model.CartItem;
 import model.Categoria.Categoria;
 import model.Categoria.CategoriaDAO;
-import model.Ordine.Ordine;
-import model.Ordine.OrdineDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
-import model.Utente.UserSession;
-import model.Utente.Utente;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,13 +16,8 @@ import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.*;
 
 @MultipartConfig
