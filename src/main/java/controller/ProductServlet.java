@@ -2,7 +2,6 @@ package controller;
 
 import model.Cart;
 import model.CartItem;
-import model.Categoria.Categoria;
 import model.Categoria.CategoriaDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
@@ -39,14 +38,19 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        ServletContext context = request.getServletContext();
+        List<Prodotto> products = (List<Prodotto>) context.getAttribute("listProducts");
+
         try {
             String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
             HttpSession session = request.getSession();
             Cart cart = null;
             Prodotto p = null;
             ProdottoDAO dao = new ProdottoDAO();
-            if (session.getAttribute("sessionCart") == null) {
+            CategoriaDAO categoriaDAO = new CategoriaDAO();
                 cart = new Cart(new ArrayList<>());
+                if (session.getAttribute("sessionCart") == null) {
                 session.setAttribute("sessionCart", cart);
             } else {
                 cart = (Cart) session.getAttribute("sessionCart");
@@ -62,7 +66,7 @@ public class ProductServlet extends HttpServlet {
                     System.out.println("id:" + id + " " + (item != null));
                     if (item != null) {
                         cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
-                        System.out.println("id: "+item.getProdotto().getId()+ "  prezzo scontato: "+item.getProdotto().getPrezzo());
+                        System.out.println("id: " + item.getProdotto().getId() + "  prezzo scontato: " + item.getProdotto().getPrezzo());
                     }
                     request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
                     break;
@@ -83,37 +87,60 @@ public class ProductServlet extends HttpServlet {
                         if (!file.exists())
                             Files.copy(fileStream, file.toPath());
                     }
+
+                    String resource = "/WEB-INF/results/manage-products.jsp";
                     switch (category) {
                         case "Materiale plastico":
                             System.out.println("file name: " + fileName);
                             p = ProductBuilder.createMaterialePlastico(map, fileName);
-                            Categoria cat = new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]);
-                            p.setCategoria(cat);
+                            p.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
                             dao.doSave(p);
-                            ServletContext ctx = request.getServletContext();
-                            List<Prodotto> list2 = (List<Prodotto>) ctx.getAttribute("listProducts");
-                            if (list2 != null)
-                                list2.add(p);
-                            request.getRequestDispatcher("/WEB-INF/results/manage-products.jsp").forward(request, response);
+                            if (products != null)
+                                products.add(p);
+                            request.getRequestDispatcher(resource).forward(request, response);
                             break;
                         case "Ricambi":
                             p = ProductBuilder.createRicambio(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            p.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
+                            dao.doSave(p);
+                            if (products != null)
+                                products.add(p);
+                            request.getRequestDispatcher(resource).forward(request, response);
                             break;
                         case "Accessori":
                             p = ProductBuilder.createAccessorio(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            p.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
+                            dao.doSave(p);
+                            if (products != null)
+                                products.add(p);
+                            request.getRequestDispatcher(resource).forward(request, response);
                             break;
                         case "Utensili":
                             p = ProductBuilder.createUtensile(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            p.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
+                            dao.doSave(p);
+                            if (products != null)
+                                products.add(p);
+                            request.getRequestDispatcher(resource).forward(request, response);
                             break;
                         case "Stampanti 3D":
                             p = ProductBuilder.createStampante3D(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
+                            p.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
+                            dao.doSave(p);
+                            if (products != null)
+                                products.add(p);
+                            request.getRequestDispatcher(resource).forward(request, response);
+                            break;
+                        case "Resine":
+                            p = ProductBuilder.createResina(map, fileName);
+                            p.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
+                            dao.doSave(p);
+                            if (products != null)
+                                products.add(p);
+                            request.getRequestDispatcher(resource).forward(request, response);
                             break;
                         default:
-                            System.out.println("Default case");
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                             break;
                     }
                     break;

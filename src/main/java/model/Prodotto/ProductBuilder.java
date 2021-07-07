@@ -75,6 +75,19 @@ public class ProductBuilder {
         return prodotto;
     }
 
+    public static Prodotto createResina(Map<String, String[]> map, String fileName) {
+        Prodotto prodotto = new Prodotto();
+        prodotto.setNome(map.get("productName")[0]);
+        prodotto.setMarchio(map.get("productMark")[0]);
+        prodotto.setDescrizione(map.get("productDescription")[0]);
+        prodotto.setUrlImage(fileName);
+        prodotto.setCaratteristiche(new JSONObject());
+        prodotto.setPrezzo(Double.parseDouble(map.get("productPrice")[0]));
+        prodotto.setPeso(Double.parseDouble(map.get("productWeight")[0]));
+        prodotto.setSconto(Double.parseDouble(map.get("productDiscount")[0]));
+        return prodotto;
+    }
+
     public static JSONObject fromObjectToJson(Prodotto p) {
         JSONObject object = new JSONObject();
         object.put("id", p.getId());

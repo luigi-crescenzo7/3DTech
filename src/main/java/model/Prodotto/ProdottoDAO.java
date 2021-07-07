@@ -2,6 +2,7 @@ package model.Prodotto;
 
 
 import model.*;
+import model.Categoria.Categoria;
 import model.Categoria.CategoriaConstructor;
 
 import java.sql.*;
@@ -91,6 +92,8 @@ public class ProdottoDAO {
             list = new ArrayList<>();
             while (set.next()) {
                 Prodotto p = ProdottoConstructor.constructProduct(set, false);
+                Categoria categoria = CategoriaConstructor.constructCategory(set);
+                p.setCategoria(categoria);
                 list.add(p);
             }
         } catch (SQLException e) {

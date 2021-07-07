@@ -38,8 +38,9 @@ public class RequestValidator {
         Object object = session.getAttribute(attribute);
         if (object instanceof Utente) {
             Utente user = (Utente) session.getAttribute(attribute);
-            if (!user.isAdmin())
+            if (!user.isAdmin()) {
                 throw new RequestNotValidException(HttpServletResponse.SC_UNAUTHORIZED, "Utente non autorizzato");
+            }
         } else {
             throw new RequestNotValidException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore interno al server");
         }
@@ -93,9 +94,8 @@ public class RequestValidator {
         return list;
     }
 
-    public boolean hasErrors() {
+    public void hasErrors() {
         if (!list.isEmpty())
             throw new RequestNotValidException(getList(), HttpServletResponse.SC_BAD_REQUEST);
-        return false;
     }
 }

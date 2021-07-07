@@ -1,5 +1,6 @@
 <!--<script src="/js/user_logged.js" defer></script>-->
 <header>
+    <input id="ctxPath" type="hidden" value="${contextPath}">
     <img id="logo" src="${contextPath}/imgs/logoNew.svg" alt="Logo">
     <c:if test="${sessionScope.userSession == null}">
         <div class="accesso">
@@ -12,7 +13,7 @@
         <div class="utente_loggato">
             <button class="email_user">${sessionScope.userSession.email}</button>
             <a href="#">
-                <img class="carrello" src="${contextPath}/img/carrello.png" alt="aa">
+                <!--<img class="carrello" src="${contextPath}/img/carrello.png" alt="aa">-->
             </a>
             <div class="opzioni">
                 <ul>
@@ -31,7 +32,6 @@
             </div>
         </div>
     </c:if>
-
 </header>
 <nav>
     <ul class="barra_di_nav">

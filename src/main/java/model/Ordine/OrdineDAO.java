@@ -63,7 +63,7 @@ public class OrdineDAO {
         String query = "select *,  CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
                 " from ordine as ord inner join ordine_prodotto as op on ord.id_ordine = op.id_ordine " +
                 "inner join prodotto as pro on op.id_prodotto = pro.id_prodotto inner join categoria as cat on " +
-                "cat.id_categoria = pro.id_categoria where ord.id_utente = ?";
+                "cat.id_categoria = pro.id_categoria where ord.id_utente = ? and ord.visibilita = 1";
 
         Map<Integer, Ordine> ordersMap = null;
 
@@ -92,6 +92,20 @@ public class OrdineDAO {
         return new ArrayList<>(ordersMap.values());
     }
 
+    public boolean doDeleteById(int id) {
+        String query = "UPDATE ordine as ord SET ord.visibilita = 0 WHERE ord.id_ordine = ?";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+
+            int result = statement.executeUpdate();
+            return result == 1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     //todo: implementazione lato dashboard sezione "ordini"
     public List<Prodotto> doRetrieveProductsByOrder(int idOrder) {
         String query = "SELECT * FROM ordine AS ord INNER JOIN ordine_prodotto AS op ON ord.id_ordine = op.id_ordine " +
@@ -104,6 +118,8 @@ public class OrdineDAO {
             List<Prodotto> products = new ArrayList<>();
             while (set.next()) {
                 Prodotto prodotto = ProdottoConstructor.constructProduct(set, false);
+                Categoria categoria = CategoriaConstructor.constructCategory(set);
+                prodotto.setCategoria(categoria);
                 products.add(prodotto);
             }
             return products;

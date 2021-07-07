@@ -44,7 +44,7 @@ public class AdminServlet extends HttpServlet {
                     return;
             }
         } catch (RequestNotValidException e) {
-            response.sendRedirect(request.getContextPath() + "/account/admin");
+            e.dispatchErrors(request, response);
             return;
         }
 

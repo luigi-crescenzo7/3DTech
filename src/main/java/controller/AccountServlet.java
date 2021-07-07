@@ -39,56 +39,52 @@ public class AccountServlet extends HttpServlet {
             switch (path) {
                 case "/loginadmin":
                     validator = UtenteValidator.validateLogin(request);
-                    if (!validator.hasErrors()) {
-                        user = FormExtractor.extractLogin(map);
-                        user = dao.doRetrieveEmailPassword(user);
-                        if (user == null) {
-                            request.setAttribute("errorMsg", "Account inesistente");
-                            System.out.println("Email o password non validi");
-                            request.getRequestDispatcher("/WEB-INF/results/loginadmin.jsp").forward(request, response);
-                            return;
-                        }
+                    validator.hasErrors();
+                    user = FormExtractor.extractLogin(map);
+                    user = dao.doRetrieveEmailPassword(user);
+                    if (user == null) {
+                        request.setAttribute("errorMsg", "Account inesistente");
+                        System.out.println("Email o password non validi");
+                        request.getRequestDispatcher("/WEB-INF/results/loginadmin.jsp").forward(request, response);
+                        return;
+                    }
 
-                        if (user.isAdmin()) {
-                            resource = "/controlpanel/";
-                            session.setAttribute("userSession", user);
-                            System.out.println("Ok??");
-                        } else {
-                            System.out.println("WTF??");
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                            return;
-                        }
+                    if (user.isAdmin()) {
+                        resource = "/controlpanel/";
+                        session.setAttribute("userSession", user);
+                        System.out.println("Ok??");
+                    } else {
+                        System.out.println("WTF??");
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "utente non autorizzatoa");
+                        return;
                     }
                     break;
                 case "/registration":
                     validator = UtenteValidator.validateRegistration(request);
                     request.setAttribute("returnBack", "registration.jsp");
-                    if (!validator.hasErrors()) {
-                        user = FormExtractor.extractRegistration(map);
-                        dao.doSave(user);
-                        session.setAttribute("userSession", user);
-                        resource = "/index.jsp";
-                    }
+                    validator.hasErrors();
+                    user = FormExtractor.extractRegistration(map);
+                    dao.doSave(user);
+                    session.setAttribute("userSession", user);
+                    resource = "/index.jsp";
                     break;
                 case "/login":
                     validator = UtenteValidator.validateLogin(request);
                     request.setAttribute("returnBack", "login.jsp");
-                    if (!validator.hasErrors()) {
-                        user = FormExtractor.extractLogin(map);
-                        user = dao.doRetrieveEmailPassword(user);
-                        if (user == null) {
-                            request.setAttribute("errorMsg", "Account inesistente");
-                            System.out.println("Email o password non validi");
-                            request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
-                            return;
-                        }
-                        session.setAttribute("userSession", user);
-                        resource = "/index.jsp";
+                    validator.hasErrors();
+                    user = FormExtractor.extractLogin(map);
+                    user = dao.doRetrieveEmailPassword(user);
+                    if (user == null) {
+                        request.setAttribute("errorMsg", "Account inesistente");
+                        System.out.println("Email o password non validi");
+                        request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
+                        return;
                     }
+                    session.setAttribute("userSession", user);
+                    resource = "/index.jsp";
                     break;
                 case "/logout":
                     RequestValidator.authenticate(session, "userSession");
-                    session.removeAttribute("user");
                     session.invalidate();
                     resource = "/index.jsp";
                     break;
@@ -126,7 +122,7 @@ public class AccountServlet extends HttpServlet {
             case "/registration":
                 resource = "/WEB-INF/results/registration.jsp";
                 break;
-            case "/account":
+            case "/profile":
                 resource = "/WEB-INF/results/account.jsp";
                 break;
             default:

@@ -26,7 +26,7 @@ public class RequestNotValidException extends RuntimeException {
             System.out.println(request.getAttribute("returnBack"));
             request.getRequestDispatcher("/WEB-INF/results/" + request.getAttribute("returnBack")).forward(request, response);
         } else {
-            response.sendError(errorCode, getErrors().get(0));
+            response.sendError(errorCode, super.getMessage());
         }
     }
 

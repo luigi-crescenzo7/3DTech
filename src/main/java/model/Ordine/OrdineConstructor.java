@@ -11,6 +11,7 @@ public class OrdineConstructor {
         ordine.setUserId(set.getInt("ord.id_utente"));
         ordine.setDataOrdine(set.getDate("ord.data_ordine").toLocalDate());
         ordine.setQuantita(set.getInt("ord.quantita"));
+        ordine.setVisible(set.getBoolean("ord.visibilita"));
         return ordine;
     }
 }

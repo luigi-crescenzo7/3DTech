@@ -12,16 +12,16 @@ public class Ordine {
     private LocalDate dataOrdine;
     private int userId;
     private Cart carrello;
+    private boolean visible;
+
 
     public int getUserId() {
         return userId;
     }
 
-
     public Cart getCarrello() {
         return carrello;
     }
-
 
     public void setCarrello(Cart carrello) {
         this.carrello = carrello;
@@ -53,5 +53,13 @@ public class Ordine {
 
     public void setDataOrdine(LocalDate dataOrdine) {
         this.dataOrdine = dataOrdine;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean flag) {
+        this.visible = flag;
     }
 }

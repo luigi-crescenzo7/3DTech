@@ -67,11 +67,15 @@ nav {
 }
 
 nav .search {
-    padding: 0;
-    margin: 0;
+    display: inline-block;
     float: right;
-    height: min-content;
-    width: min-content;
+    color: white;
+    text-transform: uppercase;
+}
+
+.search p {
+    margin: 0 40px 0;
+    font-size: 1.3em;
 }
 
 nav .search form {

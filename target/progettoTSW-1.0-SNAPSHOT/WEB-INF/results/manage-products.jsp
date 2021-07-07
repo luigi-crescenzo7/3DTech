@@ -1,10 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <%@include file="common.jsp" %>
     <title>Admin Dashboard</title>
-    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/product.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/modal.css" type="text/css">
@@ -56,7 +54,7 @@
 </div>
 <hr id="division-line">
 <div class="product-container">
-    <div class="add_product">
+    <div class="product-form">
         <div class="add_product_label"> Aggiungi prodotto</div>
         <div class="form-content">
             <form id="formBello" action="${contextPath}/product/create" name="aggiungi" method="post"
@@ -75,7 +73,7 @@
                 <input class="input" type="number" id="sconto" name="productDiscount" value=""><br><br>
                 <div id="div-test">
                 </div>
-                <label for="fieldProductCategory">Categoria</label>
+                <label for="fieldProductCategory">Categoria</label><br>
                 <select id="fieldProductCategory" name="productCategory" form="formBello">
                     <option selected>
                         -- Seleziona Categoria --
@@ -85,16 +83,16 @@
                                 ${category.nome}
                         </option>
                     </c:forEach>
-                </select>
-                <label for="fieldImage">File: </label>
+                </select><br>
+                <label for="fieldImage">File: </label><br>
                 <input type="file" name="productImage" id="fieldImage"><br><br>
                 <input class="agg" type="submit" value="Aggiungi prodotto">
             </form>
         </div>
     </div>
 
-    <div class="mod_product">
-        <div class="mod_product_label"> Modifica prodotto</div>
+    <div class="product-form">
+        <div class="mod_product_label">Modifica prodotto</div>
         <div class="mod_product_input">
             <form action="" name="modifica" method="">
                 <label for="id2">ID prodotto</label>
@@ -118,10 +116,10 @@
         </div>
     </div>
 
-    <div class="rem_product">
+    <div class="product-form">
         <div class="rem_product_label"> Rimuovi prodotto</div>
         <div class="rem_product_input">
-            <form action="" name="rimuovi" method="">
+            <form action="" name="rimuovi" method="aa">
                 <label for="id">ID prodotto</label>
                 <input class="input" type="number" id="id" name="id" value=""><br><br><br>
                 <input class="agg" type="submit" value="Rimuovi prodotto">
