@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const path = document.querySelector("#hidden-path").value
+    const path = document.querySelector("#ctxPath").value
     $.post(path + "/controlpanel/chart",
         function (data) {
             let ctx = document.getElementById('chart').getContext('2d')
