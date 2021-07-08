@@ -16,8 +16,8 @@
         <a href="${contextPath}/controlpanel/products">Gestisci prodotti</a>
         <!-- agg, elimina e modifica -->
         <a href="#">Gestisci utenti</a>
-        <a href="#">Gestione ordini</a>
-        <a class="logout" href="#">Logout</a>
+        <a href="${contextPath}/controlpanel/categories">Gestione categorie</a>
+        <a class="logout" href="${contextPath}/account/logout">Logout</a>
     </div>
 </aside>
 <div class="container">
