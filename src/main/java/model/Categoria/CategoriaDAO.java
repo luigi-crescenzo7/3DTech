@@ -2,6 +2,7 @@ package model.Categoria;
 
 import model.ConPool;
 import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoConstructor;
 import org.json.JSONObject;
 
 import java.sql.Connection;
@@ -129,6 +130,28 @@ public class CategoriaDAO {
             throw new RuntimeException(e);
         }
         return categoria;
+    }
+
+    public List<Prodotto> doRetrieveProductsByCategory(int idOrder) {
+        String query = "SELECT *, CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato FROM prodotto AS pro INNER JOIN categoria" +
+                " AS cat ON pro.id_categoria = cat.id_categoria WHERE cat.id_categoria = ?";
+        List<Prodotto> list = null;
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, idOrder);
+            list = new ArrayList<>();
+
+            ResultSet set = statement.executeQuery();
+            while (set.next()) {
+                Prodotto prodotto = ProdottoConstructor.constructProduct(set, true);
+                prodotto.setCategoria(CategoriaConstructor.constructCategory(set));
+                list.add(prodotto);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
 }
 

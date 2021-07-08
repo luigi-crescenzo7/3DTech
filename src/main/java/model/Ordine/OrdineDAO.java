@@ -18,6 +18,19 @@ import java.util.Map;
 
 public class OrdineDAO {
 
+    public double doRetrieveTotalPrices(int idOrder) {
+        String query = "";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, idOrder);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 5;
+    }
+
     public void doSave(Ordine order) {
         try (Connection connection = ConPool.getConnection()) {
             connection.setAutoCommit(false);
@@ -63,7 +76,7 @@ public class OrdineDAO {
         String query = "select *,  CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
                 " from ordine as ord inner join ordine_prodotto as op on ord.id_ordine = op.id_ordine " +
                 "inner join prodotto as pro on op.id_prodotto = pro.id_prodotto inner join categoria as cat on " +
-                "cat.id_categoria = pro.id_categoria where ord.id_utente = ? and ord.visibilita = 1";
+                "cat.id_categoria = pro.id_categoria where ord.id_utente = ? and ord.visibilita = 1 and op.visibilita = 1";
 
         Map<Integer, Ordine> ordersMap = null;
 
@@ -78,7 +91,7 @@ public class OrdineDAO {
                 int idOrdine = set.getInt("ord.id_ordine");
                 if (!ordersMap.containsKey(idOrdine)) {
                     Ordine order = OrdineConstructor.constructOrder(set);
-                    order.setCarrello(new Cart(new ArrayList<>()));
+                    order.setCarrello(new Cart(new ArrayList<>(), 0));
                     ordersMap.put(idOrdine, order);
                 }
                 Prodotto prodotto = ProdottoConstructor.constructProduct(set, true);
@@ -101,6 +114,27 @@ public class OrdineDAO {
 
             int result = statement.executeUpdate();
             return result == 1;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doDeleteProductInOrder(int orderId, int productId) {
+        String query = "UPDATE ordine_prodotto as op SET op.visibilita = 0" +
+                " WHERE op.id_ordine = ? AND op.id_prodotto = ?";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, orderId);
+            statement.setInt(2, productId);
+
+            int result = statement.executeUpdate();
+            if (statement.executeUpdate() >= 1) {
+                System.out.println("success on updating");
+            }
+
+            System.out.println(result);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -21,6 +21,7 @@ public class ProdottoConstructor {
         p.setPrezzo(rs.getDouble((discount ? "prezzo_scontato" : "pro.prezzo")));
         p.setPeso(rs.getDouble("pro.peso"));
         p.setSconto(rs.getDouble("pro.sconto"));
+        //p.setVisible(rs.getBoolean("pro.visibilita"));
         Categoria cat = CategoriaConstructor.constructCategory(rs);
         p.setCategoria(cat);
         return p;

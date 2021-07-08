@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html>
 <head>
     <%@include file="common.jsp" %>
@@ -12,8 +13,11 @@
 <section class="category">
     <c:forEach items="${applicationScope.listCategories}" var="category">
         <div class="cat">
-            <a href="#"><img src="${contextPath}/imgs/categorie/${category.urlImage}"
-                             alt=""></a>
+            <c:set var="categoryName" value="${category.nome}"/>
+            <c:set var="categoryId" value="${category.id}"/>
+            <a href="${contextPath.concat("/categorie/category?option=").concat(categoryId)}"><img
+                    src="${contextPath}/imgs/categorie/${category.urlImage}"
+                    alt=""></a>
             <span class="category_label">${category.nome}</span>
         </div>
     </c:forEach>

@@ -6,48 +6,81 @@
     <%@include file="common.jsp" %>
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
+    <style>
+        .orders-container {
+            margin: 30px;
+            border: 1px solid black;
+        }
+
+        .accordion {
+            width: 60%;
+            border: 1px solid black;
+            display: block;
+            margin: 0 auto;
+        }
+
+        summary {
+            background-color: #3a84c1;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        tr,td,th {
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
-<c:forEach items="${requestScope.userOrders}" var="order">
-        <span>id: ${order.id} - data: ${order.dataOrdine} -  totale: ${order.carrello.total}</span>
-        <form action="${contextPath}/order/remove" method="post">
-            <input type="hidden" name="order-id" value="${order.id}">
-            <button id="remove-button">Rimuovi</button>
-        </form>
-        <ul>
-            <c:forEach items="${order.carrello.prodotti}" var="item">
-                <li>id prodotto: ${item.prodotto.id} - nome: ${item.prodotto.nome} - quantita: ${item.quantita}</li>
-            </c:forEach>
-        </ul>
-</c:forEach>
-<!--<script>
-    let buttons = document.querySelectorAll('#remove-button')
-    let ctxPath = document.querySelector('#ctxPath').value
-
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', removeOrder)
-    }
-
-    function removeOrder(event) {
-        const xhttp = new XMLHttpRequest()
-        let idOrder = event.target.nextElementSibling.value
-
-        xhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-
-            }
-        }
-        console.log(ctxPath)
-
-        try {
-            xhttp.open('POST', ctxPath + '/order/remove')
-            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-            xhttp.send('idOrder=' + idOrder)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-</script>-->
+<div class="orders-container">
+    <c:forEach items="${requestScope.userOrders}" var="order">
+        <details class="accordion">
+            <summary>Data di creazione: ${order.dataOrdine} -- Id: ${order.id}</summary>
+            <table>
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Prezzo</th>
+                    <th>Quantita</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${order.carrello.prodotti}" var="item">
+                    <tr>
+                        <td data-head="Prodotto">${item.prodotto.nome}</td>
+                        <td data-head="Prezzo">${item.prodotto.prezzo}</td>
+                        <td data-head="Quantita">${item.quantita}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </details>
+    </c:forEach>
+</div>
+<!--<c:forEach items="${requestScope.userOrders}" var="order">
+    <span>id: ${order.id} - data: ${order.dataOrdine} -  totale: ${order.carrello.total}</span>
+    <form action="${contextPath}/order/remove" method="post">
+        <input type="hidden" name="order-id" value="${order.id}">
+        <button type="submit" id="remove-button">Rimuovi</button>
+    </form>
+    <ul>
+        <c:forEach items="${order.carrello.prodotti}" var="item">
+            <li>id prodotto: ${item.prodotto.id} - nome: ${item.prodotto.nome} - quantita: ${item.quantita}</li>
+            <form action="${contextPath}/product/remove" method="post">
+                <button type="submit">Rimuovi prodotto</button>
+                <input type="hidden" name="product-id" value="${item.prodotto.id}">
+                <input type="hidden" name="order-id" value="${order.id}">
+            </form>
+        </c:forEach>
+    </ul>
+</c:forEach>-->
 </body>
 </html>

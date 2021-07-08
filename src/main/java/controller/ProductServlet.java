@@ -3,9 +3,12 @@ package controller;
 import model.Cart;
 import model.CartItem;
 import model.Categoria.CategoriaDAO;
+import model.Ordine.OrdineDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
+import model.Utente.UserSession;
+import model.Utente.Utente;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -33,6 +36,23 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
+        ProdottoDAO dao = new ProdottoDAO();
+        String resource = "";
+
+        switch (path) {
+            case "/product-info":
+                String option = request.getParameter("option");
+                int id = Integer.parseInt(option);
+                Prodotto prodotto = dao.doRetrieveById(id);
+                request.setAttribute("product", prodotto);
+                resource = "/WEB-INF/results/productinfo.jsp";
+                break;
+            default:
+                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
+
+        request.getRequestDispatcher(resource).forward(request, response);
     }
 
     @Override
@@ -49,8 +69,8 @@ public class ProductServlet extends HttpServlet {
             Prodotto p = null;
             ProdottoDAO dao = new ProdottoDAO();
             CategoriaDAO categoriaDAO = new CategoriaDAO();
-                cart = new Cart(new ArrayList<>());
-                if (session.getAttribute("sessionCart") == null) {
+            if (session.getAttribute("sessionCart") == null) {
+                cart = new Cart(new ArrayList<>(), 0);
                 session.setAttribute("sessionCart", cart);
             } else {
                 cart = (Cart) session.getAttribute("sessionCart");
@@ -143,6 +163,19 @@ public class ProductServlet extends HttpServlet {
                             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                             break;
                     }
+                    break;
+                //todo: da eliminare.... forse..
+                case "/remove":
+                    String idProdotto = request.getParameter("product-id");
+                    Utente u = UserSession.getUserFromSession(session, "userSession");
+                    String idOrder = request.getParameter("order-id");
+                    int orderId = Integer.parseInt(idOrder);
+                    int productId1 = Integer.parseInt(idProdotto);
+                    System.out.println("Order id: " + orderId + " Product id: " + productId1);
+                    OrdineDAO dao2 = new OrdineDAO();
+                    dao2.doDeleteProductInOrder(orderId, productId1);
+                    request.setAttribute("userOrders", dao2.doRetrieveOrdersWithProductsByUser(u.getId()));
+                    request.getRequestDispatcher("/WEB-INF/results/orders.jsp").forward(request, response);
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
