@@ -22,7 +22,9 @@ public class ProdottoConstructor {
         p.setPeso(rs.getDouble("pro.peso"));
         p.setSconto(rs.getDouble("pro.sconto"));
         //p.setVisible(rs.getBoolean("pro.visibilita"));
-        Categoria cat = CategoriaConstructor.constructCategory(rs);
+        Categoria cat = new Categoria();
+        cat.setId(rs.getInt("cat.id_categoria"));
+        cat.setNome(rs.getString("cat.nome"));
         p.setCategoria(cat);
         return p;
     }

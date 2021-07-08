@@ -110,7 +110,7 @@ nav .search input {
 
 
 .btn-list {
-    display: block; /*todo: eliminare???*/
+    display: block;
     background: none;
     border: none;
     cursor: pointer;

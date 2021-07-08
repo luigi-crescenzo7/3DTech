@@ -13,8 +13,8 @@ public class ProductBuilder {
         prodotto.setDescrizione(map.get("productDescription")[0]);
         prodotto.setUrlImage(fileName);
         JSONObject object = new JSONObject();
-        object.put("colore", map.get("productColor")[0]);
-        object.put("temperatura", Double.parseDouble(map.get("productTemp")[0]));
+        object.put("Colore", map.get("productColor")[0]);
+        object.put("Temperatura", Double.parseDouble(map.get("productTemp")[0]));
         prodotto.setCaratteristiche(object);
         prodotto.setPrezzo(Double.parseDouble(map.get("productPrice")[0]));
         prodotto.setPeso(Double.parseDouble(map.get("productWeight")[0]));
@@ -90,16 +90,16 @@ public class ProductBuilder {
 
     public static JSONObject fromObjectToJson(Prodotto p) {
         JSONObject object = new JSONObject();
-        object.put("id", p.getId());
-        object.put("nome", p.getNome());
-        object.put("descrizione", p.getDescrizione());
-        object.put("marchio", p.getMarchio());
-        object.put("immagine", p.getUrlImage());
-        object.put("caratteristiche", p.getCaratteristiche());
-        object.put("prezzo", p.getPrezzo());
-        object.put("peso", p.getPeso());
-        object.put("sconto", p.getSconto());
-        object.put("categoria", p.getCategoria().getNome());
+        object.put("Id", p.getId());
+        object.put("Nome", p.getNome());
+        object.put("Descrizione", p.getDescrizione());
+        object.put("Marchio", p.getMarchio());
+        object.put("Immagine", p.getUrlImage());
+        object.put("Caratteristiche", p.getCaratteristiche());
+        object.put("Prezzo", p.getPrezzo());
+        object.put("Peso", p.getPeso());
+        object.put("Sconto", p.getSconto());
+        object.put("Categoria", p.getCategoria().getNome());
         return object;
     }
 }

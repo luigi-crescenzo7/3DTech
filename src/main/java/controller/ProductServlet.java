@@ -50,6 +50,7 @@ public class ProductServlet extends HttpServlet {
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                return;
         }
 
         request.getRequestDispatcher(resource).forward(request, response);

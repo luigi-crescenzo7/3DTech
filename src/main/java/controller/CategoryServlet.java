@@ -1,18 +1,33 @@
 package controller;
 
+import model.Categoria.Categoria;
 import model.Categoria.CategoriaDAO;
+import model.Categoria.CategoryBuilder;
 import model.Prodotto.Prodotto;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(urlPatterns = "/categorie/*")
+@MultipartConfig
 public class CategoryServlet extends HttpServlet {
+    private static String uploadRoot;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        uploadRoot = FileServlet.getUploadPath() + File.separator + "special_folder" + File.separator;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -37,9 +52,7 @@ public class CategoryServlet extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
                 return;
         }
-
         request.getRequestDispatcher(resource).forward(request, response);
-
     }
 
 
@@ -48,11 +61,29 @@ public class CategoryServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-
+        HttpSession session = request.getSession();
+        ServletContext context = request.getServletContext();
+        CategoriaDAO dao = new CategoriaDAO();
+        List<Categoria> categorie = null;
 
         switch (path) {
             case "/create":
-
+                RequestValidator.authorize(session, "userSession");
+                Part part = request.getPart("categoryImage");
+                Map<String, String[]> map = request.getParameterMap();
+                String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                File file = null;
+                try (InputStream fileStream = part.getInputStream()) {
+                    file = new File(uploadRoot + fileName);
+                    if (!file.exists())
+                        Files.copy(fileStream, file.toPath());
+                }
+                Categoria categoria = CategoryBuilder.createCategory(map, fileName);
+                categorie = (List<Categoria>) context.getAttribute("listCategories");
+                dao.doSave(categoria);
+                if (categorie != null)
+                    categorie.add(categoria);
+                request.getRequestDispatcher("/WEB-INF/results/admin-dashboard.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);

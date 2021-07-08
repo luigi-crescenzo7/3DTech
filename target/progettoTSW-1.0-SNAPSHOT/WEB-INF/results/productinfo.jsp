@@ -1,21 +1,58 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Scheda prodotto</title>
     <%@include file="common.jsp" %>
-    <c:set scope="page" var="product" value="${requestScope.createdProduct}"/>
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/productDetails.css" type="text/css">
 </head>
 <body>
-<p>
-    Nome: <b>${product.nome}</b>
-</p>
-<p>
-    Marchio: <b>${product.marchio}</b>
-</p>
-<p>
-    Immagine: <img src="${contextPath}/images/${product.urlImage}" alt="${product.id}">
-</p>
+<%@include file="nav-bar.jsp" %>
+<div class="product_container">
+    <div class="product_img">
+        <img src="${contextPath}/images/${requestScope.product.urlImage}" alt="aa">
+    </div>
+    <div class="product_details">
 
+        <span class="name_product">
+            <c:out value="${requestScope.product.nome}"/>
+        </span>
+
+        <span class="price_product">
+            <c:out value="€ ${requestScope.product.prezzo}"/>
+        </span>
+
+        <div class="line"></div>
+
+        <div class="buttons">
+            <button class="buy_now">Compra adesso</button>
+            <button class="add_to_cart">Aggiungi al carrello</button>
+        </div>
+
+        <span class="product_info">
+            <c:out value="Descrizione: ${requestScope.product.descrizione}"/>
+        </span>
+
+        <span class="product_info">
+            <c:out value="Marchio: ${requestScope.product.marchio}"/>
+        </span>
+
+        <span class="product_info">
+            <c:out value="Peso: ${requestScope.product.peso}"/>
+        </span>
+
+
+        <c:forEach items="${requestScope.product.caratteristiche.keys()}" var="elemName">
+            <c:set var="jsonObject" value="${requestScope.product.caratteristiche}"/>
+            <c:set var="keyName" value="${elemName}"/>
+            <span class="product_info">
+                <!-- opt() fa la stessa cosa di get() -->
+                <c:out value="${keyName}: ${jsonObject.opt(keyName)}"/>
+            </span>
+        </c:forEach>
+
+    </div>
+</div>
 </body>
 </html>

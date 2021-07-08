@@ -10,7 +10,7 @@ $(document).ready(function () {
                     datasets: [{
                         label: '# scorte',
                         data: data[1],
-                        //todo: eliminare proprietà options
+                        //todo: testare proprietà options
                         options: {
                             responsive: true,
                         },

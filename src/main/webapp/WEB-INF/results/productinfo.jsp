@@ -41,6 +41,17 @@
         <span class="product_info">
             <c:out value="Peso: ${requestScope.product.peso}"/>
         </span>
+
+
+        <c:forEach items="${requestScope.product.caratteristiche.keys()}" var="elemName">
+            <c:set var="jsonObject" value="${requestScope.product.caratteristiche}"/>
+            <c:set var="keyName" value="${elemName}"/>
+            <span class="product_info">
+                <!-- opt() fa la stessa cosa di get() -->
+                <c:out value="${keyName}: ${jsonObject.opt(keyName)}"/>
+            </span>
+        </c:forEach>
+
     </div>
 </div>
 </body>

@@ -39,6 +39,10 @@ public class AdminServlet extends HttpServlet {
                     RequestValidator.authorize(session, "userSession");
                     resource = "/WEB-INF/results/manage-products.jsp";
                     break;
+                case "/categories":
+                    RequestValidator.authorize(session, "userSession");
+                    resource = "/WEB-INF/results/manage-categories.jsp";
+                    break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
@@ -60,9 +64,11 @@ public class AdminServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         System.out.println("doPost " + path);
         PrintWriter writer = null;
+        HttpSession session = request.getSession();
 
         switch (path) {
             case "/chart":
+                RequestValidator.authenticate(session, "userSession");
                 response.setContentType("application/json");
 
                 JSONArray array = new JSONArray();
@@ -78,6 +84,7 @@ public class AdminServlet extends HttpServlet {
                 writer.close();
                 break;
             case "/product-info":
+                RequestValidator.authenticate(session, "userSession");
                 response.setContentType("application/json");
                 String id = request.getParameter("productId");
 

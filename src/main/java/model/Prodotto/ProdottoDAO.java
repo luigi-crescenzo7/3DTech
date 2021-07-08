@@ -48,6 +48,24 @@ public class ProdottoDAO {
         return result == 1;
     }
 
+    public List<String> doSearch(String name) {
+        List<String> list = new ArrayList<>();
+        String query = "SELECT nome FROM prodotto WHERE nome LIKE ?";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, name + "%");
+
+            ResultSet set = statement.executeQuery();
+
+            while (set.next())
+                list.add(set.getString(1));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
+    }
     //todo: ????
     /*
     public List<Prodotto> doSearch(List<Condition> conditions) {
@@ -142,23 +160,26 @@ public class ProdottoDAO {
         return prodotto;
     }
 
-    public List<String> doRetrieveProductsByName(String name) {
-        List<String> list = new ArrayList<>();
-        String query = "SELECT nome FROM prodotto WHERE nome LIKE ?";
+    public List<Prodotto> doRetrieveProductsByName(String name) {
+        String query = "SELECT pro.*, CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato," +
+                "cat.id_categoria, cat.nome" +
+                " FROM prodotto AS pro INNER JOIN categoria AS cat on pro.id_categoria = cat.id_categoria" +
+                " WHERE pro.nome LIKE ?";
+        List<Prodotto> prodotti = new ArrayList<>();
         try (Connection connection = ConPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, name + "%");
 
             ResultSet set = statement.executeQuery();
-
-            while (set.next())
-                list.add(set.getString(1));
-
+            while (set.next()) {
+                Prodotto p = ProdottoConstructor.constructProduct(set, true);
+                prodotti.add(p);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return list;
+        return prodotti;
     }
 
     public void doSave(Prodotto p) {

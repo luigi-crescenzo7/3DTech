@@ -1,5 +1,6 @@
 package controller;
 
+import model.FormExtractor;
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
 import model.Utente.UtenteValidator;
@@ -52,10 +53,8 @@ public class AccountServlet extends HttpServlet {
                     if (user.isAdmin()) {
                         resource = "/controlpanel/";
                         session.setAttribute("userSession", user);
-                        System.out.println("Ok??");
                     } else {
-                        System.out.println("WTF??");
-                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "utente non autorizzatoa");
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Utente non autorizzato");
                         return;
                     }
                     break;
@@ -93,7 +92,6 @@ public class AccountServlet extends HttpServlet {
                     return;
             }
         } catch (RequestNotValidException e) {
-            System.out.println("error??? " + e.getErrors());
             e.dispatchErrors(request, response);
             return;
         }

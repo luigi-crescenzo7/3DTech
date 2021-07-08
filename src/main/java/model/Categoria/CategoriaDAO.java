@@ -14,6 +14,28 @@ import java.util.List;
 
 public class CategoriaDAO {
 
+    public void doSave(Categoria categoria) {
+        String query = "INSERT INTO categoria (nome, url_image) VALUES (?, ?)";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            statement.setString(1, categoria.getNome());
+            statement.setString(2, categoria.getUrlImage());
+
+            int result = statement.executeUpdate();
+            if (result != 1) {
+                throw new RuntimeException("Insert Error");
+            }
+
+            ResultSet key = statement.getGeneratedKeys();
+            if (key.next()) {
+                categoria.setId(key.getInt(1));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Categoria doRetrieveCategoryProducts(Categoria categoria) {
         try (Connection connection = ConPool.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM categoria AS cat" +

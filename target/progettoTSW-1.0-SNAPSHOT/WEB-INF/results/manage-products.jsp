@@ -2,7 +2,7 @@
 <html>
 <head>
     <%@include file="common.jsp" %>
-    <title>Admin Dashboard</title>
+    <title>Gestione Prodotti - Dashboard</title>
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/product.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/modal.css" type="text/css">
@@ -16,8 +16,8 @@
     <div class="hamburger_menu">
         <a href="${contextPath}/controlpanel/products">Gestisci prodotti</a>
         <a href="#">Gestisci utenti</a>
-        <a href="#">Gestione ordini</a>
-        <a class="logout" href="#">Logout</a>
+        <a href="${contextPath}/controlpanel/categories">Gestione categorie</a>
+        <a class="logout" href="${contextPath}/account/logout">Logout</a>
     </div>
 </aside>
 

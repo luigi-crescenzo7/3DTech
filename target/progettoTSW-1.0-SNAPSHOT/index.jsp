@@ -2,26 +2,32 @@
 <html>
 <head>
     <%@include file="WEB-INF/results/common.jsp" %>
-    <!--<link rel="stylesheet" href="${contextPath}/css/style.css" type="text/css">-->
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
-    <script src="${contextPath}/js/search.js" defer></script>
-    <title>3DTech</title>
+    <script src="${contextPath}/js/slider.js" defer></script>
+    <title>3DTech - Home</title>
 </head>
 <body>
 <input id="path" type="hidden" value="${contextPath}">
 <%@include file="WEB-INF/results/nav-bar.jsp" %>
-<section class="prima">
-    Sconti
-</section>
-<section class="seconda">
-    Tendenze
-</section>
-<section class="terza">
-    Nuovi articoli
-</section>
-<section class="quarta">
-    Recenti
+<section class="main">
+        <div class="slick-container">
+            <div>
+                <img height="150px" width="150px" src="${contextPath}/images/logoNew.svg" alt="aa">
+            </div>
+            <div>
+                <img height="150px" width="150px" src="${contextPath}/images/logoNew.svg" alt="aa">
+            </div>
+            <div>
+                <img height="150px" width="150px" src="${contextPath}/images/logoNew.svg" alt="aa">
+            </div>
+            <div>
+                <img height="150px" width="150px" src="${contextPath}/images/logoNew.svg" alt="aa">
+            </div>
+            <div>
+                <img height="150px" width="150px" src="${contextPath}/images/logoNew.svg" alt="aa">
+            </div>
+        </div>
 </section>
 <jsp:include page="WEB-INF/results/footer.jsp"/>
 </body>

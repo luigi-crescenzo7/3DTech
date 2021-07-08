@@ -74,6 +74,28 @@ html, body {
     border: 1px solid #d9d7ce;
 }
 
+.homepage-content {
+    margin: 0;
+    width: 100%;
+    height: min-content;
+}
+
+.slick-container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.slick-container * {
+    height: min-content;
+    margin: 0;
+}
+
+.slick-container img {
+    margin: 0;
+    padding: 0;
+    background-color: blue;
+}
 
 @media screen and (max-width: 480px) {
     .table-container {

@@ -42,25 +42,29 @@
     </ul>
     <div class="search">
         <div class="ui-widget">
-            <input id="tags" class="search-bar" type="text" name="search" placeholder="Cerca...">
+            <form action="${contextPath}/search/searchproduct">
+                <input id="tags" class="search-bar" type="search" name="search" placeholder="Cerca...">
+            </form>
         </div>
     </div>
-    <div class="svg-menu">
-        <img id="bar-menu" src="${contextPath}/imgs/bar-menu.svg" alt="aa">
-        <div class="opzioni">
-            <ul>
-                <li><a href="${contextPath}/account/profile">Account</a></li>
-                <li>
-                    <form action="${contextPath}/order/orders" method="post">
-                        <button class="btn-list">Ordini</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="${contextPath}/account/logout" method="post">
-                        <button class="btn-list">Logout</button>
-                    </form>
-                </li>
-            </ul>
+    <c:if test="${sessionScope.userSession != null}">
+        <div class="svg-menu">
+            <img id="bar-menu" src="${contextPath}/imgs/bar-menu.svg" alt="aa">
+            <div class="opzioni">
+                <ul>
+                    <li><a href="${contextPath}/account/profile">Account</a></li>
+                    <li>
+                        <form action="${contextPath}/order/orders" method="post">
+                            <button class="btn-list">Ordini</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form action="${contextPath}/account/logout" method="post">
+                            <button class="btn-list">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
+    </c:if>
 </nav>
