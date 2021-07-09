@@ -32,7 +32,11 @@
             <c:forEach items="${sessionScope.sessionCart.prodotti}" var="cartitem">
                 <c:set var="prodotto" scope="page" value="${cartitem.prodotto}"/>
                 <li> ${prodotto.nome} - ${prodotto.id}</li>
-                <label for="quantity">Quantità: ${cartitem.quantita}</label>
+                <p>Quantità: ${cartitem.quantita}</p>
+                <form action="${contextPath}/cart/remove" method="post">
+                    <input type="submit" value="Rimuovi">
+                    <input type="hidden" name="productId" value="${prodotto.id}">
+                </form>
             </c:forEach>
         </ul
     </c:when>

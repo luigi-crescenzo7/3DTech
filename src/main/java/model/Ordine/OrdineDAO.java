@@ -1,15 +1,13 @@
 package model.Ordine;
 
-import model.Cart;
-import model.CartItem;
+import model.utilities.Cart;
+import model.utilities.CartItem;
 import model.Categoria.Categoria;
 import model.Categoria.CategoriaConstructor;
-import model.ConPool;
+import model.utilities.ConPool;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoConstructor;
-import model.Utente.Utente;
 
-import java.security.cert.CertificateEncodingException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

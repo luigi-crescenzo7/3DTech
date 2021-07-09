@@ -1,9 +1,10 @@
 package model.Prodotto;
 
 
-import model.*;
 import model.Categoria.Categoria;
 import model.Categoria.CategoriaConstructor;
+import model.utilities.CartItem;
+import model.utilities.ConPool;
 
 import java.sql.*;
 import java.util.ArrayList;

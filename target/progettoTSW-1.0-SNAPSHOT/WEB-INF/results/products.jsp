@@ -9,6 +9,7 @@
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
+<c:set var="backPath" value="${requestScope.back}"/>
 <div class="main">
     <div class="left_menu">
         <ul>
@@ -16,12 +17,6 @@
             <c:forEach items="${applicationScope.listCategories}" var="category">
                 <li><a href="${contextPath}/categorie/category?option=${category.id}">${category.nome}</a></li>
             </c:forEach>
-            <!--<li><a href="${contextPath}/?option=stampanti">Stampanti 3D</a></li>
-            <li><a href="${contextPath}/categorie/category?option=filamenti">Filamenti</a></li>
-            <li><a href="${contextPath}/categorie/category?option=ricambi">Ricambi per stampanti</a></li>
-            <li><a href="${contextPath}/VisualizzazioneProdottiServlet?option=resina">Resina</a></li>
-            <li><a href="${contextPath}/VisualizzazioneProdottiServlet?option=utensili">Utensili</a></li>
-            <li><a href="${contextPath}/VisualizzazioneProdottiServlet?option=accessori">Accessori</a></li>-->
         </ul>
     </div>
 
@@ -33,8 +28,12 @@
                 </a>
                 <span>Nome: <c:out value="${product.nome}"/></span>
                 <span>Prezzo: <c:out value="${product.prezzo}"/></span>
-                <form action="" method="post"> <!-- servlet da definire -->
+                <form action="${contextPath}/cart/add" method="post">
                     <button>Aggiungi al carrello</button>
+                    <input type="hidden" name="productId" value="${product.id}">
+                    <input type="hidden" name="fieldQuantity" value="1">
+                    <input type="hidden" name="productCategoryId" value="${product.categoria.id}">
+                    <input type="hidden" name="backPath" value="${backPath}">
                 </form>
             </div>
         </c:forEach>

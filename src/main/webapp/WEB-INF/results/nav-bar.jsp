@@ -12,9 +12,6 @@
     <c:if test="${sessionScope.userSession != null}"> <!--pageContext.request.getSession().getAttribute('user') != null -->
         <div class="utente_loggato">
             <button class="email_user">${sessionScope.userSession.email}</button>
-            <a href="#">
-                <!--<img class="carrello" src="${contextPath}/img/carrello.png" alt="aa">-->
-            </a>
             <div class="opzioni">
                 <ul>
                     <li><a href="${contextPath}/account/profile">Account</a></li>
@@ -30,6 +27,9 @@
                     </li>
                 </ul>
             </div>
+            <a href="${contextPath}/cart/">
+                <img class="carrello" src="${contextPath}/imgs/shopping-cart.svg" alt="aa">
+            </a>
         </div>
     </c:if>
 </header>

@@ -43,6 +43,7 @@ public class SearchServlet extends HttpServlet {
                 String option = request.getParameter("search");
                 List<Prodotto> prodotti = new ProdottoDAO().doRetrieveProductsByName(option);
                 request.setAttribute("products", prodotti);
+                request.setAttribute("back", "/search/searchproduct?search=" + option);
                 request.getRequestDispatcher("/WEB-INF/results/products.jsp").forward(request, response);
                 break;
             default:

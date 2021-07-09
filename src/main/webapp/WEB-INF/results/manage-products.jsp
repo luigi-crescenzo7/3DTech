@@ -17,7 +17,11 @@
         <a href="${contextPath}/controlpanel/products">Gestisci prodotti</a>
         <a href="#">Gestisci utenti</a>
         <a href="${contextPath}/controlpanel/categories">Gestione categorie</a>
-        <a class="logout" href="${contextPath}/account/logout">Logout</a>
+        <form action="${contextPath}/account/logout" method="post">
+            <a class="logout">
+                <button type="submit">Logout</button>
+            </a>
+        </form>
     </div>
 </aside>
 
@@ -128,6 +132,7 @@
     </div>
 </div>
 <div class="modal" id="modal-box">
+    <input type="hidden" name="modal-type" value="product">
     <div class="modal-content">
     </div>
 </div>

@@ -42,10 +42,11 @@ public class CategoryServlet extends HttpServlet {
                 resource = "/WEB-INF/results/categories.jsp";
                 break;
             case "/category":
-                String idOrder = request.getParameter("option");
-                System.out.println(idOrder);
-                List<Prodotto> prodotti = dao.doRetrieveProductsByCategory(Integer.parseInt(idOrder));
+                String idCategory = request.getParameter("option");
+                System.out.println(idCategory);
+                List<Prodotto> prodotti = dao.doRetrieveProductsByCategory(Integer.parseInt(idCategory));
                 request.setAttribute("products", prodotti);
+                request.setAttribute("back", "/categorie/category?option=" + idCategory);
                 resource = "/WEB-INF/results/products.jsp";
                 break;
             default:

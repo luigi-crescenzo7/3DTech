@@ -1,9 +1,7 @@
 package model.Ordine;
 
-import model.Cart;
-import model.Utente.Utente;
+import model.utilities.Cart;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 public class Ordine {

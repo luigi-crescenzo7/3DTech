@@ -1,7 +1,9 @@
 package controller;
 
 
+import model.Categoria.Categoria;
 import model.Categoria.CategoriaDAO;
+import model.Categoria.CategoryBuilder;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
@@ -68,7 +70,7 @@ public class AdminServlet extends HttpServlet {
 
         switch (path) {
             case "/chart":
-                RequestValidator.authenticate(session, "userSession");
+                RequestValidator.authorize(session, "userSession");
                 response.setContentType("application/json");
 
                 JSONArray array = new JSONArray();
@@ -84,7 +86,7 @@ public class AdminServlet extends HttpServlet {
                 writer.close();
                 break;
             case "/product-info":
-                RequestValidator.authenticate(session, "userSession");
+                RequestValidator.authorize(session, "userSession");
                 response.setContentType("application/json");
                 String id = request.getParameter("productId");
 
@@ -93,6 +95,19 @@ public class AdminServlet extends HttpServlet {
 
                 writer = response.getWriter();
                 writer.println(obj);
+                writer.close();
+                break;
+            case "/category-info":
+                RequestValidator.authorize(session, "userSession");
+                response.setContentType("application/json");
+
+                String idCategoria = request.getParameter("categoryId");
+
+                Categoria c = new CategoriaDAO().doRetrieveById(Integer.parseInt(idCategoria));
+                JSONObject object = CategoryBuilder.fromObjectToJson(c);
+
+                writer = response.getWriter();
+                writer.println(object);
                 writer.close();
                 break;
             default:

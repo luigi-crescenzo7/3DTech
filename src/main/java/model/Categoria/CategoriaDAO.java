@@ -1,6 +1,6 @@
 package model.Categoria;
 
-import model.ConPool;
+import model.utilities.ConPool;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoConstructor;
 import org.json.JSONObject;
@@ -13,6 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaDAO {
+
+    public Categoria doRetrieveById(int idCategoria) {
+        Categoria c = null;
+        String query = "SELECT * FROM categoria AS cat WHERE cat.id_categoria = ?";
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, idCategoria);
+
+            ResultSet set = statement.executeQuery();
+
+            if (set.next())
+                c = CategoriaConstructor.constructCategory(set);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return c;
+    }
 
     public void doSave(Categoria categoria) {
         String query = "INSERT INTO categoria (nome, url_image) VALUES (?, ?)";

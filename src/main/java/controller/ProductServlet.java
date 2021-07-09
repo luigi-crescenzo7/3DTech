@@ -1,7 +1,6 @@
 package controller;
 
-import model.Cart;
-import model.CartItem;
+import model.utilities.Cart;
 import model.Categoria.CategoriaDAO;
 import model.Ordine.OrdineDAO;
 import model.Prodotto.Prodotto;
@@ -62,10 +61,14 @@ public class ProductServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         List<Prodotto> products = (List<Prodotto>) context.getAttribute("listProducts");
+        System.out.println(request.getRequestURI());
+        String path1 = request.getParameter("test");
+        System.out.println(path1);
 
         try {
             String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
             HttpSession session = request.getSession();
+            String contextPath = request.getContextPath();
             Cart cart = null;
             Prodotto p = null;
             ProdottoDAO dao = new ProdottoDAO();
@@ -79,9 +82,11 @@ public class ProductServlet extends HttpServlet {
 
             switch (path) {
                 case "/select":
-                    RequestValidator.authenticate(session, "userSession");
+                    /*RequestValidator.authenticate(session, "userSession");
                     String productId = request.getParameter("productId");
                     String quantity = request.getParameter("fieldQuantity");
+                    String idCategoria = request.getParameter("productCategoryId");
+
                     int id = Integer.parseInt(productId);
                     CartItem item = dao.doRetrieveCartItemById(id);
                     System.out.println("id:" + id + " " + (item != null));
@@ -89,7 +94,12 @@ public class ProductServlet extends HttpServlet {
                         cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
                         System.out.println("id: " + item.getProdotto().getId() + "  prezzo scontato: " + item.getProdotto().getPrezzo());
                     }
-                    request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
+                    if (path1 != null) {
+                        System.out.println("request attr is present");
+                        response.sendRedirect(contextPath + path1);
+                        return;
+                    }
+                    response.sendRedirect(contextPath + "/");*/
                     break;
                 case "/create":
                     RequestValidator.authorize(session, "userSession");

@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public class RequestValidator {
     private final HttpServletRequest request;
     private final List<String> list;
+
     private static final Pattern INT_PATTERN = Pattern.compile("^\\d*$");
     private static final Pattern DOUBLE_PATTERN = Pattern.compile("^(-)?(0|[1-9]\\d+)\\.\\d+$");
     // ^[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+){1,2}$ <- email senza troppi caratteri speciali
@@ -35,15 +36,9 @@ public class RequestValidator {
 
     public static void authorize(HttpSession session, String attribute) {
         authenticate(session, attribute);
-        Object object = session.getAttribute(attribute);
-        if (object instanceof Utente) {
-            Utente user = (Utente) session.getAttribute(attribute);
-            if (!user.isAdmin()) {
-                throw new RequestNotValidException(HttpServletResponse.SC_UNAUTHORIZED, "Utente non autorizzato");
-            }
-        } else {
-            throw new RequestNotValidException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Errore interno al server");
-        }
+        Utente user = (Utente) session.getAttribute(attribute);
+        if (!user.isAdmin())
+            throw new RequestNotValidException(HttpServletResponse.SC_UNAUTHORIZED, "Utente non autorizzato");
     }
 
     private boolean required(String value) {

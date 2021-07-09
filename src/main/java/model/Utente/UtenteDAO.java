@@ -1,6 +1,6 @@
 package model.Utente;
 
-import model.ConPool;
+import model.utilities.ConPool;
 
 import java.sql.*;
 import java.util.ArrayList;

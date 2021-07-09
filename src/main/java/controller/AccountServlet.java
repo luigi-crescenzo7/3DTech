@@ -1,6 +1,6 @@
 package controller;
 
-import model.FormExtractor;
+import model.utilities.FormExtractor;
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
 import model.Utente.UtenteValidator;
@@ -83,6 +83,7 @@ public class AccountServlet extends HttpServlet {
                     resource = "/index.jsp";
                     break;
                 case "/logout":
+                    request.setAttribute("returnBack", "index.jsp");
                     RequestValidator.authenticate(session, "userSession");
                     session.invalidate();
                     resource = "/index.jsp";

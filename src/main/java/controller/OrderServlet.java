@@ -1,8 +1,8 @@
 package controller;
 
 
-import model.Cart;
-import model.CartItem;
+import model.utilities.Cart;
+import model.utilities.CartItem;
 import model.Ordine.Ordine;
 import model.Ordine.OrdineDAO;
 import model.Utente.UserSession;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 
