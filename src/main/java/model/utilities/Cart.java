@@ -7,11 +7,9 @@ import java.util.Optional;
 
 public class Cart {
     private final List<CartItem> prodotti;
-    private double total;
 
-    public Cart(List<CartItem> list, double totale) {
+    public Cart(List<CartItem> list) {
         this.prodotti = list;
-        this.total = totale;
     }
 
     public List<CartItem> getProdotti() {
@@ -40,15 +38,13 @@ public class Cart {
     }
 
     public double getTotal() {
+        double total = 0;
         for (CartItem item : prodotti) {
             total += item.total();
         }
         return total;
     }
 
-    public void setTotal(double value) {
-        this.total = value;
-    }
 
     public void reset() {
         prodotti.clear();

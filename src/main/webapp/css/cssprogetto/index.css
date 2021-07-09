@@ -1,0 +1,116 @@
+.home {
+    margin: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    justify-content: center;
+}
+
+.home > div {
+    width: 48%;
+    min-width: 466px;
+    height: 270px;
+    border: solid 1px lightgrey;
+}
+
+/*todo: togliere selettore*/
+.slider * {
+}
+
+.printers-container .container-item, .brands-container .container-item {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    margin: 15px 15px 0 15px;
+}
+
+@media screen and (max-width: 1510px) {
+    .home > div {
+        width: 500px;
+        height: 460px;
+        border: solid 1px lightgrey;
+    }
+}
+
+.printers-container div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.printers-container .printers-label, .brands-container .brands-label {
+    text-align: center;
+    background-color: #00B5E2;
+    color: white;
+    text-transform: uppercase;
+    margin: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.home img {
+    background-color: #81beff;
+    width: 180px;
+    height: 180px;
+}
+
+.printers-container span, .brands-container span {
+    display: block;
+    font-family: "Linux Biolinum G", sans-serif;
+}
+
+/* Slick */
+
+.sconti {
+    display: flex;
+    border: solid 2px lightgrey;
+    width: 95%;
+    min-width: 464px;
+    height: 400px;
+    margin: 30px 30px;
+}
+
+.label_sconti {
+    text-align: center;
+    background-color: #00B5E2;
+    color: white;
+    text-transform: uppercase;
+    border: solid 1px lightgrey;
+    margin: 1px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.sconti img {
+    width: 200px;
+    height: 200px;
+}
+
+.sconti span {
+    position: relative;
+    left: 5px;
+    font-family: "Linux Biolinum G", sans-serif;
+}
+
+.slider img {
+    background-color: #57B5E0;
+}
+
+.content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+.slick-slide {
+    height: auto;
+}
+
+.slick-prev:before {
+    color: lightgrey !important;
+}
+
+.slick-next:before {
+    color: lightgrey !important;
+}
+
+/* Slick */

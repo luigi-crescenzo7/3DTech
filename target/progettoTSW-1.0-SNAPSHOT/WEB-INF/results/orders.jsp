@@ -1,5 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Ordini - 3DTech</title>
@@ -32,7 +31,7 @@
             border-collapse: collapse;
         }
 
-        tr,td,th {
+        tr, td, th {
             border: 1px solid black;
             text-align: center;
         }

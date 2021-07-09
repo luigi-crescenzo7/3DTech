@@ -39,7 +39,7 @@ public class CartServlet extends HttpServlet {
         String contextPath = request.getContextPath();
 
         if (session.getAttribute("sessionCart") == null) {
-            cart = new Cart(new ArrayList<>(), 0);
+            cart = new Cart(new ArrayList<>());
             session.setAttribute("sessionCart", cart);
         } else {
             cart = (Cart) session.getAttribute("sessionCart");
@@ -71,7 +71,7 @@ public class CartServlet extends HttpServlet {
                     String productId_ = request.getParameter("productId");
                     if (cart.removeProduct(Integer.parseInt(productId_))) {
                         System.out.println("remove success");
-                        request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
+                        request.getRequestDispatcher("/WEB-INF/results/cart.jsp").forward(request, response);
                     } else {
                         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }

@@ -76,7 +76,7 @@ public class OrdineDAO {
                 int idOrdine = set.getInt("ord.id_ordine");
                 if (!ordersMap.containsKey(idOrdine)) {
                     Ordine order = OrdineConstructor.constructOrder(set);
-                    order.setCarrello(new Cart(new ArrayList<>(), 0));
+                    order.setCarrello(new Cart(new ArrayList<>()));
                     ordersMap.put(idOrdine, order);
                 }
                 Prodotto prodotto = ProdottoConstructor.constructProduct(set, true);

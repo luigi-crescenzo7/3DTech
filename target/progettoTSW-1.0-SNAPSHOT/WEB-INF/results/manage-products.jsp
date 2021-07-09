@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <%@include file="common.jsp" %>
@@ -98,7 +98,7 @@
     <div class="product-form">
         <div class="mod_product_label">Modifica prodotto</div>
         <div class="mod_product_input">
-            <form action="" name="modifica" method="">
+            <form action="" name="modifica" method="post">
                 <label for="id2">ID prodotto</label>
                 <input class="input" type="number" id="id2" name="id" value=""><br><br>
                 <label for="nome2">Nome</label>
@@ -123,7 +123,7 @@
     <div class="product-form">
         <div class="rem_product_label"> Rimuovi prodotto</div>
         <div class="rem_product_input">
-            <form action="" name="rimuovi" method="aa">
+            <form action="" name="rimuovi" method="post">
                 <label for="id">ID prodotto</label>
                 <input class="input" type="number" id="id" name="id" value=""><br><br><br>
                 <input class="agg" type="submit" value="Rimuovi prodotto">
