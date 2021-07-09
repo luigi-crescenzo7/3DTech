@@ -1,7 +1,6 @@
 package model.Prodotto;
 
 import model.Categoria.Categoria;
-import model.Categoria.CategoriaConstructor;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;

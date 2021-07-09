@@ -18,18 +18,14 @@ public class CartServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? " " : request.getPathInfo());
         HttpSession session = request.getSession();
-        String resource = "/";
-        String contextPath = request.getContextPath();
+        String resource;
 
-        switch (path) {
-            case "/":
-                RequestValidator.authenticate(session, "userSession");
-                resource = "/WEB-INF/results/cart.jsp";
-                request.getRequestDispatcher(resource).forward(request, response);
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+        if ("/".equals(path)) {
+            RequestValidator.authenticate(session, "userSession");
+            resource = "/WEB-INF/results/cart.jsp";
+            request.getRequestDispatcher(resource).forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -39,7 +35,7 @@ public class CartServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? " " : request.getPathInfo());
         HttpSession session = request.getSession();
         ProdottoDAO dao = new ProdottoDAO();
-        Cart cart = null;
+        Cart cart;
         String contextPath = request.getContextPath();
 
         if (session.getAttribute("sessionCart") == null) {

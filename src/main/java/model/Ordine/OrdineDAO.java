@@ -16,19 +16,6 @@ import java.util.Map;
 
 public class OrdineDAO {
 
-    public double doRetrieveTotalPrices(int idOrder) {
-        String query = "";
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, idOrder);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return 5;
-    }
-
     public void doSave(Ordine order) {
         try (Connection connection = ConPool.getConnection()) {
             connection.setAutoCommit(false);
@@ -39,7 +26,7 @@ public class OrdineDAO {
                     " (?,?,?,?);";
 
             try (PreparedStatement set1 = connection.prepareStatement(query1, PreparedStatement.RETURN_GENERATED_KEYS);
-                 PreparedStatement set2 = connection.prepareStatement(query2);) {
+                 PreparedStatement set2 = connection.prepareStatement(query2)) {
                 set1.setInt(1, order.getQuantita());
                 set1.setDate(2, Date.valueOf(order.getDataOrdine()));
                 set1.setInt(3, order.getUserId());
@@ -76,7 +63,7 @@ public class OrdineDAO {
                 "inner join prodotto as pro on op.id_prodotto = pro.id_prodotto inner join categoria as cat on " +
                 "cat.id_categoria = pro.id_categoria where ord.id_utente = ? and ord.visibilita = 1 and op.visibilita = 1";
 
-        Map<Integer, Ordine> ordersMap = null;
+        Map<Integer, Ordine> ordersMap;
 
         try (Connection connection = ConPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {

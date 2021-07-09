@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 
@@ -25,15 +24,14 @@ public class AccountServlet extends HttpServlet {
             throws IOException, ServletException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "/";
+        String resource;
 
         System.out.println(path);
         String contextPath = request.getContextPath();
         UtenteDAO dao = new UtenteDAO();
         HttpSession session = request.getSession();
-        List<String> list;
-        Utente user = null;
-        RequestValidator validator = null;
+        Utente user;
+        RequestValidator validator;
         Map<String, String[]> map = request.getParameterMap();
 
         try {
@@ -105,7 +103,7 @@ public class AccountServlet extends HttpServlet {
             throws IOException, ServletException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "/";
+        String resource;
         System.out.println("Path: " + path);
 
         switch (path) {

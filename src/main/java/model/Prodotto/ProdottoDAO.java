@@ -67,40 +67,6 @@ public class ProdottoDAO {
         }
         return list;
     }
-    //todo: ????
-    /*
-    public List<Prodotto> doSearch(List<Condition> conditions) {
-        List<Prodotto> products = new ArrayList<>();
-        String query = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat" +
-                " ON pro.id_categoria = cat.id_categoria WHERE " + SqlJoiner.queryJoiner(conditions, "pro");
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-            for (int i = 0; i < conditions.size(); i++) {
-                Condition condition = conditions.get(i);
-                if (condition.getOperator() == Operator.LIKE) {
-                    statement.setObject(i + 1, "%" + condition.getValue() + "%");
-                } else {
-                    statement.setObject(i + 1, condition.getValue());
-                }
-            }
-
-            ResultSet set = statement.executeQuery();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return products;
-    }*/
-
-    public boolean doDeleteAll() {
-        int result;
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("DELETE FROM prodotto;")) {
-            result = stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return result > 0;
-    }
 
     public List<Prodotto> doRetrieveAll() {
         String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat ON pro.id_categoria = cat.id_categoria ORDER BY id_prodotto";

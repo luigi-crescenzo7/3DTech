@@ -14,21 +14,18 @@ import java.util.List;
 public class SearchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
 
-        switch (path) {
-            case "/":
-                response.setContentType("application/json");
-                String parameter = request.getParameter("textContent");
-                ProdottoDAO dao = new ProdottoDAO();
-                List<String> productsName = dao.doSearch(parameter);
-                JSONArray array = new JSONArray(productsName);
-                response.getWriter().println(array);
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+        if ("/".equals(path)) {
+            response.setContentType("application/json");
+            String parameter = request.getParameter("textContent");
+            ProdottoDAO dao = new ProdottoDAO();
+            List<String> productsName = dao.doSearch(parameter);
+            JSONArray array = new JSONArray(productsName);
+            response.getWriter().println(array);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
@@ -38,17 +35,14 @@ public class SearchServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
 
-        switch (path) {
-            case "/searchproduct":
-                String option = request.getParameter("search");
-                List<Prodotto> prodotti = new ProdottoDAO().doRetrieveProductsByName(option);
-                request.setAttribute("products", prodotti);
-                request.setAttribute("back", "/search/searchproduct?search=" + option);
-                request.getRequestDispatcher("/WEB-INF/results/products.jsp").forward(request, response);
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                break;
+        if ("/searchproduct".equals(path)) {
+            String option = request.getParameter("search");
+            List<Prodotto> prodotti = new ProdottoDAO().doRetrieveProductsByName(option);
+            request.setAttribute("products", prodotti);
+            request.setAttribute("back", "/search/searchproduct?search=" + option);
+            request.getRequestDispatcher("/WEB-INF/results/products.jsp").forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

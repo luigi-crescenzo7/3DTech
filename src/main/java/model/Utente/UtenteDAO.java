@@ -34,6 +34,7 @@ public class UtenteDAO {
         }
     }
 
+    //todo: implementazione lato dashboard
     public List<Utente> doRetrieveAll() {
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement("select * from utente")) {

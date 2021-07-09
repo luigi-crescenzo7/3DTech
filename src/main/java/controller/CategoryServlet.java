@@ -34,7 +34,7 @@ public class CategoryServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "";
+        String resource;
         CategoriaDAO dao = new CategoriaDAO();
 
         switch (path) {
@@ -65,30 +65,27 @@ public class CategoryServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ServletContext context = request.getServletContext();
         CategoriaDAO dao = new CategoriaDAO();
-        List<Categoria> categorie = null;
+        List<Categoria> categorie;
 
-        switch (path) {
-            case "/create":
-                RequestValidator.authorize(session, "userSession");
-                Part part = request.getPart("categoryImage");
-                Map<String, String[]> map = request.getParameterMap();
-                String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                File file = null;
-                try (InputStream fileStream = part.getInputStream()) {
-                    file = new File(uploadRoot + fileName);
-                    if (!file.exists())
-                        Files.copy(fileStream, file.toPath());
-                }
-                Categoria categoria = CategoryBuilder.createCategory(map, fileName);
-                categorie = (List<Categoria>) context.getAttribute("listCategories");
-                dao.doSave(categoria);
-                if (categorie != null)
-                    categorie.add(categoria);
-                request.getRequestDispatcher("/WEB-INF/results/admin-dashboard.jsp").forward(request, response);
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
+        if ("/create".equals(path)) {
+            RequestValidator.authorize(session, "userSession");
+            Part part = request.getPart("categoryImage");
+            Map<String, String[]> map = request.getParameterMap();
+            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+            File file;
+            try (InputStream fileStream = part.getInputStream()) {
+                file = new File(uploadRoot + fileName);
+                if (!file.exists())
+                    Files.copy(fileStream, file.toPath());
+            }
+            Categoria categoria = CategoryBuilder.createCategory(map, fileName);
+            categorie = (List<Categoria>) context.getAttribute("listCategories");
+            dao.doSave(categoria);
+            if (categorie != null)
+                categorie.add(categoria);
+            request.getRequestDispatcher("/WEB-INF/results/admin-dashboard.jsp").forward(request, response);
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

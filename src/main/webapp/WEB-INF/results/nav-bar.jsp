@@ -1,4 +1,4 @@
-<!--<script src="/js/user_logged.js" defer></script>-->
+
 <header>
     <input id="ctxPath" type="hidden" value="${contextPath}">
     <img id="logo" src="${contextPath}/imgs/logoNew.svg" alt="Logo">
@@ -43,6 +43,7 @@
     <div class="search">
         <div class="ui-widget">
             <form action="${contextPath}/search/searchproduct">
+                <label for="tags"></label>
                 <input id="tags" class="search-bar" type="search" name="search" placeholder="Cerca...">
             </form>
         </div>

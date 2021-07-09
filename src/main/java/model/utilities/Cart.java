@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Cart {
-    private List<CartItem> prodotti;
+    private final List<CartItem> prodotti;
     private double total;
 
     public Cart(List<CartItem> list, double totale) {

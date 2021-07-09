@@ -87,23 +87,6 @@ public class CategoriaDAO {
         return categoria;
     }
 
-    public int doRetrieveIdCategory(String category) {
-        int id = 0;
-
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement("SELECT id_categoria FROM categoria WHERE nome = ?")) {
-            statement.setString(1, category);
-
-            ResultSet set = statement.executeQuery();
-
-            if (set.next())
-                id = set.getInt("id_categoria");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return id;
-    }
-
     public List<Integer> doCountCategories() {
         List<Integer> list = new ArrayList<>();
         String query = "SELECT COUNT(pro.id_prodotto) FROM prodotto as pro JOIN categoria as cat" +
@@ -175,7 +158,7 @@ public class CategoriaDAO {
     public List<Prodotto> doRetrieveProductsByCategory(int idOrder) {
         String query = "SELECT *, CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato FROM prodotto AS pro INNER JOIN categoria" +
                 " AS cat ON pro.id_categoria = cat.id_categoria WHERE cat.id_categoria = ?";
-        List<Prodotto> list = null;
+        List<Prodotto> list;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 

@@ -28,7 +28,7 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "";
+        String resource;
         HttpSession session = request.getSession();
 
         try {
@@ -61,11 +61,11 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         System.out.println("doPost " + path);
-        PrintWriter writer = null;
+        PrintWriter writer;
         HttpSession session = request.getSession();
 
         switch (path) {

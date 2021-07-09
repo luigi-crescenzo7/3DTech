@@ -60,8 +60,4 @@ public class ConPool {
         }
         return datasource.getConnection();
     }
-
-    public static void destroyConnection() {
-		datasource.close(false);
-	}
 }

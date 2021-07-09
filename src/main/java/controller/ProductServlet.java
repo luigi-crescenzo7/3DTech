@@ -1,6 +1,5 @@
 package controller;
 
-import model.utilities.Cart;
 import model.Categoria.CategoriaDAO;
 import model.Ordine.OrdineDAO;
 import model.Prodotto.Prodotto;
@@ -37,19 +36,17 @@ public class ProductServlet extends HttpServlet {
             throws ServletException, IOException {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         ProdottoDAO dao = new ProdottoDAO();
-        String resource = "";
+        String resource;
 
-        switch (path) {
-            case "/product-info":
-                String option = request.getParameter("option");
-                int id = Integer.parseInt(option);
-                Prodotto prodotto = dao.doRetrieveById(id);
-                request.setAttribute("product", prodotto);
-                resource = "/WEB-INF/results/productinfo.jsp";
-                break;
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
+        if ("/product-info".equals(path)) {
+            String option = request.getParameter("option");
+            int id = Integer.parseInt(option);
+            Prodotto prodotto = dao.doRetrieveById(id);
+            request.setAttribute("product", prodotto);
+            resource = "/WEB-INF/results/productinfo.jsp";
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
 
         request.getRequestDispatcher(resource).forward(request, response);
@@ -68,39 +65,11 @@ public class ProductServlet extends HttpServlet {
         try {
             String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
             HttpSession session = request.getSession();
-            String contextPath = request.getContextPath();
-            Cart cart = null;
-            Prodotto p = null;
+            Prodotto p;
             ProdottoDAO dao = new ProdottoDAO();
             CategoriaDAO categoriaDAO = new CategoriaDAO();
-            if (session.getAttribute("sessionCart") == null) {
-                cart = new Cart(new ArrayList<>(), 0);
-                session.setAttribute("sessionCart", cart);
-            } else {
-                cart = (Cart) session.getAttribute("sessionCart");
-            }
 
             switch (path) {
-                case "/select":
-                    /*RequestValidator.authenticate(session, "userSession");
-                    String productId = request.getParameter("productId");
-                    String quantity = request.getParameter("fieldQuantity");
-                    String idCategoria = request.getParameter("productCategoryId");
-
-                    int id = Integer.parseInt(productId);
-                    CartItem item = dao.doRetrieveCartItemById(id);
-                    System.out.println("id:" + id + " " + (item != null));
-                    if (item != null) {
-                        cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
-                        System.out.println("id: " + item.getProdotto().getId() + "  prezzo scontato: " + item.getProdotto().getPrezzo());
-                    }
-                    if (path1 != null) {
-                        System.out.println("request attr is present");
-                        response.sendRedirect(contextPath + path1);
-                        return;
-                    }
-                    response.sendRedirect(contextPath + "/");*/
-                    break;
                 case "/create":
                     RequestValidator.authorize(session, "userSession");
                     Part part = request.getPart("productImage");
@@ -112,7 +81,8 @@ public class ProductServlet extends HttpServlet {
                         System.out.println(entry.getKey() + "   " + Arrays.toString(entry.getValue()));
                     }
                     System.out.println("Categoria: " + category);
-                    File file = null;
+
+                    File file;
                     try (InputStream fileStream = part.getInputStream()) {
                         file = new File(uploadRoot + fileName);
                         if (!file.exists())

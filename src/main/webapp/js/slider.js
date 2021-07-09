@@ -3,7 +3,7 @@ $(".slick-container").slick({
     slideToScroll: 1,
     dots: true,
     autoplay: true,
-    autoplaySpeed: 50,
+    autoplaySpeed: 2500,
     centerMode: true,
     pauseOnHover: false,
     pauseOnFocus: false,
