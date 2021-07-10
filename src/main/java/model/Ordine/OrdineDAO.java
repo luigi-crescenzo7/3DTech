@@ -31,26 +31,24 @@ public class OrdineDAO {
                 set1.setDate(2, Date.valueOf(order.getDataOrdine()));
                 set1.setInt(3, order.getUserId());
                 int tableRows1 = set1.executeUpdate();
-                System.out.println("Table rows: " + tableRows1);
                 ResultSet rows = set1.getGeneratedKeys();
                 rows.next();
                 int orderId = rows.getInt(1);
                 order.setId(orderId);
 
-                int total = tableRows1;
+
                 List<CartItem> list = order.getCarrello().getProdotti();
                 for (CartItem item : list) {
                     set2.setInt(1, item.getProdotto().getId());
                     set2.setInt(2, order.getId());
                     set2.setInt(3, item.getQuantita());
                     set2.setDouble(4, item.getProdotto().getPrezzo());
-                    total += set2.executeUpdate();
+                    if (set2.executeUpdate() != 0) {
+                        System.out.println("Ok!!");
+                    }
                 }
-                System.out.println("Total: " + total);
                 connection.commit();
                 connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

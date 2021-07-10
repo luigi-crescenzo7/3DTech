@@ -54,7 +54,7 @@ public class OrderServlet extends HttpServlet {
                     order.setVisible(true);
                     dao.doSave(order);
                     c.reset();
-                    request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/results/cart.jsp").forward(request, response);
                 } else {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Carrello vuoto");
                     return;

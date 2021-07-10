@@ -1,5 +1,6 @@
 package controller;
 
+import model.utilities.Cart;
 import model.utilities.FormExtractor;
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -78,6 +80,7 @@ public class AccountServlet extends HttpServlet {
                         return;
                     }
                     session.setAttribute("userSession", user);
+                    session.setAttribute("sessionCart", new Cart(new ArrayList<>()));
                     resource = "/index.jsp";
                     break;
                 case "/logout":

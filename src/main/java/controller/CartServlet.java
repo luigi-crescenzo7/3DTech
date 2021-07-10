@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 @WebServlet(urlPatterns = "/cart/*")
 public class CartServlet extends HttpServlet {
@@ -69,7 +70,10 @@ public class CartServlet extends HttpServlet {
                 case "/remove":
                     RequestValidator.authenticate(session, "userSession");
                     String productId_ = request.getParameter("productId");
-                    if (cart.removeProduct(Integer.parseInt(productId_))) {
+                    String productQuantity = request.getParameter("quantita");
+                    int id1 = Integer.parseInt(productId_);
+                    int quantity1 = Integer.parseInt(productQuantity);
+                    if (cart.removeProduct(id1, quantity1)) {
                         System.out.println("remove success");
                         request.getRequestDispatcher("/WEB-INF/results/cart.jsp").forward(request, response);
                     } else {
