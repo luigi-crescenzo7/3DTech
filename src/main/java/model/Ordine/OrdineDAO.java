@@ -78,8 +78,6 @@ public class OrdineDAO {
                     ordersMap.put(idOrdine, order);
                 }
                 Prodotto prodotto = ProdottoConstructor.constructProduct(set, true);
-                Categoria categoria = CategoriaConstructor.constructCategory(set);
-                prodotto.setCategoria(categoria);
                 ordersMap.get(idOrdine).getCarrello().addProduct(prodotto, set.getInt("op.quantita"));
             }
         } catch (SQLException e) {

@@ -178,6 +178,10 @@
     .cart .cart_item{
         height: 200px;
     }
+
+    .remove_button{
+        margin: 5px;
+    }
 }
 
 

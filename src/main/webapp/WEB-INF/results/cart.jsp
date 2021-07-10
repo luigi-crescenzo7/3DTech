@@ -33,12 +33,12 @@
           <c:out value="Peso: ${cartItem.prodotto.peso}"/>
         </span>
 
-                        <span class="quantity_and_remove">
+        <span class="quantity_and_remove">
           <span><label for="quantita">Quantità: </label></span>
           <span>
               <form action="${contextPath}/cart/remove" method="post">
-                       <input id="quantita" type="number" name="quantita" value="${cartItem.quantita}">
-                  <span><button class="remove_button">Rimuovi</button></span>
+                  <input id="quantita" type="number" name="quantita" value="${cartItem.quantita}">
+                  <button class="remove_button">Rimuovi</button>
                   <input type="hidden" name="productId" value="${cartItem.prodotto.id}">
               </form>
           </span>

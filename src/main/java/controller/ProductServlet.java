@@ -70,6 +70,15 @@ public class ProductServlet extends HttpServlet {
             CategoriaDAO categoriaDAO = new CategoriaDAO();
 
             switch (path) {
+                case "/update":
+                    RequestValidator.authorize(session, "userSession");
+                    Map<String, String[]> mappa = request.getParameterMap();
+
+                    for (Map.Entry<String, String[]> entry : mappa.entrySet()) {
+                        System.out.println(entry.getKey() + " ---- " + Arrays.toString(entry.getValue()));
+                    }
+
+                    break;
                 case "/create":
                     RequestValidator.authorize(session, "userSession");
                     Part part = request.getPart("productImage");

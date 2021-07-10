@@ -7,6 +7,7 @@ import model.Categoria.CategoryBuilder;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
+import model.utilities.CartItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -109,6 +110,23 @@ public class AdminServlet extends HttpServlet {
                 writer = response.getWriter();
                 writer.println(object);
                 writer.close();
+                break;
+            case "/get":
+                RequestValidator.authorize(session, "userSession");
+                response.setContentType("application/json");
+
+                String productId = request.getParameter("productId");
+
+                CartItem item = new ProdottoDAO().doRetrieveCartItemById(Integer.parseInt(productId));
+                if (item != null) {
+                    System.out.println("entered!");
+                    Prodotto prodotto = item.getProdotto();
+                    writer = response.getWriter();
+                    JSONObject obj3 = ProductBuilder.fromObjectToJson(prodotto);
+                    System.out.println(obj3);
+                    writer.println(obj3);
+                    writer.close();
+                }
                 break;
             default:
                 break;

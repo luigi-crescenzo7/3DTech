@@ -64,22 +64,5 @@
         </details>
     </c:forEach>
 </div>
-<!--<c:forEach items="${requestScope.userOrders}" var="order">
-    <span>id: ${order.id} - data: ${order.dataOrdine} -  totale: ${order.carrello.total}</span>
-    <form action="${contextPath}/order/remove" method="post">
-        <input type="hidden" name="order-id" value="${order.id}">
-        <button type="submit" id="remove-button">Rimuovi</button>
-    </form>
-    <ul>
-        <c:forEach items="${order.carrello.prodotti}" var="item">
-            <li>id prodotto: ${item.prodotto.id} - nome: ${item.prodotto.nome} - quantita: ${item.quantita}</li>
-            <form action="${contextPath}/product/remove" method="post">
-                <button type="submit">Rimuovi prodotto</button>
-                <input type="hidden" name="product-id" value="${item.prodotto.id}">
-                <input type="hidden" name="order-id" value="${order.id}">
-            </form>
-        </c:forEach>
-    </ul>
-</c:forEach>-->
 </body>
 </html>

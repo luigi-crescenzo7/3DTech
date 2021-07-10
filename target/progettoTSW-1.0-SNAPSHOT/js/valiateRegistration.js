@@ -19,7 +19,7 @@ for (let i = 0; i < entries.length; i++) {
     let validInput = entries[i].nodeName.match('INPUT')
     if (entries[i].willValidate && validInput) {
         console.log(entries[i])
-        entries[i].addEventListener('input', reportError)
+        entries[i].addEventListener('change', reportError)
         //entries[i].addEventListener('focus', reset)
     }
 }
@@ -57,10 +57,9 @@ const phoneNumber = document.getElementById('phoneNumber')
 const street = document.getElementById('street')
 const city = document.getElementById('city')
 const zipCode = document.getElementById('zipcode')
-
+const alertElement = document.getElementById('alert-box')
 
 function reportError() {
-    const alertElement = document.getElementById('alert-box')
     const emailMsg = '&#9898;Email non valida'
     const psswdMsg = '&#9898; Password non valida. Composizione: almeno una lettera maiuscola,' +
         ' almeno una minuscola, almeno un numero ed un carattere speciale (.-_)'
@@ -80,15 +79,6 @@ function reportError() {
         console.log('surname valid')
     }
 
-    if (!isPsswd(psswd.value)) {
-        psswd.setCustomValidity("Password invalid")
-        if (errors.indexOf(psswdMsg) === -1)
-            errors.push(psswdMsg)
-    } else {
-        psswd.setCustomValidity("")
-        errors.splice(errors.indexOf(psswdMsg), 1)
-        console.log("password valid")
-    }
 
     if (!isEmail(email.value)) {
         email.setCustomValidity('Email invalid')
@@ -98,6 +88,18 @@ function reportError() {
         email.setCustomValidity("")
         errors.splice(errors.indexOf(emailMsg), 1)
         console.log("email valid")
+    }
+
+
+    if (!isPsswd(psswd.value)) {
+        console.log("password invalid")
+        psswd.setCustomValidity("Password invalid")
+        if (errors.indexOf(psswdMsg) === -1)
+            errors.push(psswdMsg)
+    } else {
+        psswd.setCustomValidity("")
+        errors.splice(errors.indexOf(psswdMsg), 1)
+        console.log("password valid")
     }
 
     if (!checkName(name.value)) {
@@ -111,6 +113,7 @@ function reportError() {
     }
 
     if (!checkZIPCode(zipCode.value)) {
+        console.log("zip invalid")
         zipCode.setCustomValidity('zipcode invalid')
         if (errors.indexOf(zipCodeMsg) === -1)
             errors.push(zipCodeMsg)
@@ -119,7 +122,6 @@ function reportError() {
         errors.splice(errors.indexOf(zipCodeMsg), 1)
         console.log('zipcode valid')
     }
-
 
     if (errors.length > 0) {
         console.log(errors);
