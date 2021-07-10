@@ -16,18 +16,17 @@ public class ProdottoDAO {
         int result;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement("UPDATE Prodotto SET " +
-                     "nome = ?, marchio = ?, descrizione = ?, image_name = ?, caratteristiche = ?, prezzo = ?, peso = ?, sconto = ?" +
+                     "nome = ?, marchio = ?, descrizione = ?, image_name = ?, prezzo = ?, peso = ?, sconto = ?" +
                      " WHERE id_prodotto = ?")) {
 
             ps.setString(1, p.getNome());
             ps.setString(2, p.getMarchio());
             ps.setString(3, p.getDescrizione());
             ps.setString(4, p.getUrlImage());
-            ps.setObject(5, p.getCaratteristiche().toString());
-            ps.setDouble(6, p.getPrezzo());
-            ps.setDouble(7, p.getPeso());
-            ps.setDouble(8, p.getSconto());
-            ps.setInt(9, p.getId());
+            ps.setDouble(5, p.getPrezzo());
+            ps.setDouble(6, p.getPeso());
+            ps.setDouble(7, p.getSconto());
+            ps.setInt(8, p.getId());
 
             result = ps.executeUpdate();
 

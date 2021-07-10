@@ -119,7 +119,6 @@ public class AdminServlet extends HttpServlet {
 
                 CartItem item = new ProdottoDAO().doRetrieveCartItemById(Integer.parseInt(productId));
                 if (item != null) {
-                    System.out.println("entered!");
                     Prodotto prodotto = item.getProdotto();
                     writer = response.getWriter();
                     JSONObject obj3 = ProductBuilder.fromObjectToJson(prodotto);

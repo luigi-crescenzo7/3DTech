@@ -99,35 +99,35 @@
     <div class="product-form">
         <div class="mod_product_label">Modifica prodotto</div>
         <div class="mod_product_input">
-            <form action="${contextPath}/product/update" name="modifica" method="post">
-                <label for="id2">ID prodotto</label>
-                <select id="id2">
-                    <c:forEach items="${applicationScope.listProducts}" var="product">
-                        <option>${product.id}</option>
-                    </c:forEach>
-                </select>
+            <label for="list">ID prodotto</label>
+            <select id="list">
+                <option> -- Seleziona Id --</option>
+                <c:forEach items="${applicationScope.listProducts}" var="product">
+                    <option value="${product.id}">${product.id}</option>
+                </c:forEach>
+            </select>
+            <form id="form" action="${contextPath}/product/update" name="modifica" method="post">
                 <label for="nome2">Nome</label>
-                <input class="input" type="text" id="nome2" name="nome"><br><br>
+                <input type="hidden" id="product-id" name="product-id">
+                <input class="input" type="text" id="nome2" name="productName"><br><br>
                 <label for="descrizione2">Descrizione</label>
-                <input class="input" type="text" id="descrizione2" name="descrizione"><br><br>
+                <input class="input" type="text" id="descrizione2" name="productDescription"><br><br>
                 <label for="marchio2">Marchio</label>
-                <input class="input" type="text" id="marchio2" name="marchio"><br><br>
+                <input class="input" type="text" id="marchio2" name="productMark"><br><br>
                 <label for="prezzo2">Prezzo</label>
-                <input class="input" type="number" id="prezzo2" name="prezzo"><br><br>
+                <input class="input" step=".01" type="number" id="prezzo2" name="productPrice"><br><br>
                 <label for="peso2">Peso</label>
-                <input class="input" type="number" id="peso2" name="peso"><br><br>
+                <input class="input" step=".01" type="number" id="peso2" name="productWeight"><br><br>
                 <label for="sconto2">Sconto</label>
-                <input class="input" type="number" id="sconto2" name="sconto"><br><br>
+                <input class="input" step=".01" type="number" id="sconto2" name="productDiscount"><br><br>
                 <label for="fieldProductCategory">Categoria</label><br>
-                <select id="fieldProductCategry" name="productCategory" form="formBello">
-                    <option selected>
-                        -- Seleziona Categoria --
-                    </option>
+                <select id="fieldProductCategry" name="productCategory">
+                    <option selected>-- Seleziona Categoria --</option>
+
                     <c:forEach items="${applicationScope.listCategories}" var="category">
-                        <option>
-                                ${category.nome}
-                        </option>
+                        <option>${category.nome}</option>
                     </c:forEach>
+
                 </select><br>
                 <label for="fieldImage">File: </label><br>
                 <input type="file" name="productImage" id="feldImage"><br><br>
