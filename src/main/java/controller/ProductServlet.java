@@ -57,19 +57,18 @@ public class ProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         ServletContext context = request.getServletContext();
         List<Prodotto> products = (List<Prodotto>) context.getAttribute("listProducts");
-        System.out.println(request.getRequestURI());
-        String path1 = request.getParameter("test");
-        System.out.println(path1);
+        String back = request.getParameter("test");
+        System.out.println(back);
+        HttpSession session = request.getSession();
+        Prodotto p = new Prodotto();
+        ProdottoDAO dao = new ProdottoDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Part part;
 
         try {
-            String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-            HttpSession session = request.getSession();
-            Prodotto p;
-            ProdottoDAO dao = new ProdottoDAO();
-            CategoriaDAO categoriaDAO = new CategoriaDAO();
-
             switch (path) {
                 case "/update":
                     RequestValidator.authorize(session, "userSession");
@@ -77,42 +76,36 @@ public class ProductServlet extends HttpServlet {
                     String cat = request.getParameter("productCategory");
                     String productId = request.getParameter("product-id");
                     int id = Integer.parseInt(productId);
-
-
+                    part = request.getPart("productImage");
+                    String s = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    System.out.println("file:  "+s);
                     for (Map.Entry<String, String[]> entry : mappa.entrySet()) {
                         System.out.println(entry.getKey() + " ---- " + Arrays.toString(entry.getValue()));
                     }
                     System.out.println(cat);
-                    Prodotto p1 = ProductBuilder.createStampante3D(mappa, "");
-                    p1.setId(id);
-                    ServletContext context1 = request.getServletContext();
-                    List<Prodotto> aa = (List<Prodotto>) context1.getAttribute("listProducts");
-                    Optional<Prodotto> opt = aa.stream().filter(prodotto -> prodotto.getId() == id).findFirst();
-                    if (opt.isPresent()) {
-                        Prodotto a = opt.get();
-                        a.setId(p1.getId());
-                        a.setNome(p1.getNome());
-                        a.setMarchio(p1.getMarchio());
-                        a.setDescrizione(p1.getDescrizione());
-                        a.setUrlImage(p1.getUrlImage());
-                        a.setCaratteristiche(p1.getCaratteristiche());
-                        a.setPrezzo(p1.getPrezzo());
-                        a.setPeso(p1.getPeso());
-                        a.setSconto(p1.getSconto());
-                        Categoria c = new Categoria();
-                        c.setNome(cat);
-                        a.setCategoria(c);
+                    switch (cat) {
+                        case "Materiale plastico":
+                            p = ProductBuilder.createMaterialePlastico(mappa, "");
+                            p.setId(id);
+                            Optional<Prodotto> opt = products.stream().filter(prodotto -> prodotto.getId() == id).findFirst();
+                            if (opt.isPresent()) {
+                                int index = products.indexOf(opt.get());
+                                products.set(index, p);
+                            }
+                            break;
+                        default:
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                            break;
                     }
-                    if (dao.doUpdateById(p1)) {
+                    if (dao.doUpdateById(p)) {
                         request.getRequestDispatcher("/WEB-INF/results/manage-products.jsp").forward(request, response);
-                        return;
                     } else {
                         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                        return;
                     }
+                    return;
                 case "/create":
                     RequestValidator.authorize(session, "userSession");
-                    Part part = request.getPart("productImage");
+                    part = request.getPart("productImage");
                     String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                     String category = request.getParameter("productCategory");
                     Map<String, String[]> map = request.getParameterMap();

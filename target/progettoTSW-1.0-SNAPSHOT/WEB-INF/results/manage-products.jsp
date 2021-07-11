@@ -106,7 +106,7 @@
                     <option value="${product.id}">${product.id}</option>
                 </c:forEach>
             </select>
-            <form id="form" action="${contextPath}/product/update" name="modifica" method="post">
+            <form id="form" action="${contextPath}/product/update" name="modifica" enctype="multipart/form-data" method="post">
                 <label for="nome2">Nome</label>
                 <input type="hidden" id="product-id" name="product-id">
                 <input class="input" type="text" id="nome2" name="productName"><br><br>
@@ -120,6 +120,8 @@
                 <input class="input" step=".01" type="number" id="peso2" name="productWeight"><br><br>
                 <label for="sconto2">Sconto</label>
                 <input class="input" step=".01" type="number" id="sconto2" name="productDiscount"><br><br>
+                <div id="div-test-2">
+                </div>
                 <label for="fieldProductCategory">Categoria</label><br>
                 <select id="fieldProductCategry" name="productCategory">
                     <option selected>-- Seleziona Categoria --</option>
@@ -130,6 +132,7 @@
 
                 </select><br>
                 <label for="fieldImage">File: </label><br>
+                <input type="hidden" name="fieldImage">
                 <input type="file" name="productImage" id="feldImage"><br><br>
                 <input class="agg" type="submit" value="Modifica prodotto">
             </form>

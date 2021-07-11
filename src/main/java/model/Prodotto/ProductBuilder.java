@@ -28,7 +28,10 @@ public class ProductBuilder {
         prodotto.setMarchio(map.get("productMark")[0]);
         prodotto.setDescrizione(map.get("productDescription")[0]);
         prodotto.setUrlImage(fileName);
-        prodotto.setCaratteristiche(new JSONObject());
+        JSONObject object = new JSONObject();
+        object.put("Dimensioni", map.get("productSize")[0]);
+        object.put("Velocità max", map.get("productMaxSpeed")[0]);
+        prodotto.setCaratteristiche(object);
         prodotto.setPrezzo(Double.parseDouble(map.get("productPrice")[0]));
         prodotto.setPeso(Double.parseDouble(map.get("productWeight")[0]));
         prodotto.setSconto(Double.parseDouble(map.get("productDiscount")[0]));
@@ -81,7 +84,9 @@ public class ProductBuilder {
         prodotto.setMarchio(map.get("productMark")[0]);
         prodotto.setDescrizione(map.get("productDescription")[0]);
         prodotto.setUrlImage(fileName);
-        prodotto.setCaratteristiche(new JSONObject());
+        JSONObject object = new JSONObject();
+        object.put("Durezza", map.get("productHardness")[0]);
+        prodotto.setCaratteristiche(object);
         prodotto.setPrezzo(Double.parseDouble(map.get("productPrice")[0]));
         prodotto.setPeso(Double.parseDouble(map.get("productWeight")[0]));
         prodotto.setSconto(Double.parseDouble(map.get("productDiscount")[0]));
@@ -102,4 +107,5 @@ public class ProductBuilder {
         object.put("Categoria", p.getCategoria().getNome());
         return object;
     }
+
 }
