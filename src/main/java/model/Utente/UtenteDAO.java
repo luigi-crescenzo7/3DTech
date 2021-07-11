@@ -21,7 +21,8 @@ public class UtenteDAO {
     //todo: implementazione lato dashboard
     public List<Utente> doRetrieveAll() {
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement("select * from utente")) {
+             PreparedStatement ps = connection.prepareStatement("select * from utente as u where u.admin  " +
+                     "<> 1")) {
             List<Utente> list = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();

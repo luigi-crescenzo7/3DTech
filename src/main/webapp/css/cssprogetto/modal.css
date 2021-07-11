@@ -23,7 +23,7 @@
     border: 5px solid #007763;
 }
 
-img, .imageUrl {
+.modal-content img {
     height: auto;
     width: 30%;
     border: 1px solid black;

@@ -7,6 +7,7 @@ import model.Categoria.CategoryBuilder;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
+import model.Utente.UtenteDAO;
 import model.utilities.CartItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,6 +46,11 @@ public class AdminServlet extends HttpServlet {
                 case "/categories":
                     RequestValidator.authorize(session, "userSession");
                     resource = "/WEB-INF/results/manage-categories.jsp";
+                    break;
+                case "/users":
+                    RequestValidator.authorize(session, "userSession");
+                    request.setAttribute("listUsers", new UtenteDAO().doRetrieveAll());
+                    resource = "/WEB-INF/results/manage-users.jsp";
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);

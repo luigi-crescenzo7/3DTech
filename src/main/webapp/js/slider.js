@@ -1,5 +1,5 @@
 $(".slick-container").slick({
-    slidesToShow: 3,
+    slidesToShow: 5,
     slideToScroll: 1,
     dots: true,
     autoplay: true,
@@ -7,19 +7,30 @@ $(".slick-container").slick({
     centerMode: true,
     pauseOnHover: false,
     pauseOnFocus: false,
-    centerPadding: '50px',
+    centerPadding: '20px',
     responsive: [
         {
             breakpoint: 1232,
             settings: {
-                arrows: false,
-                slidesToShow: 2
+                slidesToShow: 4
             }
         },
         {
             breakpoint: 848,
             settings: {
-                arrows: false,
+                slidesToShow: 3
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2
+            }
+        },
+
+        {
+            breakpoint: 380,
+            settings: {
                 slidesToShow: 1
             }
         }

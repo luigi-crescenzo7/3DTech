@@ -716,7 +716,7 @@ footer {
 
 }
 
-.printers-container .container-item, .brands-container .container-item {
+.printers-container .container-, .brands-container .container- {
     display: inline-block;
     width: 200px;
     height: 200px;

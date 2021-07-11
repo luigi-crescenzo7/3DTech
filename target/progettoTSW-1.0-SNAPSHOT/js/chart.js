@@ -13,6 +13,7 @@ $(document).ready(function () {
                         //todo: testare proprietà options
                         options: {
                             responsive: true,
+                            maintainAspectRatio: true,
                         },
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',

@@ -86,7 +86,6 @@ public class ProdottoDAO {
         return list;
     }
 
-    //todo: query da testare.. sembra andare bene
     public CartItem doRetrieveCartItemById(int id) {
         String sql = "SELECT *, CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
                 " FROM prodotto AS pro INNER JOIN categoria AS cat " +

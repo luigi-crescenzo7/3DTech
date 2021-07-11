@@ -11,6 +11,7 @@ public class ProductBuilder {
         prodotto.setNome(map.get("productName")[0]);
         prodotto.setMarchio(map.get("productMark")[0]);
         prodotto.setDescrizione(map.get("productDescription")[0]);
+        System.out.println("fileName: " + fileName);
         prodotto.setUrlImage(fileName);
         JSONObject object = new JSONObject();
         object.put("Colore", map.get("productColor")[0]);
@@ -106,6 +107,31 @@ public class ProductBuilder {
         object.put("Sconto", p.getSconto());
         object.put("Categoria", p.getCategoria().getNome());
         return object;
+    }
+
+    public static Prodotto getProduct(Map<String, String[]> map, String fileName) {
+        Prodotto p = new Prodotto();
+        switch (map.get("productCategory")[0]) {
+            case "Materiale plastico":
+                p = createMaterialePlastico(map, fileName);
+                break;
+            case "Stampanti 3D":
+                p = createStampante3D(map, fileName);
+                break;
+            case "Resine":
+                p = createResina(map, fileName);
+                break;
+            case "Ricambi":
+                p = createRicambio(map, fileName);
+                break;
+            case "Accessori":
+                p = createAccessorio(map, fileName);
+                break;
+            default:
+                System.out.println("error");
+                break;
+        }
+        return p;
     }
 
 }

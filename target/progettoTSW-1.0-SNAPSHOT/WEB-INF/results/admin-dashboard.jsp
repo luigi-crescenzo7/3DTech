@@ -11,26 +11,10 @@
 <body>
 <%@ include file="admin-nav.jsp" %>
 
-<aside class="sidebar">
-    <div class="hamburger_menu">
-        <a href="${contextPath}/controlpanel/products">Gestisci prodotti</a>
-        <!-- agg, elimina e modifica -->
-        <a href="#">Gestisci utenti</a>
-        <a href="${contextPath}/controlpanel/categories">Gestione categorie</a>
-        <form action="${contextPath}/account/logout" method="post">
-            <a class="logout">
-                <button type="submit">Logout</button>
-            </a>
-        </form>
-    </div>
-</aside>
 <div class="container">
     <canvas id="chart">
     </canvas>
 </div>
-<!--
-<div id="canvas">
 
-</div>-->
 </body>
 </html>

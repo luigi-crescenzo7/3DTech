@@ -26,7 +26,6 @@
         <div class="line"></div>
 
         <div class="buttons">
-            <button class="buy_now">Compra adesso</button>
             <button class="add_to_cart">Aggiungi al carrello</button>
         </div>
 
@@ -54,5 +53,6 @@
 
     </div>
 </div>
+<%@include file="footer.jsp"%>
 </body>
 </html>

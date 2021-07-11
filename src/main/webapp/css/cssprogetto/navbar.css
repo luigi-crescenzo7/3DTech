@@ -241,14 +241,47 @@ nav .search input {
 
 .container {
     padding-top: 20px;
-    margin-left: 200px;
-    margin-right: 200px;
-    max-height: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 700px;
+    max-width: 80%;
 }
 
 .container #chart {
     max-height: 100%;
     max-width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        min-width: 700px;
+        min-height: 700px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        min-width: 600px;
+        min-height: 600px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .container {
+        min-width: 520px;
+        min-height: 520px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .container {
+        min-height: 600px;
+        min-width: 270px;
+    }
+
+    #chart {
+        height: 50%;
+    }
 }
 
 .show-info {
@@ -298,4 +331,65 @@ nav .search input {
     .email_user {
 
     }
+}
+
+@media screen and (max-width: 360px) {
+    .carrello {
+        position: relative;
+        right: 30px;
+        bottom: 10px;
+    }
+
+    .svg-menu {
+        right: 30px;
+    }
+}
+
+.main-content {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.logout button {
+    border: none;
+    background: none;
+    color: #818181;
+}
+
+.logout button:hover {
+    color: white;
 }
