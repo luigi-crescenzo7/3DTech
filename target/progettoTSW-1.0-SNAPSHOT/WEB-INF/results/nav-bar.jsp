@@ -1,4 +1,3 @@
-
 <header>
     <input id="ctxPath" type="hidden" value="${contextPath}">
     <img id="logo" src="${contextPath}/imgs/logoNew.svg" alt="Logo">
@@ -10,24 +9,26 @@
     </c:if>
     <!-- todo: mettere controllo sullo user memorizzato in sessione se non è admin-->
     <c:if test="${sessionScope.userSession != null}"> <!--pageContext.request.getSession().getAttribute('user') != null -->
-        <div class="utente_loggato">
-            <button class="email_user">${sessionScope.userSession.email}</button>
-            <div class="opzioni">
-                <ul>
-                    <li><a href="${contextPath}/account/profile">Account</a></li>
-                    <li>
-                        <form action="${contextPath}/order/orders" method="post">
-                            <button class="btn-list">Ordini</button>
-                        </form>
-                    </li>
-                    <li>
-                        <form action="${contextPath}/account/logout" method="post">
-                            <button class="btn-list">Logout</button>
-                        </form>
-                    </li>
-                </ul>
+        <div class="sub-container">
+            <div class="utente_loggato">
+                <button class="email_user">${sessionScope.userSession.email}</button>
+                <div class="opzioni">
+                    <ul>
+                        <li><a href="${contextPath}/account/profile">Account</a></li>
+                        <li>
+                            <form action="${contextPath}/order/orders" method="post">
+                                <button class="btn-list">Ordini</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="${contextPath}/account/logout" method="post">
+                                <button class="btn-list">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <a href="${contextPath}/cart/">
+            <a id="cart-icon" href="${contextPath}/cart/">
                 <img class="carrello" src="${contextPath}/imgs/shopping-cart.svg" alt="aa">
             </a>
         </div>

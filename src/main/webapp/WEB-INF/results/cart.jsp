@@ -8,13 +8,14 @@
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
+<c:set var="listSize" value="${sessionScope.sessionCart.prodotti.size()}"/>
 <div class="page_cart">
     <div class="cart">
         <span class="cart_label">Carrello</span>
         <span class="prize_label">Prezzo</span>
         <div class="line"></div>
         <c:choose>
-            <c:when test="${sessionScope.sessionCart.prodotti.size() > 0}">
+            <c:when test="${listSize > 0}">
                 <c:forEach items="${sessionScope.sessionCart.prodotti}" var="cartItem">
                     <div class="cart_item">
                         <div class="cart_item_img">
@@ -23,7 +24,8 @@
                         <span class="main_info_cart_item">
           <c:out value="Nome: ${cartItem.prodotto.nome}"/>
           <span class="price_cart_item"><c:out value="${cartItem.prodotto.prezzo} €"/></span></span>
-                        <span class="info_cart_item"><c:out value="Descrizione: ${cartItem.prodotto.descrizione}"/></span>
+                        <span class="info_cart_item"><c:out
+                                value="Descrizione: ${cartItem.prodotto.descrizione}"/></span>
 
                         <span class="info_cart_item">
           <c:out value="Marchio: ${cartItem.prodotto.marchio}"/>
@@ -33,7 +35,7 @@
           <c:out value="Peso: ${cartItem.prodotto.peso}"/>
         </span>
 
-        <span class="quantity_and_remove">
+                        <span class="quantity_and_remove">
           <span><label for="quantita">Quantità: </label></span>
           <span>
               <form action="${contextPath}/cart/remove" method="post">
@@ -55,17 +57,19 @@
             <c:out value="Totale: ${sessionScope.sessionCart.total} €"/>
         </div>
     </div>
-    <div class="order">
-        <span class="finish_order">Completa il tuo ordine</span>
-        <div class="total">
-            <c:out value="Totale: ${sessionScope.sessionCart.total} €"/>
+    <c:if test="${listSize > 0}">
+        <div class="order">
+            <span class="finish_order">Completa il tuo ordine</span>
+            <div class="total">
+                <c:out value="Totale: ${sessionScope.sessionCart.total} €"/>
+            </div>
+            <div class="make_order">
+                <form action="${contextPath}/order/checkout" method="post">
+                    <input class="order_button" type="submit" name="order" value="Conferma ordine">
+                </form>
+            </div>
         </div>
-        <div class="make_order">
-            <form action="${contextPath}/order/checkout" method="post">
-                <input class="order_button" type="submit" name="order" value="Conferma ordine">
-            </form>
-        </div>
-    </div>
+    </c:if>
 </div>
 </body>
 </html>

@@ -1,7 +1,7 @@
 header {
     display: flex;
     justify-content: space-between;
-    flex-shrink: 1;
+    flex: auto;
 }
 
 .accesso {
@@ -79,6 +79,12 @@ nav .search {
     text-transform: uppercase;
 }
 
+#cart-icon {
+    margin-top: auto;
+    width: 40px;
+    height: 40px;
+}
+
 .search p {
     margin: 0 40px 0;
     font-size: 1.3em;
@@ -93,14 +99,12 @@ nav .search input {
     outline: none;
     width: auto;
     height: 2em;
-    margin-top: 5px;
-    margin-right: 70px;
+    margin: 5px 20px;
     border: none;
 }
 
 
 .utente_loggato {
-    /*padding-top: 20px;*/
     padding: 0;
     margin: 0;
     height: 40px;
@@ -108,10 +112,14 @@ nav .search input {
     top: 17px;
 }
 
+
 .utente_loggato:hover .opzioni, .svg-menu:hover .opzioni {
     display: block;
 }
 
+.sub-container {
+    display: flex;
+}
 
 .btn-list {
     display: block;
@@ -126,8 +134,7 @@ nav .search input {
     background-color: white;
     color: black;
     text-align: center;
-    text-decoration: none;
-    padding: 8px;
+    padding: 10px;
     margin: 0;
 }
 
@@ -180,9 +187,8 @@ nav .search input {
 }
 
 .carrello {
-    width: 35px;
-    height: 32px;
-    float: right;
+    width: inherit;
+    height: inherit;
 }
 
 .three_hor_lines {
@@ -338,6 +344,7 @@ nav .search input {
         position: relative;
         right: 30px;
         bottom: 10px;
+        margin-top: 10px;
     }
 
     .svg-menu {

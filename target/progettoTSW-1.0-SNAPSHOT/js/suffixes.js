@@ -8,16 +8,17 @@ $(document).ready(function () {
             switch (category) {
                 case "Materiale plastico":
                     divElement.load(path + '/form-prodotti/materiale-plastico.jsp',
-                        () => console.log("Success on " + category))
+                        (response, status) => console.log(status))
                     break;
                 case "Stampanti 3D":
                     divElement.load(path + '/form-prodotti/stampanti-3d.jsp',
-                        () => console.log("Success on " + category))
+                        (response, status) => console.log(status))
                     break;
-                case "":
+                case "Resine":
+                    divElement.load(path + '/form-prodotti/resine.jsp',
+                        (response, status) => console.log(status))
                     break;
                 default:
-                    console.log("errore!!")
                     break;
             }
         }

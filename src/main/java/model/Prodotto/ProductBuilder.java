@@ -127,6 +127,8 @@ public class ProductBuilder {
             case "Accessori":
                 p = createAccessorio(map, fileName);
                 break;
+            case "Utensili":
+                p = createUtensile(map, fileName);
             default:
                 System.out.println("error");
                 break;

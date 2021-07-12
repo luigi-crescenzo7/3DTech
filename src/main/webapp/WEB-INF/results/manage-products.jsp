@@ -61,11 +61,11 @@
                     <label for="marchio">Marchio</label>
                     <input class="input" type="text" id="marchio" name="productMark"><br><br>
                     <label for="prezzo">Prezzo</label>
-                    <input class="input" type="number" id="prezzo" name="productPrice"><br><br>
+                    <input class="input" type="number" id="prezzo" step=".01" name="productPrice"><br><br>
                     <label for="peso">Peso</label>
-                    <input class="input" type="number" id="peso" name="productWeight"><br><br>
+                    <input class="input" type="number" id="peso" step=".01" name="productWeight"><br><br>
                     <label for="sconto">Sconto</label>
-                    <input class="input" type="number" id="sconto" name="productDiscount" value=""><br><br>
+                    <input class="input" type="number" id="sconto" step=".01" name="productDiscount" value=""><br><br>
                     <div id="div-test">
                     </div>
                     <label for="fieldProductCategory">Categoria</label><br>

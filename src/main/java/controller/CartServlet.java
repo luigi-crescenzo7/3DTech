@@ -81,6 +81,7 @@ public class CartServlet extends HttpServlet {
                     }
                     break;
                 default:
+                    System.out.println("?????????????????");
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     break;
             }

@@ -79,13 +79,28 @@
     margin-left: 10px;
 }
 
-@media screen and (max-width: 760px) {
+.order_total_product{
+    margin-left: 10px;
+}
+
+@media screen and (max-width: 1030px) {
     .order_report {
-        min-width: 600px;
+        min-width: 810px;
     }
 }
 
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 830px) {
+    .order_report {
+        min-width: 500px;
+    }
+    .all_info{
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+    }
+}
+
+@media screen and (max-width: 490px) {
     .order_report {
         min-width: 340px;
     }
@@ -98,5 +113,9 @@
     .order_total_price {
         margin-top: 5px;
         float: left;
+    }
+
+    .order_total_price {
+        position: static;
     }
 }

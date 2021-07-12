@@ -1,13 +1,11 @@
 package controller;
 
-import model.Categoria.Categoria;
+
 import model.Categoria.CategoriaDAO;
-import model.Ordine.OrdineDAO;
+
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
-import model.Utente.UserSession;
-import model.Utente.Utente;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,6 +18,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @MultipartConfig
 @WebServlet(urlPatterns = "/product/*")
@@ -37,14 +36,30 @@ public class ProductServlet extends HttpServlet {
             throws ServletException, IOException {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         ProdottoDAO dao = new ProdottoDAO();
-        String resource;
+        String resource = null;
+
 
         if ("/product-info".equals(path)) {
             String option = request.getParameter("option");
+            if (!Pattern.compile("^\\d$").matcher(option).matches()) {
+                System.out.println("pattern fail");
+                resource = "/index.jsp";
+                request.setAttribute("errorMessage", "Prodotto inesistente");
+                request.getRequestDispatcher(resource).forward(request, response);
+                return;
+            }
+
             int id = Integer.parseInt(option);
             Prodotto prodotto = dao.doRetrieveById(id);
-            request.setAttribute("product", prodotto);
-            resource = "/WEB-INF/results/productinfo.jsp";
+            if (prodotto != null) {
+                request.setAttribute("back", "/product/product-info?option=" + option);
+                request.setAttribute("product", prodotto);
+                System.out.println("ciao");
+                resource = "/WEB-INF/results/productinfo.jsp";
+            } else {
+                request.setAttribute("errorMessage", "Prodotto inesistente");
+                resource = "/index.jsp";
+            }
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;

@@ -10,6 +10,14 @@
 </head>
 <body>
 <%@include file="/WEB-INF/results/nav-bar.jsp" %>
+<div id="alert-box" class="alert">
+    <c:if test="${not empty requestScope.errorMessage}">
+        <script>
+            document.querySelector("#alert-box").style.display = "block"
+        </script>
+        <p>${requestScope.errorMessage}</p>
+    </c:if>
+</div>
 <div class="home">
     <div class="best_products">
         <div class="printer">
@@ -43,10 +51,10 @@
         <div class="slick-container">
             <c:forEach items="${applicationScope.listProducts}" var="product">
                 <c:if test="${product.sconto > 10}">
-                <div>
-                    <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
-                    <span>${product.nome}</span>
-                </div>
+                    <div>
+                        <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
+                        <span>${product.nome}</span>
+                    </div>
                 </c:if>
             </c:forEach>
         </div>
