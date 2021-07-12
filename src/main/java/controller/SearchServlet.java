@@ -9,6 +9,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns = "/search/*")
 public class SearchServlet extends HttpServlet {
@@ -34,8 +35,8 @@ public class SearchServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-
-        if ("/searchproduct".equals(path)) {
+        String resource = null;
+        if (path.equals("/searchproduct")) {
             String option = request.getParameter("search");
             List<Prodotto> prodotti = new ProdottoDAO().doRetrieveProductsByName(option);
             request.setAttribute("products", prodotti);

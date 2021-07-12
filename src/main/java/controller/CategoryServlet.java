@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns = "/categorie/*")
 @MultipartConfig
@@ -43,7 +44,13 @@ public class CategoryServlet extends HttpServlet {
                 break;
             case "/category":
                 String idCategory = request.getParameter("option");
-                System.out.println(idCategory);
+                if (!Pattern.compile("^(?=.*[^\\s])\\d*$").matcher(idCategory).matches()) {
+                    resource = "/index.jsp";
+                    request.setAttribute("errorMessage", "Prodotto inesistente");
+                    request.getRequestDispatcher(resource).forward(request, response);
+                    return;
+                }
+
                 List<Prodotto> prodotti = dao.doRetrieveProductsByCategory(Integer.parseInt(idCategory));
                 request.setAttribute("products", prodotti);
                 request.setAttribute("back", "/categorie/category?option=" + idCategory);

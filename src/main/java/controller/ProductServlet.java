@@ -39,10 +39,9 @@ public class ProductServlet extends HttpServlet {
         String resource = null;
 
 
-        if ("/product-info".equals(path)) {
+        if (path.equals("/product-info")) {
             String option = request.getParameter("option");
-            if (!Pattern.compile("^\\d$").matcher(option).matches()) {
-                System.out.println("pattern fail");
+            if (!Pattern.compile("^(?=.*[^\\s])\\d*$").matcher(option).matches()) {
                 resource = "/index.jsp";
                 request.setAttribute("errorMessage", "Prodotto inesistente");
                 request.getRequestDispatcher(resource).forward(request, response);
