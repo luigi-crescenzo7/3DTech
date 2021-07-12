@@ -68,6 +68,7 @@ public class ProdottoDAO {
     }
 
     public List<Prodotto> doRetrieveAll() {
+        System.out.println("Chiamata ProdottoDAO.doRetrieveAll");
         String sql = "SELECT * FROM prodotto AS pro INNER JOIN categoria AS cat ON pro.id_categoria = cat.id_categoria ORDER BY id_prodotto";
         List<Prodotto> list;
         try (Connection connection = ConPool.getConnection();
@@ -162,8 +163,7 @@ public class ProdottoDAO {
             ps.setDouble(8, p.getSconto());
             ps.setInt(9, p.getCategoria().getId());
 
-            if (ps.executeUpdate() != 1)
-                throw new RuntimeException("INSERT error.");
+            ps.executeUpdate();
 
             ResultSet set = ps.getGeneratedKeys();
             if (set.next())

@@ -123,11 +123,10 @@ public class AdminServlet extends HttpServlet {
 
                 String productId = request.getParameter("productId");
 
-                CartItem item = new ProdottoDAO().doRetrieveCartItemById(Integer.parseInt(productId));
+                Prodotto item = new ProdottoDAO().doRetrieveById(Integer.parseInt(productId));
                 if (item != null) {
-                    Prodotto prodotto = item.getProdotto();
                     writer = response.getWriter();
-                    JSONObject obj3 = ProductBuilder.fromObjectToJson(prodotto);
+                    JSONObject obj3 = ProductBuilder.fromObjectToJson(item);
                     System.out.println(obj3);
                     writer.println(obj3);
                     writer.close();

@@ -98,7 +98,6 @@ public class ProductServlet extends HttpServlet {
 
                     Prodotto p = ProductBuilder.getProduct(mappa, fileName);
                     p.setId(id);
-                    p.setPrezzo(p.getPrezzo() + ((p.getPrezzo() * p.getSconto()) / 100));
                     p.setCategoria(categoriaDAO.doRetrieveByName(mappa.get("productCategory")[0]));
                     Optional<Prodotto> opt = products.stream().
                             filter(prodotto -> prodotto.getId() == id).
@@ -139,19 +138,6 @@ public class ProductServlet extends HttpServlet {
                         products.add(product);
                         request.getRequestDispatcher(resource).forward(request, response);
                     }
-                    break;
-                //todo: da eliminare.... forse..
-                case "/remove":
-                    String idProdotto = request.getParameter("product-id");
-                    Utente u = UserSession.getUserFromSession(session, "userSession");
-                    String idOrder = request.getParameter("order-id");
-                    int orderId = Integer.parseInt(idOrder);
-                    int productId1 = Integer.parseInt(idProdotto);
-                    System.out.println("Order id: " + orderId + " Product id: " + productId1);
-                    OrdineDAO dao2 = new OrdineDAO();
-                    dao2.doDeleteProductInOrder(orderId, productId1);
-                    request.setAttribute("userOrders", dao2.doRetrieveOrdersWithProductsByUser(u.getId()));
-                    request.getRequestDispatcher("/WEB-INF/results/orders.jsp").forward(request, response);
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);

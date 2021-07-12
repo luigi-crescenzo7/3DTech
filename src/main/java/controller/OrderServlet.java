@@ -63,7 +63,7 @@ public class OrderServlet extends HttpServlet {
             case "/remove":
                 Utente user1 = UserSession.getUserFromSession(session, "userSession");
                 int userId = user1.getId();
-                String idOrder = request.getParameter("order-id");
+                String idOrder = request.getParameter("orderId");
                 System.out.println(idOrder);
                 int id = Integer.parseInt(idOrder);
                 OrdineDAO ordineDAO = new OrdineDAO();

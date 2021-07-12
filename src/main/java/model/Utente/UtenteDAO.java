@@ -18,7 +18,6 @@ public class UtenteDAO {
         }
     }
 
-    //todo: implementazione lato dashboard
     public List<Utente> doRetrieveAll() {
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement("select * from utente as u where u.admin  " +
@@ -84,12 +83,11 @@ public class UtenteDAO {
             ps.setString(9, user.getStreet());
             ps.setBoolean(10, user.isAdmin());
 
-            if (ps.executeUpdate() != 1) throw new RuntimeException();
+            ps.executeUpdate();
 
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) {
+            if (keys.next())
                 user.setId(keys.getInt(1));
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

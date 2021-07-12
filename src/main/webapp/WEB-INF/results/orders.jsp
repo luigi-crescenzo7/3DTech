@@ -1,68 +1,48 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Ordini - 3DTech</title>
+    <title>Resoconto Ordini</title>
     <%@include file="common.jsp" %>
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
-    <style>
-        .orders-container {
-            margin: 30px;
-            border: 1px solid black;
-        }
-
-        .accordion {
-            width: 60%;
-            border: 1px solid black;
-            display: block;
-            margin: 0 auto;
-        }
-
-        summary {
-            background-color: #3a84c1;
-            margin: 0;
-            padding: 0;
-            color: white;
-        }
-
-        table {
-            width: 100%;
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-
-        tr, td, th {
-            border: 1px solid black;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/orders.css" type="text/css">
 </head>
 <body>
+<!-- todo: aggiungere media queries per il content da 622px in giù-->
 <%@include file="nav-bar.jsp" %>
-<div class="orders-container">
+<div class="order_report">
+    <span class="order_label">Ordini</span>
+    <div class="line"></div>
     <c:forEach items="${requestScope.userOrders}" var="order">
-        <details class="accordion">
-            <summary>Data di creazione: ${order.dataOrdine} -- Id: ${order.id}</summary>
-            <table>
-                <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Prezzo</th>
-                    <th>Quantita</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${order.carrello.prodotti}" var="item">
-                    <tr>
-                        <td data-head="Prodotto">${item.prodotto.nome}</td>
-                        <td data-head="Prezzo">${item.prodotto.prezzo}</td>
-                        <td data-head="Quantita">${item.quantita}</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
-        </details>
+        <c:if test="${not empty requestScope.userOrders}">
+            <c:if test="${order.visible == true}">
+                <div class="order_item">
+                    <div class="order_info order_id"><c:out value="ID Ordine: ${order.id}"/></div>
+                    <div class="order_info order_date"><c:out value="Data: ${order.dataOrdine}"/></div>
+                    <div class="order_info order_id">
+                        <c:out value="Totale prodotti: ${order.carrello.totaleProdotti()}"/>
+                    </div>
+                    <span class="order_remove_button">
+                <form style="display: inline-block" action="${contextPath}/order/remove" method="post">
+                    <input type="hidden" name="orderId" value="${order.id}">
+                    <button class="remove_button">Cancella ordine</button>
+                </form>
+            </span>
+                    <div class="order_info order_total_price"><c:out
+                            value="Totale prezzo: ${order.carrello.total}"/></div>
+                    <c:forEach items="${order.carrello.prodotti}" var="cartItem">
+                        <div class="order_product">
+                            <div><img alt="immagine" src="${contextPath}/images/${cartItem.prodotto.urlImage}"/></div>
+                            <span><c:out value="Nome: ${cartItem.prodotto.nome}"/></span>
+                            <span><c:out value="Prezzo: ${cartItem.prodotto.prezzo}"/></span>
+                            <span><c:out value="Quantità: ${cartItem.quantita}"/></span>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:if>
+        </c:if>
     </c:forEach>
 </div>
+<%@include file="footer.jsp" %>
 </body>
 </html>
