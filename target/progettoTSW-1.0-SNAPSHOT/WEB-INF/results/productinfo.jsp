@@ -9,9 +9,10 @@
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
+<c:set var="backPath" value="${requestScope.back}"/>
 <div class="product_container">
     <div class="product_img">
-        <img src="${contextPath}/images/${requestScope.product.urlImage}" alt="aa">
+        <img src="${contextPath}/images/${requestScope.product.urlImage}" alt="immagine">
     </div>
     <div class="product_details">
 
@@ -26,7 +27,12 @@
         <div class="line"></div>
 
         <div class="buttons">
-            <button class="add_to_cart">Aggiungi al carrello</button>
+            <form action="${contextPath}/cart/add" method="post">
+                <button class="add_to_cart">Aggiungi al carrello</button>
+                <input type="hidden" name="backPath" value="${backPath}">
+                <input type="hidden" name="productId" value="${requestScope.product.id}">
+                <input type="hidden" name="fieldQuantity" value="1">
+            </form>
         </div>
 
         <span class="product_info">
@@ -38,21 +44,23 @@
         </span>
 
         <span class="product_info">
-            <c:out value="Peso: ${requestScope.product.peso}"/>
+            <c:out value="Peso: ${requestScope.product.peso} Kg"/>
         </span>
 
+        <span class="product_info">
+            <c:out value="Sconto: ${requestScope.product.sconto} %"/>
+        </span>
 
         <c:forEach items="${requestScope.product.caratteristiche.keys()}" var="elemName">
             <c:set var="jsonObject" value="${requestScope.product.caratteristiche}"/>
             <c:set var="keyName" value="${elemName}"/>
             <span class="product_info">
-                <!-- opt() fa la stessa cosa di get() -->
                 <c:out value="${keyName}: ${jsonObject.opt(keyName)}"/>
             </span>
         </c:forEach>
 
     </div>
 </div>
-<%@include file="footer.jsp"%>
+<%@include file="footer.jsp" %>
 </body>
 </html>

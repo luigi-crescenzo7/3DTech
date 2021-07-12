@@ -18,7 +18,6 @@ $(document).ready(function () {
                     for (let property in data) {
                         if (data.hasOwnProperty(property))
                             values += '<p>' + property + ': ' + data[property] + '</p>'
-
                     }
 
                     content.innerHTML = values
@@ -31,7 +30,8 @@ $(document).ready(function () {
         function showProduct() {
             let idProdotto = this.nextElementSibling.value
             $.post(ctx + '/controlpanel/product-info', {productId: idProdotto}, function (data) {
-                const json2 = data.caratteristiche
+                console.log(data)
+                const json2 = data.Caratteristiche
                 let values = ''
                 const imgElement = document.createElement('img')
                 imgElement.style.width = '100px'
