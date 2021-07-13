@@ -5,6 +5,8 @@ import model.utilities.FormExtractor;
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
 import model.Utente.UtenteValidator;
+import model.utilities.RequestNotValidException;
+import model.utilities.RequestValidator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,18 +35,16 @@ public class AccountServlet extends HttpServlet {
         UtenteDAO dao = new UtenteDAO();
         HttpSession session = request.getSession();
         Utente user;
-        RequestValidator validator;
         Map<String, String[]> map = request.getParameterMap();
 
         try {
             switch (path) {
                 case "/loginadmin":
-                    validator = UtenteValidator.validateLogin(request);
-                    validator.hasErrors();
+                    UtenteValidator.validateLogin(request).hasErrors();
                     user = FormExtractor.extractLogin(map);
                     user = dao.doRetrieveEmailPassword(user);
                     if (user == null) {
-                        request.setAttribute("errorMsg", "Account inesistente");
+                        request.setAttribute("errorMessage", "Account inesistente");
                         System.out.println("Email o password non validi");
                         request.getRequestDispatcher("/WEB-INF/results/loginadmin.jsp").forward(request, response);
                         return;
@@ -59,22 +59,20 @@ public class AccountServlet extends HttpServlet {
                     }
                     break;
                 case "/registration":
-                    validator = UtenteValidator.validateRegistration(request);
+                    UtenteValidator.validateRegistration(request).hasErrors();
                     request.setAttribute("returnBack", "registration.jsp");
-                    validator.hasErrors();
                     user = FormExtractor.extractRegistration(map);
                     dao.doSave(user);
                     session.setAttribute("userSession", user);
                     resource = "/index.jsp";
                     break;
                 case "/login":
-                    validator = UtenteValidator.validateLogin(request);
+                    UtenteValidator.validateLogin(request).hasErrors();
                     request.setAttribute("returnBack", "login.jsp");
-                    validator.hasErrors();
                     user = FormExtractor.extractLogin(map);
                     user = dao.doRetrieveEmailPassword(user);
                     if (user == null) {
-                        request.setAttribute("errorMsg", "Account inesistente");
+                        request.setAttribute("errorMessage", "Account inesistente");
                         System.out.println("Email o password non validi");
                         request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
                         return;

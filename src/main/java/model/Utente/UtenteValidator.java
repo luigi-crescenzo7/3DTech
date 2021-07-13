@@ -1,6 +1,6 @@
 package model.Utente;
 
-import controller.RequestValidator;
+import model.utilities.RequestValidator;
 
 import javax.servlet.http.HttpServletRequest;
 

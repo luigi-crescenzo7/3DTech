@@ -6,6 +6,8 @@ import model.Categoria.CategoriaDAO;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
+import model.utilities.RequestNotValidException;
+import model.utilities.RequestValidator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

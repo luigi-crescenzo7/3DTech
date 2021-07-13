@@ -3,13 +3,14 @@ package controller;
 import model.utilities.Cart;
 import model.utilities.CartItem;
 import model.Prodotto.ProdottoDAO;
+import model.utilities.RequestNotValidException;
+import model.utilities.RequestValidator;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 @WebServlet(urlPatterns = "/cart/*")
 public class CartServlet extends HttpServlet {
@@ -81,7 +82,6 @@ public class CartServlet extends HttpServlet {
                     }
                     break;
                 default:
-                    System.out.println("?????????????????");
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     break;
             }

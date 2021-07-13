@@ -3,9 +3,9 @@
 <head>
     <title>Resoconto Ordini</title>
     <%@include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/orders.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/footer.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/orders.css" type="text/css">
 </head>
 <body>
 <!-- todo: aggiungere media queries per il content da 622px in giù-->

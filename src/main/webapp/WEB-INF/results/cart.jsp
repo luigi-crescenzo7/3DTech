@@ -3,8 +3,8 @@
 <head>
     <title>Il tuo carrello</title>
     <%@include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/cart.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/cart.css" type="text/css">
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
@@ -21,30 +21,40 @@
                         <div class="cart_item_img">
                             <img src="${contextPath}/images/${cartItem.prodotto.urlImage}" alt="aa">
                         </div>
+
                         <span class="main_info_cart_item">
-          <c:out value="Nome: ${cartItem.prodotto.nome}"/>
-          <span class="price_cart_item"><c:out value="${cartItem.prodotto.prezzo} €"/></span></span>
-                        <span class="info_cart_item"><c:out
-                                value="Descrizione: ${cartItem.prodotto.descrizione}"/></span>
+                            <c:out value="Nome: ${cartItem.prodotto.nome}"/>
+                            <span class="price_cart_item">
+                                <c:out value="${cartItem.prodotto.prezzo} €"/>
+                            </span>
+                        </span>
 
                         <span class="info_cart_item">
-          <c:out value="Marchio: ${cartItem.prodotto.marchio}"/>
-                </span>
+                            <c:out value="Descrizione: ${cartItem.prodotto.descrizione}"/>
+                        </span>
 
                         <span class="info_cart_item">
-          <c:out value="Peso: ${cartItem.prodotto.peso}"/>
-        </span>
+                            <c:out value="Marchio: ${cartItem.prodotto.marchio}"/>
+                        </span>
+
+                        <span class="info_cart_item">
+                            <c:out value="Peso: ${cartItem.prodotto.peso}"/>
+                        </span>
 
                         <span class="quantity_and_remove">
-          <span><label for="quantita">Quantità: </label></span>
-          <span>
-              <form action="${contextPath}/cart/remove" method="post">
-                  <input id="quantita" type="number" name="quantita" value="${cartItem.quantita}">
-                  <button class="remove_button">Rimuovi</button>
-                  <input type="hidden" name="productId" value="${cartItem.prodotto.id}">
-              </form>
-          </span>
-        </span>
+                            <span>
+                                <label for="quantita">Quantità: </label>
+                            </span>
+                        </span>
+
+                        <span>
+                            <form action="${contextPath}/cart/remove" method="post">
+                                <input id="quantita" type="number" name="quantita" value="${cartItem.quantita}">
+                                <button class="remove_button">Rimuovi</button>
+                                <input type="hidden" name="productId" value="${cartItem.prodotto.id}">
+                            </form>
+                        </span>
+
                     </div>
                 </c:forEach>
             </c:when>

@@ -1,4 +1,4 @@
-package controller;
+package model.utilities;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +20,11 @@ public class RequestNotValidException extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public void dispatchErrors(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void dispatchErrors(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
         if (errorCode == HttpServletResponse.SC_BAD_REQUEST) {
             request.setAttribute("errorMessages", getErrors());
-            System.out.println(request.getAttribute("returnBack"));
+
             request.getRequestDispatcher("/WEB-INF/results/" + request.getAttribute("returnBack")).forward(request, response);
         } else {
             response.sendError(errorCode, super.getMessage());

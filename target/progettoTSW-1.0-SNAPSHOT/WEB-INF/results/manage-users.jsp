@@ -3,7 +3,7 @@
 <head>
     <title>Admin Dashboard</title>
     <%@include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
 </head>
 <body>

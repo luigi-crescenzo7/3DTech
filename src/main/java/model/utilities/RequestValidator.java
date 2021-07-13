@@ -1,4 +1,4 @@
-package controller;
+package model.utilities;
 
 import model.Utente.Utente;
 

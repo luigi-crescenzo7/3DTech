@@ -4,19 +4,18 @@
 <head>
     <%@include file="common.jsp" %>
     <title>Login Utente - 3DTech</title>
-
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/login.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/login.css" type="text/css">
     <script src="${contextPath}/js/validateLogin.js" defer></script>
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
 <div id="alert-box" class="alert">
-    <c:if test="${not empty requestScope.errorMsg}">
+    <c:if test="${not empty requestScope.errorMessage}">
         <script>
             document.querySelector("#alert-box").style.display = "block"
         </script>
-        <p>${requestScope.errorMsg}</p>
+        <p>${requestScope.errorMessage}</p>
     </c:if>
 </div>
 <div class="form-input">

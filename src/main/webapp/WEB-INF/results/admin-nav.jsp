@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <nav>
+    <input id="ctxPath" type="hidden" value="${contextPath}">
     <div class="barra_di_nav">
         <a id="img-menu" onclick="openNav()"><img alt="immagine" class="three_hor_lines"
                                                   src="${contextPath}/imgs/three_horizontal_lines_white.png"></a>
@@ -8,7 +9,6 @@
     <div class="search">
         <p>${sessionScope.userSession.name}</p>
     </div>
-    <input id="ctxPath" type="hidden" value="${contextPath}">
 </nav>
 <aside id="mySidenav" class="sidebar sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>

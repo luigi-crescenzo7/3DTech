@@ -3,8 +3,8 @@
 <head>
     <%@include file="common.jsp" %>
     <title>Gestione Categorie - Dashboard</title>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/modal.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/modal.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
     <script src="${contextPath}/js/showModal.js" defer></script>
 </head>

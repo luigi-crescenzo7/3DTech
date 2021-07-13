@@ -3,9 +3,9 @@
 <html>
 <head>
     <%@include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/category.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/footer.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/category.css" type="text/css">
     <title>Categorie</title>
 </head>
 <body>

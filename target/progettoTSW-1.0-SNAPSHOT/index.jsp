@@ -3,9 +3,9 @@
 <head>
     <title>3DTech</title>
     <%@include file="/WEB-INF/results/common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/index.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/index.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/footer.css" type="text/css">
     <script defer src="${contextPath}/js/slider.js"></script>
 </head>
 <body>
@@ -50,7 +50,7 @@
         <div class="label_sconti">Sconti</div>
         <div class="slick-container">
             <c:forEach items="${applicationScope.listProducts}" var="product">
-                <c:if test="${product.sconto > 10}">
+                <c:if test="${product.sconto > 30}">
                     <div>
                         <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
                         <span>${product.nome}</span>

@@ -2,17 +2,17 @@
 <html>
 <head>
     <%@ include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/login.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/login.css" type="text/css">
     <script src="${contextPath}/js/validateLogin.js" defer></script>
     <title>Login Admin - 3DTech</title>
 </head>
 <body class="admin">
 <div id="alert-box" class="alert">
-    <c:if test="${not empty requestScope.errorMsg}">
+    <c:if test="${not empty requestScope.errorMessage}">
         <script>
             document.querySelector("#alert-box").style.display = "block"
         </script>
-        <p>${requestScope.errorMsg}</p>
+        <p>${requestScope.errorMessage}</p>
     </c:if>
 </div>
 <div class="login_admin">

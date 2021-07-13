@@ -8,7 +8,8 @@ import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
 import model.Utente.UtenteDAO;
-import model.utilities.CartItem;
+import model.utilities.RequestNotValidException;
+import model.utilities.RequestValidator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -71,7 +72,6 @@ public class AdminServlet extends HttpServlet {
             throws IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        System.out.println("doPost " + path);
         PrintWriter writer;
         HttpSession session = request.getSession();
 
@@ -127,7 +127,6 @@ public class AdminServlet extends HttpServlet {
                 if (item != null) {
                     writer = response.getWriter();
                     JSONObject obj3 = ProductBuilder.fromObjectToJson(item);
-                    System.out.println(obj3);
                     writer.println(obj3);
                     writer.close();
                 }

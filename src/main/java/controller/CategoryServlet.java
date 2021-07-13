@@ -22,13 +22,6 @@ import java.util.regex.Pattern;
 @WebServlet(urlPatterns = "/categorie/*")
 @MultipartConfig
 public class CategoryServlet extends HttpServlet {
-    private static String uploadRoot;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        uploadRoot = FileServlet.getUploadPath() + File.separator + "special_folder" + File.separator;
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +39,7 @@ public class CategoryServlet extends HttpServlet {
                 String idCategory = request.getParameter("option");
                 if (!Pattern.compile("^(?=.*[^\\s])\\d*$").matcher(idCategory).matches()) {
                     resource = "/index.jsp";
-                    request.setAttribute("errorMessage", "Prodotto inesistente");
+                    request.setAttribute("errorMessage", "Categoria inesistente");
                     request.getRequestDispatcher(resource).forward(request, response);
                     return;
                 }
@@ -61,38 +54,5 @@ public class CategoryServlet extends HttpServlet {
                 return;
         }
         request.getRequestDispatcher(resource).forward(request, response);
-    }
-
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        HttpSession session = request.getSession();
-        ServletContext context = request.getServletContext();
-        CategoriaDAO dao = new CategoriaDAO();
-        List<Categoria> categorie;
-
-        if ("/create".equals(path)) {
-            RequestValidator.authorize(session, "userSession");
-            Part part = request.getPart("categoryImage");
-            Map<String, String[]> map = request.getParameterMap();
-            String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-            File file;
-            try (InputStream fileStream = part.getInputStream()) {
-                file = new File(uploadRoot + fileName);
-                if (!file.exists())
-                    Files.copy(fileStream, file.toPath());
-            }
-            Categoria categoria = CategoryBuilder.createCategory(map, fileName);
-            categorie = (List<Categoria>) context.getAttribute("listCategories");
-            dao.doSave(categoria);
-            if (categorie != null)
-                categorie.add(categoria);
-            request.getRequestDispatcher("/WEB-INF/results/admin-dashboard.jsp").forward(request, response);
-        } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
     }
 }

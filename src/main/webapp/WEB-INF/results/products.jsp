@@ -3,9 +3,9 @@
 <head>
     <title>Ricerca prodotti</title>
     <%@include file="common.jsp" %>
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/navbar.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/footer.css" type="text/css">
-    <link rel="stylesheet" href="${contextPath}/css/cssprogetto/showProduct.css">
+    <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/footer.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/showProduct.css">
 </head>
 <body>
 <%@include file="nav-bar.jsp" %>
