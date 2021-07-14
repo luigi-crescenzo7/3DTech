@@ -33,9 +33,9 @@ $(document).ready(function () {
     })
 
     function loadInputs(json) {
+        const div = $('#div-test-2')
         switch (json.Categoria) {
             case "Materiale plastico":
-                const div = $('#div-test-2')
                 div.empty()
                 div.append('<label for="fieldProductColor">Colore:</label>' +
                     '<input type="text" class="input" id="fieldProductColor" name="productColor">' +
@@ -44,25 +44,45 @@ $(document).ready(function () {
                     '<input type="number" class="input" id="fieldProductTemp" name="productTemp">' +
                     '<br><br>' +
                     '')
-                let imgElement = document.createElement('img')
-                imgElement.src = path + '/images/'+json.Immagine
-                imgElement.style.width = '100px'
-                imgElement.style.height = '100px'
-                imgElement.value =
-                div.append(imgElement)
-                div.append('<p>'+json.Immagine+'</p>')
-                file.val(json.Immagine)
 
-                $('#fieldProductColor').val(json.Caratteristiche.colore)
-                $('#fieldProductTemp').val(json.Caratteristiche.temperatura)
+
+                $('#fieldProductColor').val(json.Caratteristiche.Colore)
+                $('#fieldProductTemp').val(json.Caratteristiche.Temperatura)
                 break
             case "Stampanti 3D":
-                /*divElement.load(path + '/form-prodotti/stampanti-3d.jsp',
-                    (response, status) => console.log(status))*/
+                let vals = '<label for="fieldMaxSpeed">Velocita max</label>\n' +
+                    '<input id="fieldMaxSpeed" name="productMaxSpeed" class="input" type="number">\n' +
+                    '<br>\n' +
+                    '<br>\n' +
+                    '<label for="fieldSize">Dimensioni</label>\n' +
+                    '<input id="fieldSize" name="productSize" class="input" type="text">\n' +
+                    '<br>\n' +
+                    '<br>'
+                div.empty()
+                div.append(vals)
+
+                $('#fieldMaxSpeed').val(json.Caratteristiche['Velocità max'])
+                $('#fieldSize').val(json.Caratteristiche.Dimensioni)
+                break
+            case "Resine":
+                let input = '<label for="fieldProductHardness">Durezza:</label>\n' +
+                    '<input type="text" class="input" id="fieldProductHardness" name="productHardness">\n' +
+                    '<br>\n' +
+                    '<br>'
+                div.empty()
+                div.append(input)
+                $('#fieldProductHardness').val(json.Caratteristiche.Durezza)
                 break
             default:
-                console.log('error')
+                div.empty()
                 break
         }
+        let imgElement = document.createElement('img')
+        imgElement.src = path + '/images/' + json.Immagine
+        imgElement.style.width = '100px'
+        imgElement.style.height = '100px'
+        imgElement.value = div.append(imgElement)
+        div.append('<p>' + json.Immagine + '</p>')
+        file.val(json.Immagine)
     }
 })

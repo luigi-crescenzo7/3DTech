@@ -58,16 +58,16 @@ public class AccountServlet extends HttpServlet {
                     }
                     break;
                 case "/registration":
-                    UtenteValidator.validateRegistration(request).hasErrors();
                     request.setAttribute("returnBack", "registration.jsp");
+                    UtenteValidator.validateRegistration(request).hasErrors();
                     user = FormExtractor.extractRegistration(map);
                     dao.doSave(user);
                     session.setAttribute("userSession", user);
                     resource = "/index.jsp";
                     break;
                 case "/login":
-                    UtenteValidator.validateLogin(request).hasErrors();
                     request.setAttribute("returnBack", "login.jsp");
+                    UtenteValidator.validateLogin(request).hasErrors();
                     user = FormExtractor.extractLogin(map);
                     user = dao.doRetrieveEmailPassword(user);
                     if (user == null) {
@@ -79,6 +79,7 @@ public class AccountServlet extends HttpServlet {
                     session.setAttribute("userSession", user);
                     session.setAttribute("sessionCart", new Cart(new ArrayList<>()));
                     resource = "/index.jsp";
+
                     break;
                 case "/logout":
                     request.setAttribute("returnBack", "index.jsp");

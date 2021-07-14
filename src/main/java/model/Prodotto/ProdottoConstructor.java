@@ -20,7 +20,7 @@ public class ProdottoConstructor {
         p.setPrezzo(rs.getDouble((discount ? "prezzo_scontato" : "pro.prezzo")));
         p.setPeso(rs.getDouble("pro.peso"));
         p.setSconto(rs.getDouble("pro.sconto"));
-        //p.setVisible(rs.getBoolean("pro.visibilita"));
+        p.setVisible(rs.getBoolean("pro.visibilita"));
         Categoria cat = new Categoria();
         cat.setId(rs.getInt("cat.id_categoria"));
         cat.setNome(rs.getString("cat.nome"));

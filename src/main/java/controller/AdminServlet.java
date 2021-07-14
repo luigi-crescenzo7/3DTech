@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.Optional;
 
 @WebServlet(urlPatterns = "/controlpanel/*")
 public class AdminServlet extends HttpServlet {
@@ -34,6 +35,7 @@ public class AdminServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource = null;
         HttpSession session = request.getSession();
+        ProdottoDAO dao = new ProdottoDAO();
 
         try {
             switch (path) {

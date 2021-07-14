@@ -3,16 +3,17 @@
 <head>
     <%@ include file="common.jsp" %>
     <link rel="stylesheet" href="${contextPath}/css/login.css" type="text/css">
-    <script src="${contextPath}/js/validateLogin.js" defer></script>
     <title>Login Admin - 3DTech</title>
 </head>
 <body class="admin">
 <div id="alert-box" class="alert">
-    <c:if test="${not empty requestScope.errorMessage}">
+    <c:if test="${not empty requestScope.errorMessages}">
+        <c:forEach items="${requestScope.errorMessages}" var="message">
+            <p>${message}</p>
+        </c:forEach>
         <script>
             document.querySelector("#alert-box").style.display = "block"
         </script>
-        <p>${requestScope.errorMessage}</p>
     </c:if>
 </div>
 <div class="login_admin">

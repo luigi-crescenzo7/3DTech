@@ -110,7 +110,7 @@
                     <input class="input" step=".01" type="number" id="peso2" name="productWeight"><br><br>
                     <label for="sconto2">Sconto</label>
                     <input class="input" step=".01" type="number" id="sconto2" name="productDiscount"><br><br>
-                    <div id="div-test-2">
+                    <div id="inputs-container">
                     </div>
                     <label for="fieldProductCategory">Categoria</label><br>
                     <select id="fieldProductCategry" name="productCategory">
@@ -132,9 +132,9 @@
         <div class="product-form">
             <div class="rem_product_label"> Rimuovi prodotto</div>
             <div class="rem_product_input">
-                <form action="" name="rimuovi" method="post">
-                    <label for="id">ID prodotto</label>
-                    <input class="input" type="number" id="id" name="id" value=""><br><br><br>
+                <form action="${contextPath}/product/remove" name="rimuovi" method="post">
+                    <label for="idUser">ID prodotto</label>
+                    <input class="input" type="number" id="idUser" name="userId"><br><br><br>
                     <input class="agg" type="submit" value="Rimuovi prodotto">
                 </form>
             </div>

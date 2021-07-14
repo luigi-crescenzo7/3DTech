@@ -55,7 +55,6 @@ public class ProductServlet extends HttpServlet {
             if (prodotto != null) {
                 request.setAttribute("back", "/product/product-info?option=" + option);
                 request.setAttribute("product", prodotto);
-                System.out.println("ciao");
                 resource = "/WEB-INF/results/productinfo.jsp";
             } else {
                 request.setAttribute("errorMessage", "Prodotto inesistente");
@@ -81,7 +80,7 @@ public class ProductServlet extends HttpServlet {
         HttpSession session = request.getSession();
         ProdottoDAO dao = new ProdottoDAO();
         CategoriaDAO categoriaDAO = new CategoriaDAO();
-        Part part = request.getPart("productImage");
+        Part part;
         String fileName = "";
         File file;
 
@@ -90,6 +89,7 @@ public class ProductServlet extends HttpServlet {
                 case "/update":
                     String str;
                     RequestValidator.authorize(session, "userSession");
+                    part = request.getPart("productImage");
                     Map<String, String[]> mappa = request.getParameterMap();
                     String productId = request.getParameter("product-id");
                     int id = Integer.parseInt(productId);
@@ -132,12 +132,9 @@ public class ProductServlet extends HttpServlet {
                     break;
                 case "/create":
                     RequestValidator.authorize(session, "userSession");
+                    part = request.getPart("productImage");
                     fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                     Map<String, String[]> map = request.getParameterMap();
-                    /*Set<Map.Entry<String, String[]>> set = map.entrySet();
-                    for (Map.Entry<String, String[]> entry : set) {
-                        System.out.println(entry.getKey() + "   " + Arrays.toString(entry.getValue()));
-                    }*/
 
                     try (InputStream fileStream = part.getInputStream()) {
                         file = new File(uploadRoot + fileName);
@@ -153,6 +150,27 @@ public class ProductServlet extends HttpServlet {
                     if (products != null) {
                         products.add(product);
                         request.getRequestDispatcher(resource).forward(request, response);
+                    }
+                    break;
+                case "/remove":
+                    RequestValidator.authorize(session, "userSession");
+                    System.out.println("remove product");
+                    String userId1 = request.getParameter("userId");
+                    int id1 = Integer.parseInt(userId1);
+                    Optional<Prodotto> opt1 = products.stream().
+                            filter(prodotto -> prodotto.getId() == id1).
+                            findFirst();
+
+                    if (opt1.isPresent()) {
+                        if (dao.doDeleteById(id1)) {
+                            Prodotto p1 = opt1.get();
+                            p1.setVisible(false);
+                            response.sendRedirect(context.getContextPath() + "/controlpanel/products");
+                        } else {
+                            System.out.println("delete product error");
+                        }
+                    } else {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                     break;
                 default:

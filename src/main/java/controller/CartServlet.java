@@ -59,8 +59,10 @@ public class CartServlet extends HttpServlet {
                     CartItem item = dao.doRetrieveCartItemById(id);
                     System.out.println("id:" + id + " " + (item != null));
                     if (item != null) {
-                        cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
-                        System.out.println("id: " + item.getProdotto().getId() + "  prezzo scontato: " + item.getProdotto().getPrezzo());
+                        if (item.getProdotto().isVisible()) {
+                            cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
+                            System.out.println("id: " + item.getProdotto().getId() + "  prezzo scontato: " + item.getProdotto().getPrezzo());
+                        }
                     }
                     if (path1 != null) {
                         response.sendRedirect(contextPath + path1);
@@ -69,6 +71,7 @@ public class CartServlet extends HttpServlet {
                     response.sendRedirect(contextPath + "/");
                     break;
                 case "/remove":
+                    //todo: forse mettere controllo se il prodotto è visibile, allora rimuoverlo, senno non fare nulla
                     RequestValidator.authenticate(session, "userSession");
                     String productId_ = request.getParameter("productId");
                     String productQuantity = request.getParameter("quantita");

@@ -27,12 +27,19 @@
         <div class="line"></div>
 
         <div class="buttons">
-            <form action="${contextPath}/cart/add" method="post">
-                <button class="add_to_cart">Aggiungi al carrello</button>
-                <input type="hidden" name="backPath" value="${backPath}">
-                <input type="hidden" name="productId" value="${requestScope.product.id}">
-                <input type="hidden" name="fieldQuantity" value="1">
-            </form>
+            <c:choose>
+                <c:when test="${requestScope.product.visible == true}">
+                    <form action="${contextPath}/cart/add" method="post">
+                        <button class="add_to_cart">Aggiungi al carrello</button>
+                        <input type="hidden" name="backPath" value="${backPath}">
+                        <input type="hidden" name="productId" value="${requestScope.product.id}">
+                        <input type="hidden" name="fieldQuantity" value="1">
+                    </form>
+                </c:when>
+                <c:otherwise>
+                    <p>Prodotto non disponibile</p>
+                </c:otherwise>
+            </c:choose>
         </div>
 
         <span class="product_info">

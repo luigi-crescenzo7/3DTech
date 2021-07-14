@@ -39,7 +39,8 @@ public class ProdottoDAO {
     public boolean doDeleteById(int idProdotto) {
         int result;
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement stmt = connection.prepareStatement("DELETE FROM prodotto WHERE id_prodotto = ?")) {
+             PreparedStatement stmt = connection.prepareStatement("UPDATE prodotto SET visibilita = 0" +
+                                                                        " WHERE id_prodotto = ?")) {
             stmt.setInt(1, idProdotto);
             result = stmt.executeUpdate();
         } catch (SQLException e) {

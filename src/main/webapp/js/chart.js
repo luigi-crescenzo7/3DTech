@@ -10,7 +10,6 @@ $(document).ready(function () {
                     datasets: [{
                         label: '# scorte',
                         data: data[1],
-                        //todo: testare proprietà options
                         options: {
                             responsive: true,
                             maintainAspectRatio: true,

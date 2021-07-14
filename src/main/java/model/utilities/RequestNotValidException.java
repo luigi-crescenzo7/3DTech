@@ -24,7 +24,6 @@ public class RequestNotValidException extends RuntimeException {
             throws IOException, ServletException {
         if (errorCode == HttpServletResponse.SC_BAD_REQUEST) {
             request.setAttribute("errorMessages", getErrors());
-
             request.getRequestDispatcher("/WEB-INF/results/" + request.getAttribute("returnBack")).forward(request, response);
         } else {
             response.sendError(errorCode, super.getMessage());

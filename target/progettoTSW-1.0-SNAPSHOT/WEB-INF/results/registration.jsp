@@ -10,19 +10,13 @@
 <body>
 <%@include file="nav-bar.jsp" %>
 <div id="alert-box" class="alert">
-    <c:if test="${not empty requestScope.errorMessage}">
-        <script>
-            document.querySelector("#alert-box").style.display = "block"
-        </script>
-        <p>${requestScope.errorMessage}</p>
-    </c:if>
     <c:if test="${not empty requestScope.errorMessages}">
-        <script>
-            document.querySelector("#alert-box").style.display = "block"
-        </script>
         <c:forEach items="${requestScope.errorMessages}" var="message">
             <p>${message}</p>
         </c:forEach>
+        <script>
+            document.querySelector("#alert-box").style.display = "block"
+        </script>
     </c:if>
 </div>
 <div class="registrazione">

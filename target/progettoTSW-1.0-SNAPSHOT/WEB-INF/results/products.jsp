@@ -29,13 +29,20 @@
                             <img src="${contextPath}/images/${product.urlImage}" alt="immagine">
                         </a>
                         <span>Nome: <c:out value="${product.nome}"/></span>
-                        <span>Prezzo: <c:out value="${product.prezzo}"/></span>
+                        <span>Prezzo: € <c:out value="${product.prezzo}"/></span>
                         <form action="${contextPath}/cart/add" method="post">
-                            <button>Aggiungi al carrello</button>
-                            <input type="hidden" name="productId" value="${product.id}">
-                            <input type="hidden" name="fieldQuantity" value="1">
-                            <input type="hidden" name="productCategoryId" value="${product.categoria.id}">
-                            <input type="hidden" name="backPath" value="${backPath}">
+                            <c:choose>
+                                <c:when test="${product.visible == true}">
+                                    <button>Aggiungi al carrello</button>
+                                    <input type="hidden" name="productId" value="${product.id}">
+                                    <input type="hidden" name="fieldQuantity" value="1">
+                                    <input type="hidden" name="productCategoryId" value="${product.categoria.id}">
+                                    <input type="hidden" name="backPath" value="${backPath}">
+                                </c:when>
+                                <c:otherwise>
+                                    <button style="background: gray" disabled>Aggiungi al carrello</button>
+                                </c:otherwise>
+                            </c:choose>
                         </form>
                     </div>
                 </c:forEach>

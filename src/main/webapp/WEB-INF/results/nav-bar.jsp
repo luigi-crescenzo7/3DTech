@@ -7,8 +7,7 @@
             <a href="${contextPath}/account/login">Login</a>
         </div>
     </c:if>
-    <!-- todo: mettere controllo sullo user memorizzato in sessione se non è admin-->
-    <c:if test="${sessionScope.userSession != null}"> <!--pageContext.request.getSession().getAttribute('user') != null -->
+    <c:if test="${sessionScope.userSession != null}">
         <div class="sub-container">
             <div class="utente_loggato">
                 <button class="email_user">${sessionScope.userSession.email}</button>
