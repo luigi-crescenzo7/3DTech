@@ -44,34 +44,37 @@
     </table>
 </div>
 <hr id="division-line">
-<div id="user-orders" class="rem_user">
-    <div class="rem_user_label">
-        <label for="users-list">Ordini</label>
-    </div>
-    <div class="rem_user_input">
-        <select id="users-list" name="userId">
-            <option> -- Seleziona id --</option>
-            <c:forEach items="${requestScope.listUsers}" var="user">
-                <option value="${user.id}">${user.id}</option>
-            </c:forEach>
-        </select>
-        <button style="display: inline-block" id="orders-btn" type="submit">get</button>
-        <div class="orders-content">
+<div class="flex-container-user">
+
+    <div id="user-orders" class="rem_user">
+        <div class="rem_user_label">
+            <label for="users-list">Ordini</label>
+        </div>
+
+        <div class="rem_user_input">
+            <select id="users-list" name="userId">
+                <option> -- Seleziona id --</option>
+                <c:forEach items="${requestScope.listUsers}" var="user">
+                    <option value="${user.id}">${user.id}</option>
+                </c:forEach>
+            </select>
+            <button class="agg" id="orders-btn" type="submit">get</button>
+            <div class="orders-content">
+            </div>
         </div>
     </div>
-</div>
-<div class="rem_user">
 
-    <div class="rem_user_label"> Rimuovi utente</div>
-
-    <div class="rem_user_input">
-
-        <form action="" name="rimuovi" method="">
-            <label for="email_">Email utente</label>
-            <input class="input" type="text" id="email_" name="email" value=""><br><br><br>
-            <input class="agg" type="submit" value="Rimuovi utente">
-        </form>
+    <div class="rem_user">
+        <div class="rem_user_label"> Rimuovi utente</div>
+        <div class="rem_user_input">
+            <form action="" name="rimuovi" method="">
+                <label for="email_">Email utente</label>
+                <input class="input" type="text" id="email_" name="email" value=""><br><br><br>
+                <input class="agg" type="submit" value="Rimuovi utente">
+            </form>
+        </div>
     </div>
+
 </div>
 <div class="modal" id="modal-box">
     <input type="hidden" name="modal-type" value="user">

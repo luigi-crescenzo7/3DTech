@@ -40,15 +40,15 @@
     padding: 4px 8px;
     min-height: 24px;
     border: none;
-    background-image: linear-gradient(#009687 0%, #007763 100%);
+    background-image: linear-gradient(#007FCC 0%, #57B5E0 100%);
     width: 100%;
     height: 20px;
     cursor: pointer;
 }
 
-/* forse da eliminare*/
+
 .btn-submit:hover {
-    background-image: linear-gradient(#007763 0%, #009687 100%);
+    background-image: linear-gradient(#57B5E0 0%, #007FCC 100%);
 }
 
 .admin {

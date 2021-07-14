@@ -23,7 +23,7 @@
     </div>
 </aside>
 
-<div class="table-container">
+<div class="table-container-cat">
     <table class="rtable">
         <thead>
         <tr>

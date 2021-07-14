@@ -42,10 +42,9 @@ html, body {
     margin-left: auto;
     width: 646px;
     min-height: 300px;
-    /*min-width: 646px;*/
 }
 
-/* Tabella utenti/prodotti/etc*/
+
 .table-container .rtable {
     display: block;
     vertical-align: top;
@@ -106,6 +105,18 @@ html, body {
     padding: 0;
 }
 
+.table-container-cat .rtable {
+    vertical-align: top;
+    width: 90%;
+    overflow: auto;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    text-align: center;
+}
+
+
 @media screen and (max-width: 480px) {
     .table-container {
         min-width: 300px;
@@ -123,6 +134,7 @@ html, body {
     }
 
 }
+
 
 @media screen and (max-width: 650px) {
     .table-container {
