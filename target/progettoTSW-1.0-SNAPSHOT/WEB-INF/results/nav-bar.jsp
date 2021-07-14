@@ -45,7 +45,8 @@
         <div class="ui-widget">
             <form action="${contextPath}/search/searchproduct">
                 <label for="tags"></label>
-                <input id="tags" class="search-bar" type="search" name="search" placeholder="Cerca...">
+                <input style="margin-right: 70px" id="tags" class="search-bar" type="search" name="search"
+                       placeholder="Cerca...">
             </form>
         </div>
     </div>

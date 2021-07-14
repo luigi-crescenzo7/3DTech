@@ -1,0 +1,135 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+@font-face {
+    font-family: "Orienta";
+    src: url("../font/Orienta-Regular.ttf");
+}
+
+.alert {
+    display: none;
+    border-radius: 10px;
+    padding: 20px 20px;
+    background-color: #f44336;
+    color: white;
+    margin-bottom: .2em;
+    line-height: 2em;
+    text-transform: uppercase;
+}
+
+.input {
+    border-style: solid;
+    border-radius: 2px;
+    width: 100%;
+    outline: none;
+}
+
+.input:hover {
+    border-color: #007763;
+}
+
+#logo {
+    margin: 0 15px 0;
+    padding: 0;
+    width: 20em;
+}
+
+.table-container {
+    margin-right: auto;
+    margin-left: auto;
+    width: 646px;
+    min-height: 300px;
+    /*min-width: 646px;*/
+}
+
+/* Tabella utenti/prodotti/etc*/
+.table-container .rtable {
+    display: block;
+    vertical-align: top;
+    width: 90%;
+    overflow: auto;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.rtable td:first-child {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-size: 20px 100%;
+}
+
+.rtable td:last-child {
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+    background-size: 20px 100%;
+}
+
+.rtable th {
+    font-size: 17px;
+    text-align: center;
+    text-transform: uppercase;
+    background: #007763;
+    color: white;
+}
+
+.rtable th, .rtable td {
+    padding: 4px 4px;
+    border: 1px solid #d9d7ce;
+}
+
+.homepage-content {
+    margin: 0;
+    width: 100%;
+    height: min-content;
+}
+
+.slick-container {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.slick-container * {
+    height: min-content;
+    margin: 0;
+}
+
+.slick-container img {
+    margin: 0;
+    padding: 0;
+}
+
+@media screen and (max-width: 480px) {
+    .table-container {
+        min-width: 300px;
+        max-width: 350px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .rtable {
+        margin-left: auto;
+        margin-right: auto;
+        height: auto;
+        min-width: 290px;
+        width: 320px;
+    }
+
+}
+
+@media screen and (max-width: 650px) {
+    .table-container {
+        width: auto;
+    }
+
+    .rtable {
+        width: 80%;
+    }
+}

@@ -15,7 +15,7 @@
         <div class="cat">
             <c:set var="categoryName" value="${category.nome}"/>
             <c:set var="categoryId" value="${category.id}"/>
-            <a href="${contextPath.concat("/categorie/category?option=").concat(categoryId)}"><img
+            <a style="margin-left: auto; margin-right: auto;" href="${contextPath.concat("/categorie/category?option=").concat(categoryId)}"><img
                     src="${contextPath}/images/${category.urlImage}"
                     alt=""></a>
             <span class="category_label">${category.nome}</span>

@@ -21,6 +21,7 @@
     padding: 0;
     width: 300px;
     height: 300px;
+    margin-left: 40px;
 }
 
 
@@ -63,6 +64,7 @@
     .cat img {
         width: 270px;
         height: 270px;
+        margin-left: 0;
     }
 
 }

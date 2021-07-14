@@ -99,27 +99,4 @@ public class OrdineDAO {
             throw new RuntimeException(e);
         }
     }
-
-
-    //todo: implementazione lato dashboard sezione "ordini" --- UPDATE 12/07: probabilmente da eliminare
-    public List<Prodotto> doRetrieveProductsByOrder(int idOrder) {
-        String query = "SELECT * FROM ordine AS ord INNER JOIN ordine_prodotto AS op ON ord.id_ordine = op.id_ordine " +
-                "INNER JOIN prodotto AS pro ON pro.id_prodotto = op.id_prodotto INNER JOIN categoria as cat " +
-                "on pro.id_categoria = cat.id_categoria WHERE ord.id_ordine = ?";
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, idOrder);
-            ResultSet set = stmt.executeQuery();
-            List<Prodotto> products = new ArrayList<>();
-            while (set.next()) {
-                Prodotto prodotto = ProdottoConstructor.constructProduct(set, false);
-                Categoria categoria = CategoriaConstructor.constructCategory(set);
-                prodotto.setCategoria(categoria);
-                products.add(prodotto);
-            }
-            return products;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

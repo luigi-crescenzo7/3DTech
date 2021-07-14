@@ -27,13 +27,13 @@ header {
 
 .accesso a:hover {
     color: white;
-    background-color: #007763;
+    background-color: #00B5E2;
     margin: 0;
 }
 
 nav {
     display: flex;
-    background-color: #007763;
+    background-color: #00B5E2;
     width: 100%;
     box-sizing: border-box;
     overflow: auto;
@@ -69,7 +69,7 @@ nav {
 }
 
 .barra_di_nav li:hover {
-    background-color: #009687;
+    background-color: #00B5E2;
 }
 
 nav .search {
@@ -103,6 +103,9 @@ nav .search input {
     border: none;
 }
 
+#admin-nav {
+    background-color: #007763;
+}
 
 .utente_loggato {
     padding: 0;
@@ -139,7 +142,7 @@ nav .search input {
 }
 
 .email_user:hover {
-    background-color: #007763;
+    background-color: #00B5E2;
     color: white;
 }
 
@@ -364,7 +367,7 @@ nav .search input {
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: #007763;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
@@ -374,13 +377,13 @@ nav .search input {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: white;
     display: block;
     transition: 0.3s;
 }
 
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: grey;
 }
 
 .sidenav .closebtn {
@@ -394,9 +397,9 @@ nav .search input {
 .logout button {
     border: none;
     background: none;
-    color: #818181;
+    color: white;
 }
 
 .logout button:hover {
-    color: white;
+    color: grey;
 }

@@ -1,0 +1,405 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    flex: auto;
+}
+
+.accesso {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+
+.accesso a {
+    color: black;
+    text-decoration: none;
+    padding: 5px;
+    font-family: "Verdana", sans-serif;
+}
+
+.accesso a:link {
+    color: black;
+}
+
+.accesso a:visited {
+    color: black;
+}
+
+.accesso a:hover {
+    color: white;
+    background-color: #00B5E2;
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    background-color: #00B5E2;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: auto;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.barra_di_nav {
+    list-style-type: none;
+    overflow: hidden; /**/
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.barra_di_nav li {
+    display: inline-block;
+    text-decoration: none;
+    padding: 11px 0;
+}
+
+.barra_di_nav a {
+    padding: 11px;
+}
+
+.barra_di_nav a {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    color: white;
+    font-family: "Orienta", sans-serif;
+}
+
+.barra_di_nav li:hover {
+    background-color: #00B5E2;
+}
+
+nav .search {
+    display: inline-block;
+    float: right;
+    color: white;
+    text-transform: uppercase;
+}
+
+#cart-icon {
+    margin-top: auto;
+    width: 40px;
+    height: 40px;
+}
+
+.search p {
+    margin: 0 40px 0;
+    font-size: 1.3em;
+}
+
+nav .search form {
+    padding: 0;
+    margin: 0;
+}
+
+nav .search input {
+    outline: none;
+    width: auto;
+    height: 2em;
+    margin: 5px 20px;
+    border: none;
+}
+
+#admin-nav {
+    background-color: #007763;
+}
+
+.utente_loggato {
+    padding: 0;
+    margin: 0;
+    height: 40px;
+    position: relative;
+    top: 17px;
+}
+
+
+.utente_loggato:hover .opzioni, .svg-menu:hover .opzioni {
+    display: block;
+}
+
+.sub-container {
+    display: flex;
+}
+
+.btn-list {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.email_user {
+    border: none;
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+}
+
+.email_user:hover {
+    background-color: #00B5E2;
+    color: white;
+}
+
+.opzioni {
+    display: none;
+    position: absolute;
+    color: black;
+    right: 3px;
+    background-color: #f8f8f8;
+    padding-left: 2px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    border: 2px solid black;
+    width: 142px;
+}
+
+.opzioni a, .opzioni .btn-list {
+    text-decoration: none;
+    box-sizing: content-box;
+    width: 135px;
+    margin-right: 0;
+    text-align: center;
+    line-height: 70px;
+    display: block;
+    color: black;
+}
+
+.opzioni a:hover, .opzioni .btn-list:hover {
+    background-color: lightgrey;
+}
+
+.opzioni ul {
+    padding: 0;
+    margin: 0;
+    max-width: 120px;
+}
+
+.opzioni li {
+    list-style: none;
+    width: 100%;
+    float: left;
+    margin: 0;
+    padding: 0;
+    color: black;
+}
+
+.carrello {
+    width: inherit;
+    height: inherit;
+}
+
+.three_hor_lines {
+    height: 18px;
+    width: 18px;
+}
+
+.hamburger_menu {
+    background-color: #DBDCDB;
+    display: none;
+    width: 20%;
+    min-width: 154px;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    position: fixed;
+}
+
+.hamburger_menu_visible {
+    display: block;
+}
+
+.hamburger_menu a {
+    display: block;
+    background-color: #DBDCDB;
+    color: black;
+    text-decoration: none;
+    padding-top: 20px;
+    padding-left: 8px;
+    margin: 0;
+    font-family: "Franklin Gothic Medium", sans-serif;
+    text-transform: uppercase;
+}
+
+.hamburger_menu a:hover {
+    background-color: #D1D2D1;
+}
+
+#test-text {
+    padding: 0;
+    text-decoration: none;
+    font-family: "Orienta", sans-serif;
+    font-style: italic;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: white;
+    left: 100px;
+    margin: 5px 0 0;
+}
+
+#test-text:hover {
+    background-color: unset;
+}
+
+.container {
+    padding-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-height: 700px;
+    max-width: 80%;
+}
+
+.container #chart {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        min-width: 700px;
+        min-height: 700px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        min-width: 600px;
+        min-height: 600px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    .container {
+        min-width: 520px;
+        min-height: 520px;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .container {
+        min-height: 600px;
+        min-width: 270px;
+    }
+
+    #chart {
+        height: 50%;
+    }
+}
+
+.show-info {
+    border: 0;
+    background-color: #007763;
+    color: white;
+    padding: 5px;
+}
+
+.svg-menu, #bar-menu {
+    display: none;
+}
+
+
+@media screen and (max-width: 589px) {
+    #logo {
+    }
+
+    .email_user {
+        display: none;
+    }
+
+    .svg-menu {
+        display: inline-block;
+    }
+
+    #bar-menu {
+        display: inline-block;
+        position: relative;
+        right: 0;
+        top: 0;
+    }
+
+    .utente_loggato button {
+
+    }
+
+    .utente_loggato {
+    }
+}
+
+@media screen and (max-width: 409px) {
+    #logo {
+        width: 190px;
+    }
+
+    .email_user {
+
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .carrello {
+        position: relative;
+        right: 30px;
+        bottom: 10px;
+        margin-top: 10px;
+    }
+
+    .svg-menu {
+        right: 30px;
+    }
+}
+
+.main-content {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #007763;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: grey;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.logout button {
+    border: none;
+    background: none;
+    color: white;
+}
+
+.logout button:hover {
+    color: grey;
+}

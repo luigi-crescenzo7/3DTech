@@ -4,11 +4,13 @@
     <title>Admin Dashboard</title>
     <%@include file="common.jsp" %>
     <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/user-dashboard.css" type="text/css">
     <script defer src="${contextPath}/js/hamburger.js"></script>
+    <script src="${contextPath}/js/getOrders.js" defer></script>
 </head>
 <body>
 <%@include file="admin-nav.jsp" %>
-<div class="user">
+<div class="table-container">
     <table class="rtable">
         <thead>
         <tr>
@@ -40,7 +42,23 @@
         </tbody>
     </table>
 </div>
-
+<hr id="division-line">
+<div class="rem_user">
+    <div class="rem_user_label">
+        <label for="users-list">Ordini</label>
+    </div>
+    <div class="rem_user_input">
+        <select id="users-list" name="userId">
+            <option> -- Seleziona id --</option>
+            <c:forEach items="${requestScope.listUsers}" var="user">
+                <option value="${user.id}">${user.id}</option>
+            </c:forEach>
+        </select>
+        <button style="display: inline-block" id="btn-submit" type="submit">get</button>
+        <div class="orders-content">
+        </div>
+    </div>
+</div>
 <div class="rem_user">
 
     <div class="rem_user_label"> Rimuovi utente</div>

@@ -54,12 +54,14 @@ public class ProdottoDAO {
         try (Connection connection = ConPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
 
-            statement.setString(1, name + "%");
+            statement.setString(1, "%" + name + "%");
 
             ResultSet set = statement.executeQuery();
 
-            while (set.next())
+            while (set.next()) {
                 list.add(set.getString(1));
+                System.out.println(set.getString(1));
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

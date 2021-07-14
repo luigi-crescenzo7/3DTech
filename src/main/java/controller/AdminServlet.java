@@ -4,6 +4,7 @@ package controller;
 import model.Categoria.Categoria;
 import model.Categoria.CategoriaDAO;
 import model.Categoria.CategoryBuilder;
+import model.Ordine.Ordine;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @WebServlet(urlPatterns = "/controlpanel/*")
 public class AdminServlet extends HttpServlet {
@@ -31,7 +33,7 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource;
+        String resource = null;
         HttpSession session = request.getSession();
 
         try {
@@ -52,6 +54,17 @@ public class AdminServlet extends HttpServlet {
                     RequestValidator.authorize(session, "userSession");
                     request.setAttribute("listUsers", new UtenteDAO().doRetrieveAll());
                     resource = "/WEB-INF/results/manage-users.jsp";
+                    break;
+                case "/orders":
+                    RequestValidator.authorize(session, "userSession");
+                    response.setContentType("application/json");
+                    String userId = request.getParameter("userId");
+
+                    List<Ordine> orders = new UtenteDAO().doRetrieveAllOrdersByUser(Integer.parseInt(userId));
+
+                    PrintWriter writer = response.getWriter();
+                    writer.println(new JSONArray(orders));
+                    writer.close();
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<nav>
+<nav id="admin-nav">
     <input id="ctxPath" type="hidden" value="${contextPath}">
     <div class="barra_di_nav">
         <a id="img-menu" onclick="openNav()"><img alt="immagine" class="three_hor_lines"

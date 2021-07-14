@@ -22,25 +22,29 @@
     <div class="best_products">
         <div class="printer">
             <span class="label_printer">Migliori stampanti 3D</span>
-            <c:forEach items="${applicationScope.listProducts}" var="product">
-                <c:if test="${product.categoria.nome.equals('Stampanti 3D')}">
-                    <div class="container-item">
-                        <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
-                        <span>${product.nome}</span>
-                    </div>
-                </c:if>
-            </c:forEach>
+            <div class="flex-items">
+                <c:forEach items="${applicationScope.listProducts}" var="product">
+                    <c:if test="${product.categoria.nome.equals('Stampanti 3D')}">
+                        <div class="container-item">
+                            <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
+                            <span>${product.nome}</span>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </div>
         </div>
         <div class="brands">
             <span class="label_brands">Migliori resine</span>
-            <c:forEach items="${applicationScope.listProducts}" var="product">
-                <c:if test="${product.categoria.nome.equals('Resine')}">
-                    <div class="container-item">
-                        <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
-                        <span>${product.nome}</span>
-                    </div>
-                </c:if>
-            </c:forEach>
+            <div class="flex-items">
+                <c:forEach items="${applicationScope.listProducts}" var="product">
+                    <c:if test="${product.categoria.nome.equals('Resine')}">
+                        <div class="container-item">
+                            <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
+                            <span>${product.nome}</span>
+                        </div>
+                    </c:if>
+                </c:forEach>
+            </div>
         </div>
     </div>
 </div>

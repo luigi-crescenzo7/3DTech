@@ -22,9 +22,16 @@
     margin: 15px 15px 0 15px;
 }
 
-.printer div{
+.flex-items {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
+    height: min-content;
+    padding-bottom: 19px;
+}
+
+.printer {
+    height: min-content;
 }
 
 .printer .label_printer, .brands .label_brands {
@@ -38,7 +45,6 @@
 }
 
 .best_products img {
-    background-color: #eeeeee;
     width: 180px;
     height: 180px;
 }
@@ -55,7 +61,7 @@
     border: solid 2px lightgrey;
     width: 95%;
     min-width: 464px;
-    height: 220px;
+    height: min-content;
     margin: 30px auto;
 }
 
@@ -103,29 +109,29 @@
     color: lightgrey !important;
 }
 
-.slick-dots{
+.slick-dots {
     margin: 0 auto !important;
 }
 
 /* Slick */
 
-@media screen and (max-width: 370px){
+@media screen and (max-width: 370px) {
     .best_products {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 20px;
     }
+
     .best_products img {
         width: 180px;
         height: 180px;
     }
-    .container-item{
-        padding-left: 40px;
-    }
-    .sconti{
+
+    .sconti {
         min-width: 0;
     }
+
     .best_products > div {
         width: 300px;
     }

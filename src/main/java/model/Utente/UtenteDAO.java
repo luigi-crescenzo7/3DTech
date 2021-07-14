@@ -1,14 +1,21 @@
 package model.Utente;
 
+import model.Ordine.Ordine;
+import model.Ordine.OrdineConstructor;
+import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoConstructor;
+import model.utilities.Cart;
 import model.utilities.ConPool;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UtenteDAO {
 
-    public void doUpdateById(int userId) {
+    /*public void doUpdateById(int userId) {
         String query = "";
         try (Connection connection = ConPool.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -16,7 +23,7 @@ public class UtenteDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     public List<Utente> doRetrieveAll() {
         try (Connection connection = ConPool.getConnection();
@@ -62,6 +69,36 @@ public class UtenteDAO {
         }
 
         return null;
+    }
+
+    public List<Ordine> doRetrieveAllOrdersByUser(int userId) {
+        String query = "select *,  CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
+                " from ordine as ord inner join ordine_prodotto as op on ord.id_ordine = op.id_ordine " +
+                "inner join prodotto as pro on op.id_prodotto = pro.id_prodotto inner join categoria as cat on " +
+                "cat.id_categoria = pro.id_categoria where ord.id_utente = ?";
+        Map<Integer, Ordine> ordersMap;
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            ordersMap = new LinkedHashMap<>();
+            statement.setInt(1, userId);
+            ResultSet set = statement.executeQuery();
+
+            while (set.next()) {
+                int idOrdine = set.getInt("ord.id_ordine");
+                if (!ordersMap.containsKey(idOrdine)) {
+                    Ordine order = OrdineConstructor.constructOrder(set);
+                    order.setCarrello(new Cart(new ArrayList<>()));
+                    ordersMap.put(idOrdine, order);
+                }
+                Prodotto prodotto = ProdottoConstructor.constructProduct(set, true);
+                ordersMap.get(idOrdine).getCarrello().addProduct(prodotto, set.getInt("op.quantita"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return new ArrayList<>(ordersMap.values());
     }
 
     public void doSave(Utente user) {
