@@ -5,8 +5,9 @@
     <%@include file="common.jsp" %>
     <link rel="stylesheet" href="${contextPath}/css/navbar.css" type="text/css">
     <link rel="stylesheet" href="${contextPath}/css/user-dashboard.css" type="text/css">
+    <link rel="stylesheet" href="${contextPath}/css/modal.css" type="text/css">
+    <script src="${contextPath}/js/showModal.js" defer></script>
     <script defer src="${contextPath}/js/hamburger.js"></script>
-    <script src="${contextPath}/js/getOrders.js" defer></script>
 </head>
 <body>
 <%@include file="admin-nav.jsp" %>
@@ -43,7 +44,7 @@
     </table>
 </div>
 <hr id="division-line">
-<div class="rem_user">
+<div id="user-orders" class="rem_user">
     <div class="rem_user_label">
         <label for="users-list">Ordini</label>
     </div>
@@ -54,7 +55,7 @@
                 <option value="${user.id}">${user.id}</option>
             </c:forEach>
         </select>
-        <button style="display: inline-block" id="btn-submit" type="submit">get</button>
+        <button style="display: inline-block" id="orders-btn" type="submit">get</button>
         <div class="orders-content">
         </div>
     </div>
@@ -70,6 +71,11 @@
             <input class="input" type="text" id="email_" name="email" value=""><br><br><br>
             <input class="agg" type="submit" value="Rimuovi utente">
         </form>
+    </div>
+</div>
+<div class="modal" id="modal-box">
+    <input type="hidden" name="modal-type" value="user">
+    <div class="modal-content">
     </div>
 </div>
 </body>

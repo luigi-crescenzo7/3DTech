@@ -30,7 +30,6 @@ public class AccountServlet extends HttpServlet {
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource;
 
-        System.out.println(path);
         String contextPath = request.getContextPath();
         UtenteDAO dao = new UtenteDAO();
         HttpSession session = request.getSession();
