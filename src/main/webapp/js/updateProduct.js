@@ -1,20 +1,20 @@
 $(document).ready(function () {
     const path = $('#ctxPath').val()
     const element = document.getElementById('list')
-    const divElement = $('#div-test-2')
-    let nome2 = $('#nome2')
-    let descrizione2 = $('#descrizione2')
-    let marchio2 = $('#marchio2')
-    let prezzo2 = $('#prezzo2')
-    let sconto2 = $('#sconto2')
-    let peso2 = $('#peso2')
+
+    let nome2 = $('#product-name')
+    let descrizione2 = $('#product-description')
+    let marchio2 = $('#product-mark')
+    let prezzo2 = $('#product-price')
+    let sconto2 = $('#product-discount')
+    let peso2 = $('#product-weight')
     let productId = $('#product-id')
     let cat = $('#fieldProductCategry')
     let file = $('#hidden-file')
     $('#list').bind('change', function () {
         const id = element.options[element.selectedIndex].text
         $.post(path + '/controlpanel/get', {productId: id}, function (data) {
-
+            console.log(data)
             loadInputs(data)
 
             cat.val(data.Categoria)
@@ -30,7 +30,7 @@ $(document).ready(function () {
     })
 
     function loadInputs(json) {
-        const div = $('#div-test-2')
+        const div = $('#inputs-container')
         switch (json.Categoria) {
             case "Materiale plastico":
                 div.empty()
