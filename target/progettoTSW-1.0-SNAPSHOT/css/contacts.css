@@ -1,0 +1,25 @@
+.contact_details{
+    width: 40%;
+    min-width: 500px;
+    height: 500px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 0 0 2px rgba(0, 0, 0, 0.08);
+    border-radius: 2px;
+    padding: 24px 0px 24px 48px;
+}
+
+.contact_details span{
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 360px){
+    .contact_details{
+        width: 320px;
+        min-width: 320px;
+    }
+}

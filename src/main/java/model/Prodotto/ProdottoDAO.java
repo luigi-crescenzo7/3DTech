@@ -40,7 +40,7 @@ public class ProdottoDAO {
         int result;
         try (Connection connection = ConPool.getConnection();
              PreparedStatement stmt = connection.prepareStatement("UPDATE prodotto SET visibilita = 0" +
-                                                                        " WHERE id_prodotto = ?")) {
+                     " WHERE id_prodotto = ?")) {
             stmt.setInt(1, idProdotto);
             result = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -61,7 +61,6 @@ public class ProdottoDAO {
 
             while (set.next()) {
                 list.add(set.getString(1));
-                System.out.println(set.getString(1));
             }
 
         } catch (SQLException e) {

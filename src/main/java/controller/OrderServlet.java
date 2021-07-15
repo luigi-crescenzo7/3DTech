@@ -65,10 +65,9 @@ public class OrderServlet extends HttpServlet {
                 Utente user1 = UserSession.getUserFromSession(session, "userSession");
                 int userId = user1.getId();
                 String idOrder = request.getParameter("orderId");
-                System.out.println(idOrder);
                 int id = Integer.parseInt(idOrder);
                 OrdineDAO ordineDAO = new OrdineDAO();
-                System.out.println(ordineDAO.doDeleteById(id));
+                ordineDAO.doDeleteById(id);
                 List<Ordine> orders = dao.doRetrieveOrdersWithProductsByUser(userId);
                 request.setAttribute("userOrders", orders);
                 request.getRequestDispatcher("/WEB-INF/results/orders.jsp").forward(request, response);

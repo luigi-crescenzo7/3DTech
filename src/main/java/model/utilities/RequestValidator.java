@@ -22,6 +22,7 @@ public class RequestValidator {
     private static final Pattern SURNAME_PATTERN = Pattern.compile("^([a-zA-Z\\s]){3,25}$");
     // Solo per numeri di telefonia mobile italiani
     private static final Pattern PHONE_PATTERN = Pattern.compile("^(\\d){10}$");
+    private static final Pattern ZIP_CODE_PATTERN = Pattern.compile("^(\\d){5}$");
 
     public RequestValidator(HttpServletRequest request) {
         this.request = request;
@@ -83,6 +84,10 @@ public class RequestValidator {
 
     public boolean assertSurname(String param, String msg) {
         return assertMatch(param, SURNAME_PATTERN, msg);
+    }
+
+    public boolean assertZIPCode(String param, String msg) {
+        return assertMatch(param, ZIP_CODE_PATTERN, msg);
     }
 
     public List<String> getList() {

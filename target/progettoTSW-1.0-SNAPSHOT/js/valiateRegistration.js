@@ -80,17 +80,6 @@ function reportError() {
         console.log("password valid")
     }
 
-    /*if (!checkSurname(surname.value)) {
-        surname.setCustomValidity('surname invalid')
-        if (!errors.includes(surnameMsg))
-            errors.push(surnameMsg)
-    } else {
-        surname.setCustomValidity('')
-        errors.splice(errors.indexOf(surnameMsg), 1)
-        console.log('surname valid')
-    }*/
-
-
     if (!checkEmail(email.value)) {
         email.setCustomValidity('Email invalid')
         if (!errors.includes(emailMsg))
@@ -100,16 +89,6 @@ function reportError() {
         errors.splice(errors.indexOf(emailMsg), 1)
         console.log("email valid")
     }
-
-    /*if (!checkName(name.value)) {
-        name.setCustomValidity('name invalid')
-        if (!errors.includes(nameMsg))
-            errors.push(nameMsg)
-    } else {
-        name.setCustomValidity('')
-        errors.splice(errors.indexOf(nameMsg), 1)
-        console.log('name valid')
-    }*/
 
     if (!checkZIPCode(zipCode.value)) {
         console.log("zip invalid")

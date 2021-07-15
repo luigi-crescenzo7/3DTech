@@ -15,16 +15,6 @@ import java.util.Map;
 
 public class UtenteDAO {
 
-    /*public void doUpdateById(int userId) {
-        String query = "";
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
-
     public List<Utente> doRetrieveAll() {
         try (Connection connection = ConPool.getConnection();
              PreparedStatement ps = connection.prepareStatement("select * from utente as u where u.admin  " +

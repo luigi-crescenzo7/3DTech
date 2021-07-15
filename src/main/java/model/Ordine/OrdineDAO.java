@@ -44,7 +44,6 @@ public class OrdineDAO {
                     set2.setInt(3, item.getQuantita());
                     set2.setDouble(4, item.getProdotto().getPrezzo());
                     if (set2.executeUpdate() != 0) {
-                        System.out.println("Ok!!");
                     }
                 }
                 connection.commit();

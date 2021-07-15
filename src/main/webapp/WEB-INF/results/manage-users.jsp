@@ -11,6 +11,16 @@
 </head>
 <body>
 <%@include file="admin-nav.jsp" %>
+<div id="alert-box" class="alert">
+    <c:if test="${not empty requestScope.errorMessages}">
+        <c:forEach items="${requestScope.errorMessages}" var="message">
+            <p>${message}</p>
+        </c:forEach>
+        <script>
+            document.querySelector("#alert-box").style.display = "block"
+        </script>
+    </c:if>
+</div>
 <div class="table-container">
     <table class="rtable">
         <thead>
@@ -23,7 +33,6 @@
             <th>indirizzo</th>
             <th>città</th>
             <th>cap</th>
-            <th>privilegi</th>
         </tr>
         </thead>
         <tbody>
@@ -37,7 +46,6 @@
                 <td>${user.street}</td>
                 <td>${user.city}</td>
                 <td>${user.ZIPCode}</td>
-                <td>${user.admin}</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -53,28 +61,16 @@
 
         <div class="rem_user_input">
             <select id="users-list" name="userId">
-                <option> -- Seleziona id --</option>
+                <option value="default" id="default-option" selected> -- Seleziona id --</option>
                 <c:forEach items="${requestScope.listUsers}" var="user">
                     <option value="${user.id}">${user.id}</option>
                 </c:forEach>
             </select>
-            <button class="agg" id="orders-btn" type="submit">get</button>
+            <button class="agg" id="orders-btn" type="submit">Mostra prodotti</button>
             <div class="orders-content">
             </div>
         </div>
     </div>
-
-    <div class="rem_user">
-        <div class="rem_user_label"> Rimuovi utente</div>
-        <div class="rem_user_input">
-            <form action="" name="rimuovi" method="">
-                <label for="email_">Email utente</label>
-                <input class="input" type="text" id="email_" name="email" value=""><br><br><br>
-                <input class="agg" type="submit" value="Rimuovi utente">
-            </form>
-        </div>
-    </div>
-
 </div>
 <div class="modal" id="modal-box">
     <input type="hidden" name="modal-type" value="user">

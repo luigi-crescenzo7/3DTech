@@ -44,7 +44,6 @@ public class AccountServlet extends HttpServlet {
                     user = dao.doRetrieveEmailPassword(user);
                     if (user == null) {
                         request.setAttribute("errorMessages", "Account inesistente");
-                        System.out.println("Email o password non validi");
                         request.getRequestDispatcher("/WEB-INF/results/loginadmin.jsp").forward(request, response);
                         return;
                     }
@@ -72,7 +71,6 @@ public class AccountServlet extends HttpServlet {
                     user = dao.doRetrieveEmailPassword(user);
                     if (user == null) {
                         request.setAttribute("errorMessages", "Account inesistente");
-                        System.out.println("Email o password non validi");
                         request.getRequestDispatcher("/WEB-INF/results/login.jsp").forward(request, response);
                         return;
                     }
@@ -105,7 +103,6 @@ public class AccountServlet extends HttpServlet {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
         String resource;
-        System.out.println("Path: " + path);
 
         switch (path) {
             case "/admin":

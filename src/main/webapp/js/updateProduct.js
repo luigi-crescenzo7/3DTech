@@ -13,12 +13,9 @@ $(document).ready(function () {
     let file = $('#hidden-file')
     $('#list').bind('change', function () {
         const id = element.options[element.selectedIndex].text
-        console.log(id)
         $.post(path + '/controlpanel/get', {productId: id}, function (data) {
-            console.log(data)
-            console.log(data.Categoria)
-            loadInputs(data)
 
+            loadInputs(data)
 
             cat.val(data.Categoria)
             productId.val(id)

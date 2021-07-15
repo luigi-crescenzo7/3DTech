@@ -77,7 +77,6 @@ public class ProductServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         List<Prodotto> products = (List<Prodotto>) context.getAttribute("listProducts");
         String back = request.getParameter("test");
-        System.out.println(back);
         HttpSession session = request.getSession();
         ProdottoDAO dao = new ProdottoDAO();
         CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -97,7 +96,6 @@ public class ProductServlet extends HttpServlet {
 
                     if (!Pattern.compile("^(?=.*[^\\s])\\d*$").matcher(productId).matches()) {
                         resource = "/WEB-INF/results/manage-products.jsp";
-                        System.out.println("pattern error");
                         request.setAttribute("errorMessages", "Id prodotto non valido");
                         request.getRequestDispatcher(resource).forward(request, response);
                         return;
@@ -166,7 +164,6 @@ public class ProductServlet extends HttpServlet {
                     break;
                 case "/remove":
                     RequestValidator.authorize(session, "userSession");
-                    System.out.println("remove product");
                     String userId1 = request.getParameter("userId");
                     int id1 = Integer.parseInt(userId1);
                     Optional<Prodotto> opt1 = products.stream().
@@ -178,8 +175,6 @@ public class ProductServlet extends HttpServlet {
                             Prodotto p1 = opt1.get();
                             p1.setVisible(false);
                             response.sendRedirect(context.getContextPath() + "/controlpanel/products");
-                        } else {
-                            System.out.println("delete product error");
                         }
                     } else {
                         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

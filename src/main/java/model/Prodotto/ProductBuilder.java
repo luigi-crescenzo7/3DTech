@@ -11,7 +11,6 @@ public class ProductBuilder {
         prodotto.setNome(map.get("productName")[0]);
         prodotto.setMarchio(map.get("productMark")[0]);
         prodotto.setDescrizione(map.get("productDescription")[0]);
-        System.out.println("fileName: " + fileName);
         prodotto.setUrlImage(fileName);
         JSONObject object = new JSONObject();
         object.put("Colore", map.get("productColor")[0]);
@@ -130,7 +129,6 @@ public class ProductBuilder {
             case "Utensili":
                 p = createUtensile(map, fileName);
             default:
-                System.out.println("error");
                 break;
         }
         return p;

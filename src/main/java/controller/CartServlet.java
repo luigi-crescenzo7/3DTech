@@ -75,7 +75,6 @@ public class CartServlet extends HttpServlet {
                     response.sendRedirect(contextPath + path1);
                     break;
                 case "/remove":
-                    //todo: forse mettere controllo se il prodotto è visibile, allora rimuoverlo, senno non fare nulla
                     RequestValidator.authenticate(session, "userSession");
                     String productId_ = request.getParameter("productId");
                     String productQuantity = request.getParameter("quantita");

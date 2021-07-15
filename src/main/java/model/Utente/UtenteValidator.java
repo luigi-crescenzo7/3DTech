@@ -16,10 +16,9 @@ public class UtenteValidator {
     public static RequestValidator validateRegistration(HttpServletRequest request) {
         RequestValidator validator = new RequestValidator(request);
         validator.assertEmail("fieldEmail", "Cattiva composizione email");
-        validator.assertName("fieldName", "Il nome deve essere compreso tra 3 e 25 caratteri");
-        validator.assertSurname("fieldSurname", "Cattiva composizione cognome");
-        validator.assertPassword("fieldPassword", "Cattiva composizione password");
+        validator.assertPassword("fieldPassword", "Formato password non valido");
         validator.assertPhoneNumber("fieldPhoneNumber", "Numero non valido");
+        validator.assertZIPCode("fieldZIPCode", "Formato CAP non valido");
         return validator;
     }
 }

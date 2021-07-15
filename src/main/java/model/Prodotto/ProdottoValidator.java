@@ -60,7 +60,6 @@ public class ProdottoValidator {
                 validator = validateProduct(request);
                 break;
             default:
-                System.out.println("error");
                 break;
         }
         return validator;
