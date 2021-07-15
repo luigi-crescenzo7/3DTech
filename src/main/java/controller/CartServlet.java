@@ -57,18 +57,22 @@ public class CartServlet extends HttpServlet {
 
                     int id = Integer.parseInt(productId);
                     CartItem item = dao.doRetrieveCartItemById(id);
-                    System.out.println("id:" + id + " " + (item != null));
+
+                    if (path1 == null) {
+                        response.sendRedirect(contextPath + "/");
+                        return;
+                    }
+
                     if (item != null) {
                         if (item.getProdotto().isVisible()) {
                             cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
-                            System.out.println("id: " + item.getProdotto().getId() + "  prezzo scontato: " + item.getProdotto().getPrezzo());
                         }
-                    }
-                    if (path1 != null) {
-                        response.sendRedirect(contextPath + path1);
+                    } else {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                         return;
                     }
-                    response.sendRedirect(contextPath + "/");
+
+                    response.sendRedirect(contextPath + path1);
                     break;
                 case "/remove":
                     //todo: forse mettere controllo se il prodotto è visibile, allora rimuoverlo, senno non fare nulla
@@ -78,7 +82,6 @@ public class CartServlet extends HttpServlet {
                     int id1 = Integer.parseInt(productId_);
                     int quantity1 = Integer.parseInt(productQuantity);
                     if (cart.removeProduct(id1, quantity1)) {
-                        System.out.println("remove success");
                         request.getRequestDispatcher("/WEB-INF/results/cart.jsp").forward(request, response);
                     } else {
                         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

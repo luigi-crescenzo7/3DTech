@@ -7,8 +7,7 @@
             <a href="${contextPath}/account/login">Login</a>
         </div>
     </c:if>
-    <!-- todo: mettere controllo sullo user memorizzato in sessione se non è admin-->
-    <c:if test="${sessionScope.userSession != null}"> <!--pageContext.request.getSession().getAttribute('user') != null -->
+    <c:if test="${sessionScope.userSession != null}">
         <div class="sub-container">
             <div class="utente_loggato">
                 <button class="email_user">${sessionScope.userSession.email}</button>
@@ -38,8 +37,8 @@
     <ul class="barra_di_nav">
         <li><a href="${contextPath}/">Home</a></li>
         <li><a href="${contextPath}/categorie/">Categorie</a></li>
-        <li><a href="#">Chi Siamo</a></li>
-        <li><a href="#">Contatti</a></li>
+        <li><a href="${contextPath}/about.jsp">Chi Siamo</a></li>
+        <li><a href="${contextPath}/contacts.jsp">Contatti</a></li>
     </ul>
     <div class="search">
         <div class="ui-widget">

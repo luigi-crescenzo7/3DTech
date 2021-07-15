@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="${contextPath}/css/orders.css" type="text/css">
 </head>
 <body>
-<!-- todo: aggiungere media queries per il content da 622px in giù-->
 <%@include file="nav-bar.jsp" %>
 <div class="order_report">
     <span class="order_label">Ordini</span>

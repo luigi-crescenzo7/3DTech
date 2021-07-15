@@ -37,8 +37,8 @@
     <ul class="barra_di_nav">
         <li><a href="${contextPath}/">Home</a></li>
         <li><a href="${contextPath}/categorie/">Categorie</a></li>
-        <li><a href="#">Chi Siamo</a></li>
-        <li><a href="#">Contatti</a></li>
+        <li><a href="${contextPath}/about.jsp">Chi Siamo</a></li>
+        <li><a href="${contextPath}/contacts.jsp">Contatti</a></li>
     </ul>
     <div class="search">
         <div class="ui-widget">

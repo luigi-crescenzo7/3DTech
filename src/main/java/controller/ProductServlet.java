@@ -5,6 +5,7 @@ import model.Categoria.CategoriaDAO;
 
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
+import model.Prodotto.ProdottoValidator;
 import model.Prodotto.ProductBuilder;
 import model.utilities.RequestNotValidException;
 import model.utilities.RequestValidator;
@@ -83,6 +84,7 @@ public class ProductServlet extends HttpServlet {
         Part part;
         String fileName = "";
         File file;
+        String resource;
 
         try {
             switch (path) {
@@ -92,8 +94,16 @@ public class ProductServlet extends HttpServlet {
                     part = request.getPart("productImage");
                     Map<String, String[]> mappa = request.getParameterMap();
                     String productId = request.getParameter("product-id");
-                    int id = Integer.parseInt(productId);
 
+                    if (!Pattern.compile("^(?=.*[^\\s])\\d*$").matcher(productId).matches()) {
+                        resource = "/WEB-INF/results/manage-products.jsp";
+                        System.out.println("pattern error");
+                        request.setAttribute("errorMessages", "Id prodotto non valido");
+                        request.getRequestDispatcher(resource).forward(request, response);
+                        return;
+                    }
+
+                    int id = Integer.parseInt(productId);
                     if (part == null) {
                         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                         return;
@@ -131,7 +141,9 @@ public class ProductServlet extends HttpServlet {
                     }
                     break;
                 case "/create":
+                    request.setAttribute("returnBack", "manage-products.jsp");
                     RequestValidator.authorize(session, "userSession");
+                    ProdottoValidator.chooseProduct(request.getParameter("productCategory"), request).hasErrors();
                     part = request.getPart("productImage");
                     fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
                     Map<String, String[]> map = request.getParameterMap();
@@ -141,7 +153,7 @@ public class ProductServlet extends HttpServlet {
                         if (!file.exists())
                             Files.copy(fileStream, file.toPath());
                     }
-                    String resource = "/WEB-INF/results/manage-products.jsp";
+                    resource = "/WEB-INF/results/manage-products.jsp";
                     Prodotto product = ProductBuilder.getProduct(map, fileName);
 
                     product.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
