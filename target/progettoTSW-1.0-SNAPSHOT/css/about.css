@@ -1,0 +1,45 @@
+.people{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 10px;
+    width: 60%;
+    height: 800px;
+    margin: 30px auto;
+}
+
+.people *{
+    display: flex;
+    gap: 20px;
+}
+
+.people div{
+    border: solid 1px lightgrey;
+    padding: 10px;
+}
+
+.people img{
+    width: 200px;
+    height: 200px;
+}
+
+.people span{
+    display: inline;
+}
+
+@media screen and (max-width: 750px) and (min-width: 370px){
+    .people{
+        min-width: 450px;
+    }
+}
+
+@media screen and (max-width: 360px){
+    .people img{
+        width: 100px;
+        height: 100px;
+    }
+    .people{
+        width: 300px;
+        margin: 0px auto;
+    }
+}

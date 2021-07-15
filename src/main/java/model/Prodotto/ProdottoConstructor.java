@@ -1,7 +1,6 @@
 package model.Prodotto;
 
 import model.Categoria.Categoria;
-import model.Categoria.CategoriaConstructor;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
@@ -21,7 +20,10 @@ public class ProdottoConstructor {
         p.setPrezzo(rs.getDouble((discount ? "prezzo_scontato" : "pro.prezzo")));
         p.setPeso(rs.getDouble("pro.peso"));
         p.setSconto(rs.getDouble("pro.sconto"));
-        Categoria cat = CategoriaConstructor.constructCategory(rs);
+        p.setVisible(rs.getBoolean("pro.visibilita"));
+        Categoria cat = new Categoria();
+        cat.setId(rs.getInt("cat.id_categoria"));
+        cat.setNome(rs.getString("cat.nome"));
         p.setCategoria(cat);
         return p;
     }

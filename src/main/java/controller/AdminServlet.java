@@ -1,10 +1,16 @@
 package controller;
 
 
+import model.Categoria.Categoria;
 import model.Categoria.CategoriaDAO;
+import model.Categoria.CategoryBuilder;
+import model.Ordine.Ordine;
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
 import model.Prodotto.ProductBuilder;
+import model.Utente.UtenteDAO;
+import model.utilities.RequestNotValidException;
+import model.utilities.RequestValidator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,8 +32,9 @@ public class AdminServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        String resource = "";
+        String resource = null;
         HttpSession session = request.getSession();
+        ProdottoDAO dao = new ProdottoDAO();
 
         try {
             switch (path) {
@@ -39,12 +46,32 @@ public class AdminServlet extends HttpServlet {
                     RequestValidator.authorize(session, "userSession");
                     resource = "/WEB-INF/results/manage-products.jsp";
                     break;
+                case "/categories":
+                    RequestValidator.authorize(session, "userSession");
+                    resource = "/WEB-INF/results/manage-categories.jsp";
+                    break;
+                case "/users":
+                    RequestValidator.authorize(session, "userSession");
+                    request.setAttribute("listUsers", new UtenteDAO().doRetrieveAll());
+                    resource = "/WEB-INF/results/manage-users.jsp";
+                    break;
+                case "/orders":
+                    RequestValidator.authorize(session, "userSession");
+                    response.setContentType("application/json");
+                    String userId = request.getParameter("userId");
+
+                    List<Ordine> orders = new UtenteDAO().doRetrieveAllOrdersByUser(Integer.parseInt(userId));
+
+                    PrintWriter writer = response.getWriter();
+                    writer.println(new JSONArray(orders));
+                    writer.close();
+                    break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
             }
         } catch (RequestNotValidException e) {
-            response.sendRedirect(request.getContextPath() + "/account/admin");
+            e.dispatchErrors(request, response);
             return;
         }
 
@@ -55,14 +82,15 @@ public class AdminServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
         String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-        System.out.println("doPost " + path);
-        PrintWriter writer = null;
+        PrintWriter writer;
+        HttpSession session = request.getSession();
 
         switch (path) {
             case "/chart":
+                RequestValidator.authorize(session, "userSession");
                 response.setContentType("application/json");
 
                 JSONArray array = new JSONArray();
@@ -78,6 +106,7 @@ public class AdminServlet extends HttpServlet {
                 writer.close();
                 break;
             case "/product-info":
+                RequestValidator.authorize(session, "userSession");
                 response.setContentType("application/json");
                 String id = request.getParameter("productId");
 
@@ -87,6 +116,33 @@ public class AdminServlet extends HttpServlet {
                 writer = response.getWriter();
                 writer.println(obj);
                 writer.close();
+                break;
+            case "/category-info":
+                RequestValidator.authorize(session, "userSession");
+                response.setContentType("application/json");
+
+                String idCategoria = request.getParameter("categoryId");
+
+                Categoria c = new CategoriaDAO().doRetrieveById(Integer.parseInt(idCategoria));
+                JSONObject object = CategoryBuilder.fromObjectToJson(c);
+
+                writer = response.getWriter();
+                writer.println(object);
+                writer.close();
+                break;
+            case "/get":
+                RequestValidator.authorize(session, "userSession");
+                response.setContentType("application/json");
+
+                String productId = request.getParameter("productId");
+
+                Prodotto item = new ProdottoDAO().doRetrieveById(Integer.parseInt(productId));
+                if (item != null) {
+                    writer = response.getWriter();
+                    JSONObject obj3 = ProductBuilder.fromObjectToJson(item);
+                    writer.println(obj3);
+                    writer.close();
+                }
                 break;
             default:
                 break;

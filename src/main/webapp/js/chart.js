@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const path = document.querySelector("#hidden-path").value
+    const path = document.querySelector("#ctxPath").value
     $.post(path + "/controlpanel/chart",
         function (data) {
             let ctx = document.getElementById('chart').getContext('2d')
@@ -10,9 +10,9 @@ $(document).ready(function () {
                     datasets: [{
                         label: '# scorte',
                         data: data[1],
-                        //todo: eliminare proprietà options
                         options: {
                             responsive: true,
+                            maintainAspectRatio: true,
                         },
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',

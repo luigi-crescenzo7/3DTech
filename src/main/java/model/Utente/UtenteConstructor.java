@@ -4,12 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UtenteConstructor {
-
-    /**
-     * @param set The ResultSet object where belongs all the data of a table
-     * @return
-     * @throws SQLException
-     */
     public static Utente constructUser(ResultSet set) throws SQLException {
         Utente user = new Utente();
         user.setId(set.getInt("id_utente"));

@@ -1,42 +1,24 @@
 package model.Utente;
 
-import model.ConPool;
+import model.Ordine.Ordine;
+import model.Ordine.OrdineConstructor;
+import model.Prodotto.Prodotto;
+import model.Prodotto.ProdottoConstructor;
+import model.utilities.Cart;
+import model.utilities.ConPool;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UtenteDAO {
 
-    public void doUpdate(Utente user) {
-        try (Connection connection = ConPool.getConnection();
-             PreparedStatement ps =
-                     connection.prepareStatement("UPDATE utente SET email = ?, passwordHash = ?," +
-                             " nome = ?, cognome = ?, " +
-                             "data_di_nascita = ?, telefono = ?, CAP = ?, citta = ?, via = ?" +
-                             "WHERE id_utente = ?")) {
-
-            ps.setString(1, user.getEmail());
-            ps.setString(2, user.getPasswordhash());
-            ps.setString(3, user.getName());
-            ps.setString(4, user.getSurname());
-            ps.setDate(5, user.getDataNascita());
-            ps.setString(6, user.getPhoneNumber());
-            ps.setString(7, user.getZIPCode());
-            ps.setString(8, user.getCity());
-            ps.setString(9, user.getStreet());
-            ps.setInt(10, user.getId());
-
-            if (ps.executeUpdate() != 1) throw new RuntimeException();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public List<Utente> doRetrieveAll() {
         try (Connection connection = ConPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement("select * from utente")) {
+             PreparedStatement ps = connection.prepareStatement("select * from utente as u where u.admin  " +
+                     "<> 1")) {
             List<Utente> list = new ArrayList<>();
 
             ResultSet rs = ps.executeQuery();
@@ -79,6 +61,36 @@ public class UtenteDAO {
         return null;
     }
 
+    public List<Ordine> doRetrieveAllOrdersByUser(int userId) {
+        String query = "select *,  CAST(pro.prezzo - (pro.prezzo/100) * pro.sconto AS DECIMAL(8,2)) as prezzo_scontato" +
+                " from ordine as ord inner join ordine_prodotto as op on ord.id_ordine = op.id_ordine " +
+                "inner join prodotto as pro on op.id_prodotto = pro.id_prodotto inner join categoria as cat on " +
+                "cat.id_categoria = pro.id_categoria where ord.id_utente = ?";
+        Map<Integer, Ordine> ordersMap;
+        try (Connection connection = ConPool.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            ordersMap = new LinkedHashMap<>();
+            statement.setInt(1, userId);
+            ResultSet set = statement.executeQuery();
+
+            while (set.next()) {
+                int idOrdine = set.getInt("ord.id_ordine");
+                if (!ordersMap.containsKey(idOrdine)) {
+                    Ordine order = OrdineConstructor.constructOrder(set);
+                    order.setCarrello(new Cart(new ArrayList<>()));
+                    ordersMap.put(idOrdine, order);
+                }
+                Prodotto prodotto = ProdottoConstructor.constructProduct(set, true);
+                ordersMap.get(idOrdine).getCarrello().addProduct(prodotto, set.getInt("op.quantita"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return new ArrayList<>(ordersMap.values());
+    }
+
     public void doSave(Utente user) {
         if (user == null) return;
         try (Connection connection = ConPool.getConnection();
@@ -98,12 +110,11 @@ public class UtenteDAO {
             ps.setString(9, user.getStreet());
             ps.setBoolean(10, user.isAdmin());
 
-            if (ps.executeUpdate() != 1) throw new RuntimeException();
+            ps.executeUpdate();
 
             ResultSet keys = ps.getGeneratedKeys();
-            if (keys.next()) {
+            if (keys.next())
                 user.setId(keys.getInt(1));
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

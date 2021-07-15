@@ -1,12 +1,14 @@
 package controller;
 
-import model.Cart;
-import model.CartItem;
-import model.Categoria.Categoria;
+
 import model.Categoria.CategoriaDAO;
+
 import model.Prodotto.Prodotto;
 import model.Prodotto.ProdottoDAO;
+import model.Prodotto.ProdottoValidator;
 import model.Prodotto.ProductBuilder;
+import model.utilities.RequestNotValidException;
+import model.utilities.RequestValidator;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @MultipartConfig
 @WebServlet(urlPatterns = "/product/*")
@@ -34,96 +37,155 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
+        ProdottoDAO dao = new ProdottoDAO();
+        String resource = null;
+
+
+        if (path.equals("/product-info")) {
+            String option = request.getParameter("option");
+            if (!Pattern.compile("^(?=.*[^\\s])\\d*$").matcher(option).matches()) {
+                resource = "/index.jsp";
+                request.setAttribute("errorMessage", "Prodotto inesistente");
+                request.getRequestDispatcher(resource).forward(request, response);
+                return;
+            }
+
+            int id = Integer.parseInt(option);
+            Prodotto prodotto = dao.doRetrieveById(id);
+            if (prodotto != null) {
+                request.setAttribute("back", "/product/product-info?option=" + option);
+                request.setAttribute("product", prodotto);
+                resource = "/WEB-INF/results/productinfo.jsp";
+            } else {
+                request.setAttribute("errorMessage", "Prodotto inesistente");
+                resource = "/index.jsp";
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        request.getRequestDispatcher(resource).forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
-            HttpSession session = request.getSession();
-            Cart cart = null;
-            Prodotto p = null;
-            ProdottoDAO dao = new ProdottoDAO();
-            if (session.getAttribute("sessionCart") == null) {
-                cart = new Cart(new ArrayList<>());
-                session.setAttribute("sessionCart", cart);
-            } else {
-                cart = (Cart) session.getAttribute("sessionCart");
-            }
 
+        String path = (request.getPathInfo() == null ? "/" : request.getPathInfo());
+        ServletContext context = request.getServletContext();
+        List<Prodotto> products = (List<Prodotto>) context.getAttribute("listProducts");
+        String back = request.getParameter("test");
+        HttpSession session = request.getSession();
+        ProdottoDAO dao = new ProdottoDAO();
+        CategoriaDAO categoriaDAO = new CategoriaDAO();
+        Part part;
+        String fileName = "";
+        File file;
+        String resource;
+
+        try {
             switch (path) {
-                case "/select":
-                    RequestValidator.authenticate(session, "userSession");
-                    String productId = request.getParameter("productId");
-                    String quantity = request.getParameter("fieldQuantity");
-                    int id = Integer.parseInt(productId);
-                    CartItem item = dao.doRetrieveCartItemById(id);
-                    System.out.println("id:" + id + " " + (item != null));
-                    if (item != null) {
-                        cart.addProduct(item.getProdotto(), Integer.parseInt(quantity));
-                        System.out.println("id: "+item.getProdotto().getId()+ "  prezzo scontato: "+item.getProdotto().getPrezzo());
-                    }
-                    request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
-                    break;
-                case "/create":
+                case "/update":
+                    String str;
                     RequestValidator.authorize(session, "userSession");
-                    Part part = request.getPart("productImage");
-                    String fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                    String category = request.getParameter("productCategory");
-                    Map<String, String[]> map = request.getParameterMap();
-                    Set<Map.Entry<String, String[]>> set = map.entrySet();
-                    for (Map.Entry<String, String[]> entry : set) {
-                        System.out.println(entry.getKey() + "   " + Arrays.toString(entry.getValue()));
+                    part = request.getPart("productImage");
+                    Map<String, String[]> mappa = request.getParameterMap();
+                    String productId = request.getParameter("product-id");
+
+                    if (!Pattern.compile("^(?=.*[^\\s])\\d*$").matcher(productId).matches()) {
+                        resource = "/WEB-INF/results/manage-products.jsp";
+                        request.setAttribute("errorMessages", "Id prodotto non valido");
+                        request.getRequestDispatcher(resource).forward(request, response);
+                        return;
                     }
-                    System.out.println("Categoria: " + category);
-                    File file = null;
+
+                    int id = Integer.parseInt(productId);
+                    if (part == null) {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        return;
+                    }
+
+                    str = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    if (str.isEmpty()) {
+                        fileName = request.getParameter("fieldImage");
+                    } else {
+                        fileName = str;
+                    }
+
                     try (InputStream fileStream = part.getInputStream()) {
                         file = new File(uploadRoot + fileName);
                         if (!file.exists())
                             Files.copy(fileStream, file.toPath());
                     }
-                    switch (category) {
-                        case "Materiale plastico":
-                            System.out.println("file name: " + fileName);
-                            p = ProductBuilder.createMaterialePlastico(map, fileName);
-                            Categoria cat = new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]);
-                            p.setCategoria(cat);
-                            dao.doSave(p);
-                            ServletContext ctx = request.getServletContext();
-                            List<Prodotto> list2 = (List<Prodotto>) ctx.getAttribute("listProducts");
-                            if (list2 != null)
-                                list2.add(p);
+
+                    Prodotto p = ProductBuilder.getProduct(mappa, fileName);
+                    p.setId(id);
+                    p.setCategoria(categoriaDAO.doRetrieveByName(mappa.get("productCategory")[0]));
+                    Optional<Prodotto> opt = products.stream().
+                            filter(prodotto -> prodotto.getId() == id).
+                            findFirst();
+                    if (opt.isPresent()) {
+                        int index = products.indexOf(opt.get());
+                        products.set(index, p);
+                        if (dao.doUpdateById(p)) {
                             request.getRequestDispatcher("/WEB-INF/results/manage-products.jsp").forward(request, response);
-                            break;
-                        case "Ricambi":
-                            p = ProductBuilder.createRicambio(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
-                            break;
-                        case "Accessori":
-                            p = ProductBuilder.createAccessorio(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
-                            break;
-                        case "Utensili":
-                            p = ProductBuilder.createUtensile(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
-                            break;
-                        case "Stampanti 3D":
-                            p = ProductBuilder.createStampante3D(map, fileName);
-                            p.setCategoria(new CategoriaDAO().doRetrieveByName(map.get("productCategory")[0]));
-                            break;
-                        default:
-                            System.out.println("Default case");
-                            break;
+                        } else {
+                            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        }
+                    } else {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    }
+                    break;
+                case "/create":
+                    request.setAttribute("returnBack", "manage-products.jsp");
+                    RequestValidator.authorize(session, "userSession");
+                    ProdottoValidator.chooseProduct(request.getParameter("productCategory"), request).hasErrors();
+                    part = request.getPart("productImage");
+                    fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    Map<String, String[]> map = request.getParameterMap();
+
+                    try (InputStream fileStream = part.getInputStream()) {
+                        file = new File(uploadRoot + fileName);
+                        if (!file.exists())
+                            Files.copy(fileStream, file.toPath());
+                    }
+                    resource = "/WEB-INF/results/manage-products.jsp";
+                    Prodotto product = ProductBuilder.getProduct(map, fileName);
+
+                    product.setCategoria(categoriaDAO.doRetrieveByName(map.get("productCategory")[0]));
+                    dao.doSave(product);
+
+                    if (products != null) {
+                        products.add(product);
+                        request.getRequestDispatcher(resource).forward(request, response);
+                    }
+                    break;
+                case "/remove":
+                    RequestValidator.authorize(session, "userSession");
+                    String userId1 = request.getParameter("userId");
+                    int id1 = Integer.parseInt(userId1);
+                    Optional<Prodotto> opt1 = products.stream().
+                            filter(prodotto -> prodotto.getId() == id1).
+                            findFirst();
+
+                    if (opt1.isPresent()) {
+                        if (dao.doDeleteById(id1)) {
+                            Prodotto p1 = opt1.get();
+                            p1.setVisible(false);
+                            response.sendRedirect(context.getContextPath() + "/controlpanel/products");
+                        }
+                    } else {
+                        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     }
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        } catch (RequestNotValidException e) {
+            e.dispatchErrors(request, response);
         }
     }
 }

@@ -1,23 +1,23 @@
 $(document).ready(function () {
     const divElement = $("#div-test")
     $("#fieldProductCategory").change(function () {
-        const pathNuevo = $('#ctxPath').val()
-        console.log(pathNuevo)
+        const path = $('#ctxPath').val()
         const category = $("#fieldProductCategory").val()
         if (typeof (category) === "string") {
             switch (category) {
                 case "Materiale plastico":
-                    divElement.load(pathNuevo + '/form-prodotti/materiale-plastico.jsp',
-                        () => console.log("Success on " + category))
+                    divElement.load(path + '/form-prodotti/materiale-plastico.jsp',
+                        (response, status) => console.log(status))
                     break;
                 case "Stampanti 3D":
-                    divElement.load(pathNuevo + '/form-prodotti/stampanti-3d.jsp',
-                        () => console.log("Success on " + category))
+                    divElement.load(path + '/form-prodotti/stampanti-3d.jsp',
+                        (response, status) => console.log(status))
                     break;
-                case "":
+                case "Resine":
+                    divElement.load(path + '/form-prodotti/resine.jsp',
+                        (response, status) => console.log(status))
                     break;
                 default:
-                    console.log("errore!!")
                     break;
             }
         }

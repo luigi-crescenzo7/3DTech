@@ -10,6 +10,8 @@
 <div id="center-text">
     <h1>500: Errore Interno al Server</h1>
 </div>
-<%@include file="liberrors.jsp" %>
+<div id="home-anchor">
+    <a href="${contextPath}/">Torna alla homepage</a>
+</div>
 </body>
 </html>

@@ -1,12 +1,13 @@
 package controller;
 
 
-import model.Cart;
-import model.CartItem;
+import model.utilities.Cart;
+import model.utilities.CartItem;
 import model.Ordine.Ordine;
 import model.Ordine.OrdineDAO;
 import model.Utente.UserSession;
 import model.Utente.Utente;
+import model.utilities.RequestValidator;
 
 
 import javax.servlet.ServletException;
@@ -51,14 +52,25 @@ public class OrderServlet extends HttpServlet {
                     order.setQuantita(products.size());
                     order.setDataOrdine(LocalDate.now());
                     order.setUserId(user.getId());
-                    OrdineDAO orderDao = new OrdineDAO();
-                    orderDao.doSave(order);
+                    order.setVisible(true);
+                    dao.doSave(order);
                     c.reset();
-                    request.getRequestDispatcher("/WEB-INF/results/account.jsp").forward(request, response);
+                    request.getRequestDispatcher("/WEB-INF/results/cart.jsp").forward(request, response);
                 } else {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Carrello vuoto");
                     return;
                 }
+                break;
+            case "/remove":
+                Utente user1 = UserSession.getUserFromSession(session, "userSession");
+                int userId = user1.getId();
+                String idOrder = request.getParameter("orderId");
+                int id = Integer.parseInt(idOrder);
+                OrdineDAO ordineDAO = new OrdineDAO();
+                ordineDAO.doDeleteById(id);
+                List<Ordine> orders = dao.doRetrieveOrdersWithProductsByUser(userId);
+                request.setAttribute("userOrders", orders);
+                request.getRequestDispatcher("/WEB-INF/results/orders.jsp").forward(request, response);
                 break;
             default:
                 response.sendError(HttpServletResponse.SC_NOT_FOUND, "Risorsa non trovata");
