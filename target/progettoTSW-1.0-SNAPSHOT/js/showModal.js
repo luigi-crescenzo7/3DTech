@@ -11,10 +11,8 @@ $(document).ready(function () {
 
     for (let i = 0; i < buttons.length; i++) {
         if (modalType === 'product') {
-            console.log("type product")
             buttons[i].addEventListener('click', showProduct)
         } else if (modalType === 'category') {
-            console.log("type category")
             buttons[i].addEventListener('click', showCategory)
         }
     }
@@ -46,7 +44,6 @@ $(document).ready(function () {
         let id = $('#users-list option:selected').val()
         if (id !== "default") {
             $.get(ctx + '/controlpanel/orders', {userId: id}, function (data) {
-                console.log(data)
                 let values = ''
                 if (data.length === 0) {
                     values = "Lista ordini vuota"
@@ -104,7 +101,6 @@ $(document).ready(function () {
             for (let property in json2) {
                 if (json2.hasOwnProperty(property)) {
                     values += '<p>' + property + ': ' + json2[property] + '</p>'
-                    console.log(property + ' --- ' + json2[property])
                 }
             }
             content.innerHTML = '<p>Id: ' + data.Id + ' </p><p>Nome: ' + data.Nome + ' </p>' +

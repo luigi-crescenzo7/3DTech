@@ -2,7 +2,6 @@ $(document).ready(function () {
     const divElement = $("#div-test")
     $("#fieldProductCategory").change(function () {
         const path = $('#ctxPath').val()
-        console.log(path)
         const category = $("#fieldProductCategory").val()
         if (typeof (category) === "string") {
             switch (category) {

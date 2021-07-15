@@ -28,7 +28,9 @@
                 <c:forEach items="${applicationScope.listProducts}" var="product">
                     <c:if test="${product.categoria.nome.equals('Stampanti 3D') && product.visible}">
                         <div class="container-item">
-                            <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
+                            <a href="${contextPath}/product/product-info?option=${product.id}">
+                                <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
+                            </a>
                             <span>${product.nome}</span>
                         </div>
                     </c:if>
@@ -42,7 +44,9 @@
                 <c:forEach items="${applicationScope.listProducts}" var="product">
                     <c:if test="${product.categoria.nome.equals('Resine') && product.visible}">
                         <div class="container-item">
-                            <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
+                            <a href="${contextPath}/product/product-info?option=${product.id}">
+                                <img alt="immagine" src="${contextPath}/images/${product.urlImage}">
+                            </a>
                             <span>${product.nome}</span>
                         </div>
                     </c:if>
