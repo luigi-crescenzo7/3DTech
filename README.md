@@ -1,6 +1,6 @@
 # 3DTech
 
-A web-app written in Java (Servlet API 4.0) for a project of a university course.
+A Java WebApp that uses Java Servlet 4.0 Specification developed for an university course exam.
 
 Technologies & Frameworks involved:
 - Tomcat 9.0.43
@@ -10,3 +10,5 @@ Technologies & Frameworks involved:
 - HTML & CSS
 - Java Servlet API 4.0
 - JDBC
+- MySQL JDBC Driver
+- OpenJDK 11
