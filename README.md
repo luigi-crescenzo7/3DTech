@@ -9,6 +9,5 @@ Technologies & Frameworks involved:
 - AJAX
 - HTML & CSS
 - Java Servlet API 4.0
-- JDBC
 - MySQL JDBC Driver
 - OpenJDK 11
