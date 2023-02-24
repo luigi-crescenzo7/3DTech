@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+//test
 @WebServlet(name = "FileServlet", urlPatterns = "/images/*")
 public class FileServlet extends HttpServlet {
 
