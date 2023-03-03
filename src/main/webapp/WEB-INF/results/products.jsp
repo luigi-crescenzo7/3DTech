@@ -34,7 +34,7 @@
 
                             <c:when test="${product.sconto > 0}">
                                 <span style="color:red;">Special price:</span>
-                                <span style="color:red;"> € <c:out value="${product.prezzo}"/></span>
+                                <span style="color:red;">€ <c:out value="${product.prezzo}"/></span>
                             </c:when>
                             <c:otherwise>
                                     <span>Prezzo: € <c:out value="${product.prezzo}"/></span>
