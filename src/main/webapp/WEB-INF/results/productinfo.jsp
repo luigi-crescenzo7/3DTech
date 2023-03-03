@@ -21,25 +21,7 @@
         </span>
 
         <span class="price_product">
-            <c:choose>
-                <c:when test="${requestScope.product.sconto != 0}">
-                    <p style="text-decoration: line-through;">
-                        <c:out value="€ ${requestScope.product.prezzo}"/>
-                    </p>
-                    <p style="color:black;">
-                        <c:out value = "€ ${requestScope.product.prezzo - ((requestScope.product.prezzo/100)*requestScope.product.sconto)}"/>
-                    </p>
-                </c:when>
-
-                <c:otherwise>
-                    <p style="color:black;">
-                        <c:out value="€ ${requestScope.product.prezzo}"/>
-                    </p>
-                </c:otherwise>
-            </c:choose>
-
-
-
+            <c:out value="€ ${requestScope.product.prezzo}"/>
         </span>
 
         <div class="line"></div>

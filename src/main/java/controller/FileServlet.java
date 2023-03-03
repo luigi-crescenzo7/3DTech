@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//test
+
 @WebServlet(name = "FileServlet", urlPatterns = "/images/*")
 public class FileServlet extends HttpServlet {
 
@@ -36,8 +36,7 @@ public class FileServlet extends HttpServlet {
     // Actions ------------------------------------------------------------------------------------
 
     public static String getUploadPath() {
-        return "/Users/oskarszuba/Documents/AAAuniversit…/2°ANNO/2° semestre/TSW - TecnologieSoftwareWeb/apache-tomcat-9.0.72";
-        //odl directory: C:\Program Files\Apache Software Foundation\Tomcat 9.0
+        return "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0";
     }
 
     /**
