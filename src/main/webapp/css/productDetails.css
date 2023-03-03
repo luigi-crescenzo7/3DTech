@@ -32,7 +32,13 @@
     font-family: sans-serif;
     font-size: 24px;
     font-weight: bold;
+    /*
     color: #db545a;
+    */
+}
+
+.product_details span.price_product p1 {
+    color: red;
 }
 
 .product_details div.line {

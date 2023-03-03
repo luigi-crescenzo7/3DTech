@@ -32,9 +32,9 @@
 
                         <c:choose>
 
-                            <c:when test="${requestScope.product.sconto > 0}">
-                                <span style="text-decoration: line-through; color:red;">Special price:</span>
-                                <span style="text-decoration: line-through; color:red;"> € <c:out value="${product.prezzo}"/></span>
+                            <c:when test="${product.sconto > 0}">
+                                <span style="color:red;">Special price:</span>
+                                <span style="color:red;"> € <c:out value="${product.prezzo}"/></span>
                             </c:when>
                             <c:otherwise>
                                     <span>Prezzo: € <c:out value="${product.prezzo}"/></span>

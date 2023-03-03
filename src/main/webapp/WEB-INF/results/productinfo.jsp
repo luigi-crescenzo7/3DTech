@@ -26,13 +26,13 @@
                     <p style="text-decoration: line-through;">
                         <c:out value="€ ${requestScope.product.prezzo}"/>
                     </p>
-                    <p style="color:black;">
+                    <p style="color:red;">
                         <c:out value = "€ ${requestScope.product.prezzo - ((requestScope.product.prezzo/100)*requestScope.product.sconto)}"/>
                     </p>
                 </c:when>
 
                 <c:otherwise>
-                    <p style="color:black;">
+                    <p>
                         <c:out value="€ ${requestScope.product.prezzo}"/>
                     </p>
                 </c:otherwise>
