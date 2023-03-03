@@ -36,7 +36,8 @@ public class FileServlet extends HttpServlet {
     // Actions ------------------------------------------------------------------------------------
 
     public static String getUploadPath() {
-        return "C:\\Program Files\\Apache Software Foundation\\Tomcat 9.0";
+        return "/Users/oskarszuba/Documents/AAAuniversit…/2°ANNO/2° semestre/TSW - TecnologieSoftwareWeb/apache-tomcat-9.0.72";
+        //odl directory: C:\Program Files\Apache Software Foundation\Tomcat 9.0
     }
 
     /**

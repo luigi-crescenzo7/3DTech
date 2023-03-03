@@ -29,7 +29,18 @@
                             <img src="${contextPath}/images/${product.urlImage}" alt="immagine">
                         </a>
                         <span>Nome: <c:out value="${product.nome}"/></span>
-                        <span>Prezzo: € <c:out value="${product.prezzo}"/></span>
+
+                        <c:choose>
+
+                            <c:when test="${requestScope.product.sconto > 0}">
+                                <span style="text-decoration: line-through; color:red;">Special price:</span>
+                                <span style="text-decoration: line-through; color:red;"> € <c:out value="${product.prezzo}"/></span>
+                            </c:when>
+                            <c:otherwise>
+                                    <span>Prezzo: € <c:out value="${product.prezzo}"/></span>
+                            </c:otherwise>
+                        </c:choose>
+
                         <form action="${contextPath}/cart/add" method="post">
                             <c:choose>
                                 <c:when test="${product.visible == true}">
